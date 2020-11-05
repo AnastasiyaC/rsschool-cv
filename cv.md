@@ -12,7 +12,7 @@
 
 
 phone number: +375293922415  
-e-mail: nastya.che92@gmail.com  
+e-mail address: nastya.che92@gmail.com  
 [GitHub](https://github.com/AnastasiyaC)
 
 
