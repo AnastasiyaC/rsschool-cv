@@ -1,0 +1,110 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Chelsea Market", cursive;
+}
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+
+.blocks {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+}
+
+.block {
+  box-shadow: 0 0 10px 5px rgba(34, 60, 80, 0.5) inset;
+  overflow: hidden;
+  flex-basis: 0;
+  flex-grow: 1;
+  position: relative;
+  transition: flex-grow 0.5s ease-in;
+  border-left: 1px solid rgba(83, 82, 82, 0.3);
+  border-right: 1px solid rgba(83, 82, 82, 0.3);
+  cursor: pointer;
+}
+
+.block__image {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.block__image_image-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.block__text {
+  width: 100%;
+  color: white;
+  z-index: 2;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0;
+  transition: all 0.2s linear;
+}
+
+.block__text_text-top {
+  font-size: 35px;
+  text-shadow: 3px 3px 0 black;
+  position: absolute;
+  top: 20%;
+  transform: translate(0, -50%);
+}
+
+.block__text_text-center {
+  font-size: 40px;
+  letter-spacing: -3px;
+  text-shadow: 3px 4px 0 black;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.block__text_text-down {
+  font-size: 55px;
+  text-shadow: 3px 3px 0 black;
+  position: absolute;
+  top: 80%;
+  transform: translate(0, -50%);
+}
+
+.block > .block__text_text-top {
+  transform: translateY(-400%);
+}
+
+.block.opened-active > .block__text_text-top {
+  transform: translate(0, -50%);
+}
+
+.block > .block__text_text-down {
+  transform: translateY(600%);
+}
+
+.block.opened-active > .block__text_text-down {
+  transform: translate(0, -50%);
+}
+
+.block.block-opened {
+  flex-grow: 5;
+}
+
+.block.block-opened > .block__text_text-center {
+  font-size: 30px;
+  letter-spacing: -1px;
+  color: rgba(255, 255, 255, 0.7);
+}
