@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Singolo</title>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/fonts.css">
+  </head>
+  <body>
+    <header class="header">
+      <div class="wrapper header__wrapper">
+        <div class="header__logo">
+          <div class="header__logo-text">singolo</div>
+          <span class="header__logo-star header__logo-star--color-red">*</span>
+        </div>
+        <button class="header__menu-button menu-button">
+          <div class="menu-button__line-element"></div>
+          <div class="menu-button__line-element"></div>
+          <div class="menu-button__line-element"></div>
+        </button>
+        <nav class="header__navigation navigation">
+          <ul class="navigation__list list">
+            <li class="navigation__item">
+              <a class="navigation__link active" href="#">home</a>
+            </li>
+            <li class="navigation__item">
+              <a class="navigation__link" href="#services">services</a>
+            </li>
+            <li class="navigation__item">
+              <a class="navigation__link" href="#portfolio">portfolio</a>
+            </li>
+            <li class="navigation__item">
+              <a class="navigation__link" href="#">about</a>
+            </li>
+            <li class="navigation__item">
+              <a class="navigation__link" href="#">contact</a>
+            </li>
+          </ul>
+        </nav>
+        <h1 class="visually-hidden"></h1>
+      </div>
+    </header>
+
+    <hr
+      class="dividing-line dividing-line--margin-minus dividing-line--margin-header"
+    />
+
+    <main>
+      <section id="slider" class="block slider">
+        <div class="wrapper wrapper-slider">
+          <div class="slideshow">
+            <div class="slide first-slide">
+              <div class="phone-vertical">
+                <div class="phone-body"></div>
+                <div class="phone-front-camera"></div>
+                <div class="phone-dynamic"></div>
+                <div class="phone-screen">
+                  <img
+                    class="phone-display"
+                    src="assets/phone/phone-vertical-display.png"
+                    alt="phone-display-vertical"
+                  />
+                </div>
+                <button class="phone-button"></button>
+              </div>
+              <div class="phone-horizontal">
+                <div class="phone-body"></div>
+                <div class="phone-front-camera"></div>
+                <div class="phone-dynamic"></div>
+                <div class="phone-screen">
+                  <img
+                    class="phone-display"
+                    src="assets/phone/phone-horizontal-display.png"
+                    alt="phone-display-horizontal"
+                  />
+                </div>
+                <button class="phone-button"></button>
+              </div>
+            </div>
+
+            <div class="slide second-slide">
+              <div class="secondary-phone secondary-phone-left">
+                <div class="phone-body"></div>
+                <div class="phone-front-camera"></div>
+                <div class="phone-dynamic"></div>
+                <div class="phone-screen">
+                  <img
+                    class="phone-display"
+                    src="assets/phone/phone-vertical-display.png"
+                    alt="phone-display-vertical"
+                  />
+                </div>
+                <div class="phone-button"></div>
+              </div>
+              <div class="main-phone">
+                <div class="phone-body"></div>
+                <div class="phone-front-camera"></div>
+                <div class="phone-dynamic"></div>
+                <div class="phone-screen">
+                  <img
+                    class="phone-display"
+                    src="assets/phone/phone-vertical-display-slide2.png"
+                    alt="main-phone-display-vertical"
+                  />
+                </div>
+                <button class="phone-button"></button>
+              </div>
+              <div class="secondary-phone secondary-phone-right">
+                <div class="phone-body"></div>
+                <div class="phone-front-camera"></div>
+                <div class="phone-dynamic"></div>
+                <div class="phone-screen">
+                  <img
+                    class="phone-display"
+                    src="assets/phone/phone-vertical-display.png"
+                    alt="phone-display-vertical"
+                  />
+                </div>
+                <div class="phone-button"></div>
+              </div>
+            </div>
+
+            <div class="slider-controls">
+              <button class="arrow arrow-left"></button>
+              <button class="arrow arrow-right"></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="dividing-line dividing-line--margin-minus" />
+
+      <section id="services" class="services block">
+        <div class="wrapper services__wrapper">
+          <h2 class="services__title title">Our Services</h2>
+          <p class="services__description description">
+            Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum.
+            Duis mollis, non commodo luctus, nisi erat portitor ligula, eget
+            lacinia odio sem nec elit. Fusce dapibus, tellus ac cursus commodo,
+            tortor mauris condimentum nibh.
+          </p>
+          <ul class="services__list list">
+            <li class="services__item services__custom-design">
+              <h3 class="services__item-name">Custom design</h3>
+              <p class="services__item-description">
+                Curabitur vestibulum eget mauris quis laoreet. Phasellus in quam
+                laoreet, viverra lacus ut, ultrices velit.
+              </p>
+            </li>
+
+            <li class="services__item services__inovative-ideas">
+              <h3 class="services__item-name">Inovative ideas</h3>
+              <p class="services__item-description">
+                Quisque luctus, quam eget moiestie commodo, lacus purus cursus
+                purus, nec rutrum tellus dolor id lorem.
+              </p>
+            </li>
+
+            <li class="services__item services__love-is-the-answer">
+              <h3 class="services__item-name">Love is the answer</h3>
+              <p class="services__item-description">
+                Nulla sed nunc et tortor luctus faucibus. Morbi at aliquet
+                turpis, et consequat felis. Quisque condimentum.
+              </p>
+            </li>
+
+            <li class="services__item services__responsive-layout">
+              <h3 class="services__item-name">Responsive layout</h3>
+              <p class="services__item-description">
+                Sed porttitor placerat rhoncus. In at nunc tellus. Maecenas
+                blandit nunc ligula. Praesent elit leo.
+              </p>
+            </li>
+
+            <li class="services__item services__24-7-support">
+              <h3 class="services__item-name">24/7 support</h3>
+              <p class="services__item-description">
+                Vivamus vel quam lacinia, tincidunt dui non, vehicula nisi.
+                Nulla a sem erat. Pellentesque egestas venenatis lorem.
+              </p>
+            </li>
+
+            <li class="services__item services__fell-like-a-star">
+              <h3 class="services__item-name">Fell like a star</h3>
+              <p class="services__item-description">
+                Quisque hendrerit purus dapibus, ornare nibh vitae, viverra
+                nibh. Fusce vitae aliquam tellus.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <hr class="dividing-line dividing-line--margin-minus" />
+
+      <section id="portfolio" class="portfolio block">
+        <div class="portfolio__wrapper wrapper">
+          <h2 class="portfolio__title title">Portfolio</h2>
+          <p class="portfolio__description description">
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula,
+            eget lacinia odio sem nec elit.
+          </p>
+          <form class="portfolio__form form">
+            <input
+              id="radio1"
+              type="radio"
+              class="form__input"
+              name="selector"
+              value="all"
+              checked="checked"
+            />
+            <label for="radio1" class="form__label label--active">All</label>
+            <input
+              id="radio2"
+              type="radio"
+              class="form__input"
+              name="selector"
+              value="web-design"
+            />
+            <label for="radio2" class="form__label">Web Design</label>
+            <input
+              id="radio3"
+              type="radio"
+              class="form__input"
+              name="selector"
+              value="graphic-design"
+            />
+            <label for="radio3" class="form__label">Graphic Design</label>
+            <input
+              id="radio4"
+              type="radio"
+              class="form__input"
+              name="selector"
+              value="artwork"
+            />
+            <label for="radio4" class="form__label">Artwork</label>
+          </form>
+
+          <div class="portfolio__images-gallery">
+            <div class="portfolio__gallery-item">
+              <img
+                class="portfolio__gallery-image"
+                src="assets/portfolio/portfolio-1.png"
+                alt="potrfolio-image-1"
+              />
+            </div>
+            <div class="portfolio__gallery-item">
+              <img
+                class="portfolio__gallery-image"
+                src="assets/portfolio/portfolio-2.png"
+                alt="potrfolio-image-2"
+              />
+            </div>
+            <div class="portfolio__gallery-item">
+              <img
+                class="portfolio__gallery-image"
+                src="assets/portfolio/portfolio-3.png"
+                alt="potrfolio-image-3"
+              />
+            </div>
+            <div class="portfolio__gallery-item">
+              <img
+                class="portfolio__gallery-image"
+                src="assets/portfolio/portfolio-4.png"
+                alt="potrfolio-image-4"
+              />
+            </div>
+            <div class="portfolio__gallery-item">
+              <img
+                class="portfolio__gallery-image"
+                src="assets/portfolio/portfolio-5.png"
+                alt="potrfolio-image-5"
+              />
+            </div>
+            <div class="portfolio__gallery-item">
+              <img
+                class="portfolio__gallery-image"
+                src="assets/portfolio/portfolio-6.png"
+                alt="potrfolio-image-6"
+              />
+            </div>
+            <div class="portfolio__gallery-item">
+              <img
+                class="portfolio__gallery-image"
+                src="assets/portfolio/portfolio-7.png"
+                alt="potrfolio-image-7"
+              />
+            </div>
+            <div class="portfolio__gallery-item">
+              <img
+                class="portfolio__gallery-image"
+                src="assets/portfolio/portfolio-8.png"
+                alt="potrfolio-image-8"
+              />
+            </div>
+            <div class="portfolio__gallery-item">
+              <img
+                class="portfolio__gallery-image"
+                src="assets/portfolio/portfolio-9.png"
+                alt="potrfolio-image-9"
+              />
+            </div>
+            <div class="portfolio__gallery-item">
+              <img
+                class="portfolio__gallery-image"
+                src="assets/portfolio/portfolio-10.png"
+                alt="potrfolio-image-10"
+              />
+            </div>
+            <div class="portfolio__gallery-item">
+              <img
+                class="portfolio__gallery-image"
+                src="assets/portfolio/portfolio-11.png"
+                alt="potrfolio-image-11"
+              />
+            </div>
+            <div class="portfolio__gallery-item">
+              <img
+                class="portfolio__gallery-image"
+                src="assets/portfolio/portfolio-12.png"
+                alt="potrfolio-image-12"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <hr class="dividing-line dividing-line--margin-minus" />
+
+    <footer class="footer">
+      <div class="wrapper footer__wrapper">
+        <div class="footer__copyright-text">© Copyright 2013</div>
+        <ul class="footer__contact-list list">
+          <li class="footer__contact-item">
+            <a class="footer__contact-link" href="#">
+              <img
+                class="footer__contact-icon"
+                src="assets/contact-icons/ico-facebook.png"
+                alt="facebook-icon"
+              />
+            </a>
+          </li>
+          <li class="footer__contact-item">
+            <a class="footer__contact-link" href="#">
+              <img
+                class="footer__contact-icon"
+                src="assets/contact-icons/ico-google-plus.png"
+                alt="google-plus-icon"
+              />
+            </a>
+          </li>
+          <li class="footer__contact-item">
+            <a class="footer__contact-link" href="#">
+              <img
+                class="footer__contact-icon"
+                src="assets/contact-icons/ico-twitter.png"
+                alt="twitter-icon"
+              />
+            </a>
+          </li>
+          <li class="footer__contact-item">
+            <a class="footer__contact-link" href="#">
+              <img
+                class="footer__contact-icon"
+                src="assets/contact-icons/ico-linkedin.png"
+                alt="linkedin-icon"
+              />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
