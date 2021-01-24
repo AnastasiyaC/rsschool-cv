@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Calculator</title>
+</head>
+<body>
+    <header>
+        <h1 class="visually-hidden">Calculator</h1>
+    </header>
+
+    <main>
+        <section class="container">
+            <form class="calculator">
+                <div class="calculator__display">
+                    <input type="text" class="calculator__display-input display display-previous"  value="0" placeholder="0" readonly="readonly">
+                    <input type="text" class="calculator__display-input display display-current" value="0" placeholder="0" readonly="readonly">
+                </div>
+                <ul class="calculator__buttons buttons">
+                    <li class="buttons__item">
+                        <button class="buttons__button backspace buttons__button_color-clear">&larr;</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button clear buttons__button_color-clear">C/CE</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button operation buttons__button_color-operation" value="*">×</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button operation buttons__button_color-operation" value="/">÷</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button number buttons__button_color-number" value="7">7</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button number buttons__button_color-number" value="8">8</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button number buttons__button_color-number" value="9">9</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button operation buttons__button_color-operation" value="-">-</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button number buttons__button_color-number" value="4">4</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button number buttons__button_color-number" value="5">5</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button number buttons__button_color-number" value="6">6</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button operation buttons__button_color-operation" value="+">&plus;</button>
+                    </li> 
+                    <li class="buttons__item">
+                        <button class="buttons__button number buttons__button_color-number" value="1">1</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button number buttons__button_color-number" value="2">2</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button number buttons__button_color-number" value="3">3</button>
+                    </li>
+                    <li class="buttons__item buttons__item_big-grid-vertical">
+                        <button class="buttons__button result buttons__button_color-result" value="=">=</button>
+                    </li>
+                    <li class="buttons__item buttons__item_big-grid-horizontal">
+                        <button class="buttons__button number buttons__button_color-number" value="0">0</button>
+                    </li>
+                    <li class="buttons__item">
+                        <button class="buttons__button number buttons__button_color-decimal" value=".">.</button>
+                    </li>
+                </ul>        
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
