@@ -90,4 +90,3 @@ backspaceBtn.addEventListener('click', (e) => {
         displayCurrent.value = currentValue;
         console.log(currentValue);
 })
-
