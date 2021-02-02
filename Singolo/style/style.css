@@ -5,8 +5,6 @@
 body {
   margin: 0;
   padding: 0;
-  /* height: 100%;
-  width: 100%; */
   font-family: Lato;
 }
 
@@ -176,7 +174,7 @@ body {
 }
 
 .navigation__link:hover,
-.active,
+.link--active,
 .scrolled {
   color: #f06c64;
 }
@@ -290,6 +288,10 @@ html {
     display: none;
   }
 }
+
+/* @media screen and (max-height: 480px) {
+
+} */
 
 /* SLIDER SECTION */
 .slider {
@@ -418,6 +420,11 @@ html {
   transform: translate(-50%, -50%);
 }
 
+/* HIDE PHONE DISPLAY */
+.phone-display-hiden .phone-display {
+  display: none;
+}
+
 .phone-vertical .phone-button {
   height: 9%;
   width: 19%;
@@ -491,6 +498,10 @@ button.phone-button:hover {
 button.phone-button:active {
   border: 2px solid rgba(58, 56, 56, 0.2);
 }
+
+/* .phone-display-hiden button.phone-button:focus {
+  border: 2px solid rgba(58, 56, 56, 0.2);
+} */
 
 .second-slide {
   display: none;
