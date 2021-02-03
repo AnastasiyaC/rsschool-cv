@@ -1,0 +1,86 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    
+  }
+
+  .visually-hidden {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+  }
+  
+  .page {
+    height: 100vh;
+    width: 100%;
+    background: url("../assets/images/background.jpg"), no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .keyboard {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media screen and (max-width: 1300px) {
+      .keyboard {
+          width: 80%;
+      }
+  }
+
+  /* @media screen and (max-width: 980px) {
+    .keyboard {
+        width: 50%;
+        flex-wrap: wrap;
+    }
+}  */
+  
+  .keyboard__key {
+    height: 90px;
+    width: 90px;
+    border-radius: 14%;
+    background-color: rgba(0, 0, 0, 0.8);
+    outline: none;
+    border: 2px solid rgba(0, 0, 0, 1);
+    box-shadow: 3px 3px 5px 2px rgba(67, 67, 68, 0.4);
+    cursor: pointer;
+    transition: all 0.2s linear;
+  }
+
+  @media screen and (max-width: 1120px) {
+    .keyboard__key {
+        height: 80px;
+        width: 80px;
+    }
+  }
+
+  .keyboard__key:hover {
+    border: 1px solid rgb(187, 187, 187);
+    box-shadow: 3px 3px 5px 2px rgba(187, 187, 187, 0.4);
+  }
+
+  .key__title,
+  .key__description {
+    color: white;
+    text-transform: uppercase;
+  }
+
+  .key__title {
+    font-size: 30px;
+  }
+
+  .key__description {
+    font-size: 12px;
+    margin-top: 10%;
+  }
+  
