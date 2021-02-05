@@ -1,10 +1,19 @@
-const keyBoard = document.querySelector('.keyboard');
+// const keyBoard = document.querySelector('.keyboard');
 
-keyBoard.addEventListener('click', (e) => {
-    const clickedElement = e.target;
+// document.body.addEventListener('click', (e) => {
+//     const clickedElement = e.target;
 
-    if(clickedElement.classList.contains('key')) {
-        console.log('hello');
-        clickedElement.childNodes.querySelector('.key__audio').play();
-    }
+//     if(clickedElement.classList.contains('keyboard__key')) {
+//         console.log('hello');
+//         clickedElement.querySelector('.key__audio').play();
+//     }
+// });
+
+
+const keys = document.querySelectorAll('.keyboard__key');
+
+keys.forEach(key => {
+    key.addEventListener('click', () => {
+        key.querySelector('.key__audio').play();
+    })
 });

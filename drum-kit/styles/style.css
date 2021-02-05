@@ -1,86 +1,115 @@
 * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    margin: 0;
-    padding: 0;
-    
-  }
+  box-sizing: border-box;
+}
 
-  .visually-hidden {
-    position: absolute;
-    clip: rect(0 0 0 0);
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-  }
-  
-  .page {
-    height: 100vh;
-    width: 100%;
-    background: url("../assets/images/background.jpg"), no-repeat;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+.page {
+  height: 100vh;
+  width: 100%;
+  background: url("../assets/images/background.jpg"), no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.keyboard {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1300px) {
   .keyboard {
-    width: 70%;
-    display: flex;
-    justify-content: space-between;
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .keyboard {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 840px) {
+  .keyboard {
+    width: 90%;
   }
 
-  @media screen and (max-width: 1300px) {
-      .keyboard {
-          width: 80%;
-      }
-  }
+}
 
-  /* @media screen and (max-width: 980px) {
-    .keyboard {
-        width: 50%;
-        flex-wrap: wrap;
-    }
-}  */
-  
+@media screen and (max-width: 740px) {
+  .keyboard {
+    width: 50%;
+    flex-wrap: wrap;
+  }
+}
+
+.keyboard__key {
+  height: 90px;
+  width: 90px;
+  border-radius: 14%;
+  background-color: rgba(0, 0, 0, 0.8);
+  outline: none;
+  border: 2px solid rgba(0, 0, 0, 1);
+  box-shadow: 3px 3px 5px 2px rgba(67, 67, 68, 0.4);
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+@media screen and (max-width: 1120px) {
   .keyboard__key {
-    height: 90px;
-    width: 90px;
-    border-radius: 14%;
-    background-color: rgba(0, 0, 0, 0.8);
-    outline: none;
-    border: 2px solid rgba(0, 0, 0, 1);
-    box-shadow: 3px 3px 5px 2px rgba(67, 67, 68, 0.4);
-    cursor: pointer;
-    transition: all 0.2s linear;
+    height: 80px;
+    width: 80px;
   }
+}
 
-  @media screen and (max-width: 1120px) {
-    .keyboard__key {
-        height: 80px;
-        width: 80px;
-    }
+@media screen and (max-width: 840px) {
+  .keyboard__key {
+    height: 70px;
+    width: 70px;
   }
+}
 
-  .keyboard__key:hover {
-    border: 1px solid rgb(187, 187, 187);
-    box-shadow: 3px 3px 5px 2px rgba(187, 187, 187, 0.4);
-  }
+.keyboard__key:hover {
+  border: 1px solid rgb(187, 187, 187);
+  box-shadow: 3px 3px 5px 2px rgba(187, 187, 187, 0.4);
+}
 
-  .key__title,
-  .key__description {
-    color: white;
-    text-transform: uppercase;
-  }
+.key__title,
+.key__description {
+  color: white;
+  text-transform: uppercase;
+}
 
+.key__title {
+  font-size: 30px;
+}
+
+.key__description {
+  font-size: 12px;
+  margin-top: 10%;
+}
+
+@media screen and (max-width: 840px) {
   .key__title {
-    font-size: 30px;
+    font-size: 26px;
   }
 
   .key__description {
-    font-size: 12px;
-    margin-top: 10%;
+    font-size: 10px;
   }
-  
+}
+
