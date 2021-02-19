@@ -44,14 +44,31 @@ function removeToggle() {
 
 // inputForm.forEach(input => input.addEventListener('mousemove', filter));
 
-function imageUpdate() {
-    const suffix = this.dataset.sizing || '';
 
-    document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
-};
+// function applyFilter() {
+//     let computedFilter = '';
 
+//     inputForm.forEach( (input) => {
+//         // computedFilter += `${input.getAttribute('data-name')}(${input.value}${input.getAttribute('data-sizing')})`;
+//         computedFilter += input.getAttribute('data-name') + '(' + input.value + input.getAttribute('data-sizing') + ')';
+//     });
 
+//     image.style.filter = computedFilter;
+// }
 
+// function imageUpdate() {
+//     const suffix = this.dataset.sizing || '';
+
+//     document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+// };
+
+// function imageChange() {
+//     return (() => {
+//         document.documentElement.style.setProperty(`--${this.name}`, this.value + this.dataset.sizing);
+//     });
+// };
+
+// let change = imageChange();
 
 
 const editorForm = document.querySelector('.modification__form');
@@ -59,10 +76,12 @@ const editorForm = document.querySelector('.modification__form');
 editorForm.addEventListener('change', (e) => {
     if(e.target.classList.contains('input-range')) {
         console.log(e.target.value);
+        // change();
         // imageUpdate();
-        document.documentElement.style.setProperty(`--${e.target.name}`, e.target.value + e.target.dataset.sizing);
+        // document.documentElement.style.setProperty(`--${e.target.name}`, e.target.value + e.target.dataset.sizing);
     } else if(e.target.classList.contains('input-color')) {
         console.log(e.target.value);
+        // change();
         // imageUpdate();
         document.documentElement.style.setProperty(`--${e.target.name}`, e.target.value);
     }
@@ -71,48 +90,18 @@ editorForm.addEventListener('change', (e) => {
 editorForm.addEventListener('mousemove', (e) => {
     if(e.target.classList.contains('input-range')) {
         console.log(e.target.value);
+        // change();
         // imageUpdate();
-        document.documentElement.style.setProperty(`--${e.target.name}`, e.target.value + e.target.dataset.sizing);
+        // document.documentElement.style.setProperty(`--${e.target.name}`, e.target.value + e.target.dataset.sizing);
     } else if(e.target.classList.contains('input-color')) {
         console.log(e.target.value);
+        // change();
         // imageUpdate();
         document.documentElement.style.setProperty(`--${e.target.name}`, e.target.value);
     }
 });
 
 
-
-
-// TERRIBLE CODE STARTS HERE 
-// const inputColor = document.querySelector('.input-color');
-// const background = document.querySelector('.photo-area');
-
-// const form = document.querySelectorAll('.modification__form');
-
-// inputColor.addEventListener('change', (e) => {
-//     console.log(e.target.value);
-//     background.style.setProperty('--background-color', e.target.value);
-//     background.style.backgroundColor = e.target.value;
-// });
-
-
-
-// CONTRAST
-
-// const inputContrast = document.querySelector('.input-contrast');
-
-// inputContrast.addEventListener('change', (e) => {
-//     console.log(e.target);
-//     console.log(inputContrast.name);
-
-//     image.style.setProperty('--' + inputContrast.name, e.target.value + inputContrast.dataset.sizing);
-// });
-
-// inputContrast.addEventListener('mousemove', (e) => {
-//     console.log(e.target.value); 
-
-//     image.style.setProperty('--' + inputContrast.name, e.target.value + inputContrast.dataset.sizing);
-// });
 
 
 
