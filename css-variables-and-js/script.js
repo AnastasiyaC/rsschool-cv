@@ -1,104 +1,80 @@
-const editorArea = document.querySelector('.editor-area'),
-    title = document.querySelector('.editor-area__title'),
-    titleText = title.textContent,
-    image = document.querySelector('.photo-area__image'),
-    inputForm = document.querySelectorAll('.modification__input');
+const editorArea = document.querySelector('.editor-area');
+const title = document.querySelector('.editor-area__title');
+const titleText = title.textContent;
+const image = document.querySelector('.photo-area__image');
+const editorForm = document.querySelector('.modification__form');
+
+const CHANGE_TYPE_TO_INPUTS_MAP = {
+    background: '<input class="modification__input input-color" type="color" name="background" value="#afafaf" data-name="background">',
+    contrast: ' <input class="modification__input input-range" type="range" min="30" max="200" value="100" name="contrast" step="1" data-suffix="%" data-name="contrast">',
+    brightness: '<input class="modification__input input-range" type="range" min="20" max="200" value="100" name="brightness" step="1" data-suffix="%" data-name="brightness">',
+    tint: '<input class="modification__input input-range" type="range" min="0" max="360" value="0" name="tint" step="1" data-suffix="deg" data-name="tint">',
+    blur: '<input class="modification__input input-range" type="range" min="0" max="10" value="0" name="blur" step="0.1" data-suffix="px" data-name="blur">',
+    suturation: '<input class="modification__input input-range" type="range" min="0" max="200" value="100" name="suturation" step="1" data-suffix="%" data-name="saturate">',
+    grayscale: '<input class="modification__input input-range" type="range" min="0" max="100" value="0" name="grayscale" step="1" data-suffix="%" data-name="grayscale">',
+    sepia: '<input class="modification__input input-range" type="range" min="0" max="100" value="0" name="sepia" step="1" data-suffix="%" data-name="sepia">',
+}
+
+const defaultImage = {
+    propName: null,
+    propValue: null,
+};
+
+let {propName, propValue} = defaultImage;
 
 editorArea.addEventListener('click', (e) => {
     const clickedElement = e.target;
+    const clickedButton = clickedElement.closest('.filter__button');
 
-    if(clickedElement.closest('.filter__button')) {
-        console.log('hello');
-        title.textContent = clickedElement.closest('.filter__button').textContent;
+    if(clickedButton) {
+        const button = clickedButton;
+        const changeType = button.dataset.changeType;
+
+        editorForm.innerHTML = CHANGE_TYPE_TO_INPUTS_MAP[changeType];
+        title.textContent = clickedButton.textContent;
         editorArea.classList.toggle('form-opened');
+        defaultImage.propName = `--${changeType}`;
+        defaultImage.propValue = editorForm[changeType].value + (editorForm[changeType].dataset.suffix || '');
     }
     else if(clickedElement.classList.contains('modification__exit-button')) {
+        console.log(defaultImage);
+        // document.documentElement[defaultImage.propName]= defaultImage;
         removeToggle();
+
     }
     else if(clickedElement.classList.contains('modification__submit-button')) {
         removeToggle();
     }
 });
 
-
 function removeToggle() {
     editorArea.classList.remove('form-opened');
     title.textContent = titleText;
 };
 
-// function confirmFilter() {
-//     let addedFilter = '';
-
-
-//     return function makeChanges() {
-//         const suffix = this.dataset.sizing || '';
-
-//         document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
-//     };
-
-// };
-
-// let filter = confirmFilter();
-
-// inputForm.forEach(input => input.addEventListener('change', filter));
-
-// inputForm.forEach(input => input.addEventListener('mousemove', filter));
-
-
-// function applyFilter() {
-//     let computedFilter = '';
-
-//     inputForm.forEach( (input) => {
-//         // computedFilter += `${input.getAttribute('data-name')}(${input.value}${input.getAttribute('data-sizing')})`;
-//         computedFilter += input.getAttribute('data-name') + '(' + input.value + input.getAttribute('data-sizing') + ')';
-//     });
-
-//     image.style.filter = computedFilter;
-// }
-
-// function imageUpdate() {
-//     const suffix = this.dataset.sizing || '';
-
-//     document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
-// };
-
-// function imageChange() {
-//     return (() => {
-//         document.documentElement.style.setProperty(`--${this.name}`, this.value + this.dataset.sizing);
-//     });
-// };
-
-// let change = imageChange();
-
-
-const editorForm = document.querySelector('.modification__form');
+function imageUpdate(propName, propValue, suffix) {
+    document.documentElement.style.setProperty(`--${propName}`, propValue + suffix);
+};
 
 editorForm.addEventListener('change', (e) => {
-    if(e.target.classList.contains('input-range')) {
-        console.log(e.target.value);
-        // change();
-        // imageUpdate();
-        // document.documentElement.style.setProperty(`--${e.target.name}`, e.target.value + e.target.dataset.sizing);
-    } else if(e.target.classList.contains('input-color')) {
-        console.log(e.target.value);
-        // change();
-        // imageUpdate();
-        document.documentElement.style.setProperty(`--${e.target.name}`, e.target.value);
-    }
+    const propName = e.target.dataset.name;
+    const propValue = e.target.value;
+    const suffix = e.target.dataset.suffix || '';
+
+    if(e.target.classList.contains('modification__input')) {
+        imageUpdate(propName, propValue, suffix);
+    };
 });
 
 editorForm.addEventListener('mousemove', (e) => {
-    if(e.target.classList.contains('input-range')) {
-        console.log(e.target.value);
-        // change();
-        // imageUpdate();
-        // document.documentElement.style.setProperty(`--${e.target.name}`, e.target.value + e.target.dataset.sizing);
-    } else if(e.target.classList.contains('input-color')) {
-        console.log(e.target.value);
-        // change();
-        // imageUpdate();
-        document.documentElement.style.setProperty(`--${e.target.name}`, e.target.value);
-    }
+    const propName = e.target.dataset.name;
+    const propValue = e.target.value;
+    const suffix = e.target.dataset.suffix || '';
+
+    if(e.target.classList.contains('modification__input')) {
+        imageUpdate(propName, propValue, suffix);
+    };
+
 });
 
 

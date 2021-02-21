@@ -25,54 +25,45 @@
                     <h2 class="editor-area__title title">Editor</h2>
                     <hr>
                     <div class="editor-area__filter filter">
-                        <button class="filter__button button">
+                        <button class="filter__button button" data-change-type="background">
                             <img class="button__icon" src="assets/icons/icon-background.jpg" height="50px" width="50px" alt="icon-background">
                             <div class="button__discription">background</div>
                         </button>
-                        <button class="filter__button button">
+                        <button class="filter__button button" data-change-type="resize">
                             <img class="button__icon" src="assets/icons/icon-resize.jpg" height="50px" width="50px" alt="icon-resize">
                             <div class="button__discription">resize</div>
                         </button>
-                        <button class="filter__button button">
+                        <button class="filter__button button" data-change-type="contrast">
                             <img class="button__icon" src="assets/icons/icon-contrast.jpg" height="50px" width="50px" alt="icon-contrast">
                             <div class="button__discription">contrast</div>
                         </button>
-                        <button class="filter__button button">
+                        <button class="filter__button button" data-change-type="brightness">
                             <img class="button__icon" src="assets/icons/icon-brightness.jpg" height="50px" width="50px" alt="icon-brightness">
                             <div class="button__discription">brightness</div>
                         </button>
-                        <button class="filter__button button">
+                        <button class="filter__button button" data-change-type="tint">
                             <img class="button__icon" src="assets/icons/icon-tint.jpg" height="50px" width="50px" alt="icon-tint">
                             <div class="button__discription">tint</div>
                         </button>
-                        <button class="filter__button button">
+                        <button class="filter__button button" data-change-type="blur">
                             <img class="button__icon" src="assets/icons/icon-blur.png" height="50px" width="50px" alt="icon-blur">
                             <div class="button__discription">blur</div>
                         </button>
-                        <button class="filter__button button">
+                        <button class="filter__button button" data-change-type="suturation">
                             <img class="button__icon" src="assets/icons/icon-suturation.jpg" height="50px" width="50px" alt="icon-suturation">
                             <div class="button__discription">suturation</div>
                         </button>
-                        <button class="filter__button button">
-                            <img class="button__icon" src="assets/icons/icon-greyscale.jpg" height="50px" width="50px" alt="icon-grayscale">
+                        <button class="filter__button button" data-change-type="grayscale">
+                            <img class="button__icon" src="assets/icons/icon-grayscale.jpg" height="50px" width="50px" alt="icon-grayscale">
                             <div class="button__discription">greyscale</div>
                         </button>
-                        <button class="filter__button button">
+                        <button class="filter__button button" data-change-type="sepia">
                             <img class="button__icon" src="assets/icons/icon-sepia.jpg" height="50px" width="50px" alt="icon-sepia">
                             <div class="button__discription">sepia</div>
                         </button>
                     </div>
                     <div class="editor-area__modification modification">
                         <form class="modification__form">
-                            <input class="modification__input input-color" type="color" name="background" value="#afafaf">
-                            <input class="modification__input input-range input-contrast" type="range" min="30" max="200" value="100" name="contrast" step="1" data-sizing="%" data-name="contrast">
-                            <input class="modification__input input-range input-brightness" type="range" min="20" max="200" value="100" name="brightness" step="1" data-sizing="%" data-name="brightness">
-                            <input class="modification__input input-range input-tint" type="range" min="0" max="360" value="0" name="tint" step="1" data-sizing="deg" data-name="hue-rotate">
-                            <input class="modification__input input-range input-blur" type="range" min="0" max="10" value="0" name="blur" step="0.1" data-sizing="px" data-name="blur">
-                            <input class="modification__input input-range input-suturation" type="range" min="0" max="200" value="100" name="suturation" step="1" data-sizing="%" data-name="saturate">
-                            <input class="modification__input input-range input-grayscale" type="range" min="0" max="100" value="0" name="grayscale" step="1" data-sizing="%" data-name="grayscale">
-                            <input class="modification__input input-range input-sepia" type="range" min="0" max="100" value="0" name="sepia" step="1" data-sizing="%" data-name="sepia">
-                            
                         </form>
                         <div class="modification__buttons">
                             <button class="modification__exit-button button">exit</button>

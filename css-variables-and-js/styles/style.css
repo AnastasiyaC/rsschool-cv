@@ -7,9 +7,6 @@
   --contrast: 100%;
   --grayscale: 0%;
   --tint: 0deg;
-  /* inver ? */
-  --invert: 0%;
-  --opacity: 100%;
   --suturation: 100%;
   --sepia: 0%;
 }
@@ -60,15 +57,6 @@ body {
   filter: contrast(var(--contrast)) brightness(var(--brightness))
     hue-rotate(var(--tint)) blur(var(--blur)) saturate(var(--suturation))
     grayscale(var(--grayscale)) sepia(var(--sepia));
-  /* filter: blur(var(--blur));
-  filter: brightness(var(--brightness));
-  filter: contrast(var(--contrast));
-  filter: grayscale(var(--grayscale));
-  filter: hue-rotate(var(--tint));
-  filter: invert(var(--invert));
-  filter: opacity(var(--opacity));
-  filter: saturate(var(--suturation));
-  filter: sepia(var(--sepia)); */
 }
 
 .editor-area {
@@ -160,7 +148,7 @@ hr {
 
 .editor-area__modification {
   width: 100%;
-  transform: translateY(300%);
+  transform: translateY(700%);
   transition: all 0.3s ease-out;
 }
 
@@ -170,15 +158,15 @@ hr {
 
 .modification__form {
   width: 100%;
-  margin-top: 20px;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.modification__input + .modification__input {
+/* .modification__input + .modification__input {
   margin-top: 30px;
-}
+} */
 
 .input-color {
   appearance: none;
