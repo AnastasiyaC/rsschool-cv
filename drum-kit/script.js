@@ -1,19 +1,29 @@
-// const keyBoard = document.querySelector('.keyboard');
+const keyBoard = document.querySelector('.keyboard');
+const audio = document.querySelectorAll('.key__audio');
 
-// document.body.addEventListener('click', (e) => {
-//     const clickedElement = e.target;
+keyBoard.addEventListener('click', (e) => {
+    const clickedElement = e.target;
+    const button = clickedElement.closest('.keyboard__key');
 
-//     if(clickedElement.classList.contains('keyboard__key')) {
-//         console.log('hello');
-//         clickedElement.querySelector('.key__audio').play();
-//     }
-// });
-
-
-const keys = document.querySelectorAll('.keyboard__key');
-
-keys.forEach(key => {
-    key.addEventListener('click', () => {
-        key.querySelector('.key__audio').play();
-    })
+    if(button) {
+        const buttonName = button.dataset.name;
+        playAudio(buttonName);
+    }
 });
+
+function playAudio(buttonName) {
+    audio.forEach(audioSound => {
+        if(audioSound.dataset.name == buttonName) {
+            audioSound.play();
+        };
+    })
+};
+
+document.addEventListener('keydown', (e) => {
+    const buttonName = e.code.slice(3).toLocaleLowerCase();
+
+    if(e.code) {
+       playAudio(buttonName);
+    }
+});
+

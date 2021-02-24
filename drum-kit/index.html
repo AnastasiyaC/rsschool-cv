@@ -4,80 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animal sounds</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
-    <header>
+    <header class="header">
         <h1 class="visually-hidden">Animal sounds.</h1>
     </header>
     <main>
         <div class="page">
             <div class="keyboard">
-                <button class="keyboard__key key key--margin-left">
+                <button class="keyboard__key key key--row_first" data-name="a">
                         <div class="key__title">a</div>
                         <div class="key__description">antelope</div>
-                        <audio class="key__audio" src="assets/audio/antelope.mp3" type="audio/mpeg"></audio>
+                        <audio class="key__audio" src="assets/audio/antelope.mp3" type="audio/mpeg" data-name="a"></audio>
                 </button>
-                <button class="keyboard__key key">
-                    <div class="key__content">
+                <button class="keyboard__key key key--row_first" data-name="s">
                         <div class="key__title">s</div>
                         <div class="key__description">squirrel</div>
-                        <audio class="key__audio" src="assets/audio/squirrel.mp3" type="audio/mpeg"></audio>
-                    </div>
+                        <audio class="key__audio" src="assets/audio/squirrel.mp3" type="audio/mpeg" data-name="s"></audio>
                 </button>
-                <button class="keyboard__key key">
-                    <div class="key__content">
+                <button class="keyboard__key key key--row_first" data-name="d">
                         <div class="key__title">d</div>
                         <div class="key__description">donkey</div>
-                        <audio class="key__audio" src="assets/audio/donkey.mp3" type="audio/mpeg"></audio>
-                    </div>
+                        <audio class="key__audio" src="assets/audio/donkey.mp3" type="audio/mpeg" data-name="d"></audio>
                 </button>
-                <button class="keyboard__key key key--margin-right">
-                    <div class="key__content">
+                <button class="keyboard__key key key--row_first" data-name="f">
                         <div class="key__title">f</div>
                         <div class="key__description">fox</div>
-                        <audio class="key__audio" src="assets/audio/fox.mp3" type="audio/mpeg"></audio>
-                    </div>
+                        <audio class="key__audio" src="assets/audio/fox.mp3" type="audio/mpeg" data-name="f"></audio>
                 </button>
-                <button class="keyboard__key key">
-                    <div class="key__content">
+                <button class="keyboard__key key key--row_first" data-name="g">
                         <div class="key__title">g</div>
                         <div class="key__description">giraffe</div>
-                        <audio class="key__audio" src="assets/audio/giraffe.mp3" type="audio/mpeg"></audio>
-                    </div>
+                        <audio class="key__audio" src="assets/audio/giraffe.mp3" type="audio/mpeg" data-name="g"></audio>
                 </button>
-                <button class="keyboard__key key">
-                    <div class="key__content">
+                <button class="keyboard__key key key--row_second" data-name="h">
                         <div class="key__title">h</div>
                         <div class="key__description">horse</div>
-                        <audio class="key__audio" src="assets/audio/horse.mp3" type="audio/mpeg"></audio>
-                    </div>
+                        <audio class="key__audio" src="assets/audio/horse.mp3" type="audio/mpeg" data-name="h"></audio>
                 </button>
-                <button class="keyboard__key key">
-                    <div class="key__content">
+                <button class="keyboard__key key key--row_second" data-name="j">
                         <div class="key__title">j</div>
                         <div class="key__description">jaguar</div>
-                        <audio class="key__audio" src="assets/audio/jaguar.mp3" type="audio/mpeg"></audio>
-                    </div>
+                        <audio class="key__audio" src="assets/audio/jaguar.mp3" type="audio/mpeg" data-name="j"></audio>
                 </button>
-                <button class="keyboard__key key">
-                    <div class="key__content">
+                <button class="keyboard__key key key--row_second" data-name="k">
                         <div class="key__title">k</div>
                         <div class="key__description">kangaroo</div>
-                        <audio class="key__audio" src="assets/audio/kangaroo.mp3" type="audio/mpeg"></audio>
-                    </div>
+                        <audio class="key__audio" src="assets/audio/kangaroo.mp3" type="audio/mpeg" data-name="k"></audio>
                 </button>
-                <button class="keyboard__key key">
-                    <div class="key__content">
+                <button class="keyboard__key key key--row_second" data-name="l">
                         <div class="key__title">l</div>
                         <div class="key__description">lion</div>
-                        <audio class="key__audio" src="assets/audio/lion.mp3" type="audio/mpeg"></audio>
-                    </div>
+                        <audio class="key__audio" src="assets/audio/lion.mp3" type="audio/mpeg" data-name="l"></audio>
                 </button>
             </div>
         </div>
     </main>
     <footer></footer>
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
 </body>
 </html>
