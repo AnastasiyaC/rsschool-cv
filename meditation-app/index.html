@@ -8,58 +8,72 @@
 </head>
 <body>
     <header class="header">
-        <h1 class="visually-hidden"></h1>
-        <nav class="header__navigation navigation">
-            <ul class="navigation__list list">
-                <li class="navigation__item">
-                    <a href="#" class="navigation__button">
-                        <img class="navigation__image" src="assets/images/water-icon.jpg" alt="water-icon">
-                    </a>
-                </li>
-                <li class="navigation__item">
-                    <a href="#" class="navigation__button">
-                        <img class="navigation__image" src="assets/images/ground-icon.jpg" alt="ground-icon">
-                    </a>
-                </li>
-                <li class="navigation__item">
-                    <a href="#" class="navigation__button">
-                        <img class="navigation__image" src="assets/images/air-icon.jpg" alt="air-icon">
-                    </a>
-                </li>
-                <li class="navigation__item">
-                    <a href="#" class="navigation__button">
-                        <img class="navigation__image" src="assets/images/fire-icon.jpg" alt="fire-icon">
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <h1 class="visually-hidden"></h1> 
     </header>
     <main>
         <div class="page">
-            <div class="block">
-                <img class="block__image" src="assets/images/water-block.jpg" alt="water">
+            <div class="video-block">
+                <video class="video" controls poster="assets/images/poster.png">
+                    <source class="video-item" src="assets/videos/violet&yellow_ink.mp4" type="video/mp4">
+                    <source src="assets/videos/blue&orange_ink.mp4" type="video/mp4">
+                    <source src="assets/videos/green&blue&purple_ink.mp4" type="video/mp4">
+                    <source src="assets/videos/green&blue_ink.mp4" type="video/mp4">
+                    
+                </video>
             </div>
-            <div class="block">
-                <img class="block__image" src="assets/images/ground-block.jpg" alt="ground">
-            </div>
-            <div class="block">
-                <img class="block__image" src="assets/images/air-block.jpg" alt="air">
-            </div>
-            <div class="block">
-                <img class="block__image" src="assets/images/fire-block.jpg" alt="fire">
-            </div>
+            <nav class="navigation">
+                <ul class="navigation__list list">
+                    <li class="navigation__item">
+                        <a href="#" class="navigation__button">
+                            <img class="navigation__image" src="assets/images/violet&orange_icon.png" alt="water-icon">
+                        </a>
+                    </li>
+                    <li class="navigation__item">
+                        <a href="#" class="navigation__button">
+                            <img class="navigation__image" src="assets/images/green&violet_icon.png" alt="ground-icon">
+                        </a>
+                    </li>
+                    <li class="navigation__item">
+                        <a href="#" class="navigation__button">
+                            <img class="navigation__image" src="assets/images/blue&orange_icon.png" alt="air-icon">
+                        </a>
+                    </li>
+                    <li class="navigation__item">
+                        <a href="#" class="navigation__button">
+                            <img class="navigation__image" src="assets/images/green&blue_icon.png" alt="fire-icon">
+                        </a>
+                    </li>
+                    <!-- <li class="navigation__item">
+                        <a href="#" class="navigation__button">
+                            <img class="navigation__image" src="assets/images/red&green_icon.png" alt="fire-icon">
+                        </a>
+                    </li> -->
+                    <li class="navigation__item">
+                        <a href="#" class="navigation__button">
+                            <img class="navigation__image" src="assets/images/blue&red_icon.png" alt="fire-icon">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="timer-controls">
+                <button class="button-play-stop button">
+                    <div class="play button--active">
+                    </div>
+                    <div class="pause"></div>
+                </button>
+                <button class="timer__button button button__time-1">1 minute</button>
+                <button class="timer__button button button__time-2">3 minutes</button>
+                <button class="timer__button button button__time-3">5 minutes</button>
+            </div> 
+            <!-- <div class="fake">
+                Явление цветового видения музыки обнаруживали у себя некоторые выдающиеся музыкальные деятели. Гениальному русскому композитору Н.А. Римскому-Корсакову, известным советским музыкантам Б.В. Асафьеву, С.С. Скребкову, А.А.Кенелю и др. все тональности мажора и минора виделись окрашенными в определённые цвета. Австрийский композитор XX в. А. Шёнберг сопоставлял краски с музыкальными тембрами инструментов симфонического оркестра. Каждый из этих выдающихся мастеров видел свои цвета в звуках музыки.
+            </div> -->
+         
         </div>
-        <button class="button-play-stop button">
-            <div class="play button--active">
-            </div>
-            <div class="pause"></div>
-        </button>
-        <div class="timer-controls">
-            <button class="timer__button button button__time-1">1 minute</button>
-            <button class="timer__button button button__time-2">3 minutes</button>
-            <button class="timer__button button button__time-3">5 minutes</button>
-        </div>
-    </main>
+      
+
+
+    </main> 
     <footer></footer>
     <script src="script.js"></script>
 </body>
