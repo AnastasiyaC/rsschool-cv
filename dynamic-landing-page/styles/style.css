@@ -1,0 +1,89 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url(../assets/images/morning.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: rgb(255, 255, 255);
+}
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+.page {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.daytime__time,
+.daytime__date {
+  margin: 0;
+}
+
+.greet-form {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 80%;
+  transform: translateX(-50%);
+  font-size: 64px;
+  text-shadow: 2px 2px 5px black;
+  font-family: 'Do Hyeon', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form__input,
+.form__textarea {
+  padding: 0;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 1);
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 56px;
+  text-shadow: 2px 2px 5px black;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.7);
+  border: none;
+}
+
+.label-plan--margin_top {
+  margin-top: 24px;
+}
+
+.form__textarea {
+  resize: none;
+  overflow: hidden;
+}
+
+.daytime {
+  font-family: "Roboto Condensed", sans-serif;
+  color: white;
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  text-shadow: 1px 1px 3px black;
+}
+
+.daytime__time {
+  font-size: 32px;
+}
+
+.time__number {
+  font-size: 46px;
+}
+
+.daytime__date {
+  font-size: 28px;
+}
