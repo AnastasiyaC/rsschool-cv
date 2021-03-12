@@ -6,7 +6,23 @@ const month = year[dateToday.getMonth()];
 const dateNumber = dateToday.getDate();
 const greetForm = document.forms.greet;
 
-greetForm.addEventListener('keypress', (e) => {
+// greetForm.addEventListener('keypress', (e) => {
+//   if (e.target.name == 'name') {
+//     localStorage.setItem('name', e.target.value);
+//     } else if (e.target.name == 'plan') {
+//       localStorage.setItem('plan', e.target.value);
+//     };
+// });
+
+greetForm.addEventListener('keydown', (e) => {
+  if (e.code == 'Enter') {
+    // e.preventDefault();
+    e.target.blur();
+  }else 
+    return;
+});
+
+greetForm.addEventListener('change', (e) => {
   if (e.target.name == 'name') {
     localStorage.setItem('name', e.target.value);
     } else if (e.target.name == 'plan') {
@@ -14,13 +30,13 @@ greetForm.addEventListener('keypress', (e) => {
     };
 });
 
-greetForm.addEventListener('focusout', (e) => {
-  if (e.target.name == 'name') {
-    localStorage.setItem('name', e.target.value);
-    } else if (e.target.name == 'plan') {
-      localStorage.setItem('plan', e.target.value);
-    };
-});
+// greetForm.addEventListener('focusout', (e) => {
+//   if (e.target.name == 'name') {
+//     localStorage.setItem('name', e.target.value);
+//     } else if (e.target.name == 'plan') {
+//       localStorage.setItem('plan', e.target.value);
+//     };
+// });
 
 document.querySelector('.date__day-of-week').innerHTML = weekDay;
 document.querySelector('.date__date').innerHTML = dateNumber;
@@ -83,7 +99,7 @@ function showBackground() {
 }
 
 function changeBackground(part) {
-  const labelName = document.querySelector('.label-name');
+  const labelName = document.querySelector('.label-name');  
 
   document.body.style.backgroundImage = part.background;
   labelName.textContent = part.phase;
@@ -97,9 +113,17 @@ function getValue() {
   textarea.value = localStorage.getItem('plan');
 };
 
+// function getValue(formElemName) {
+//   const a = greetForm.elements.formElemName;
+
+//   a.value = localStorage.getItem(formElemName);
+// };
+
 showTime();
 showBackground();
 getValue();
+
+
 
 
 

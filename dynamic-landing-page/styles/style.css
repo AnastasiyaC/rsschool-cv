@@ -38,7 +38,7 @@ body {
   transform: translateX(-50%);
   font-size: 64px;
   text-shadow: 2px 2px 5px black;
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: "Do Hyeon", sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,8 +50,9 @@ body {
   padding: 0;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.2);
+  /* background-color: transparent; */
   color: rgba(255, 255, 255, 1);
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: "Do Hyeon", sans-serif;
   font-size: 56px;
   text-shadow: 2px 2px 5px black;
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.7);
