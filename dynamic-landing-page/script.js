@@ -6,37 +6,18 @@ const month = year[dateToday.getMonth()];
 const dateNumber = dateToday.getDate();
 const greetForm = document.forms.greet;
 
-// greetForm.addEventListener('keypress', (e) => {
-//   if (e.target.name == 'name') {
-//     localStorage.setItem('name', e.target.value);
-//     } else if (e.target.name == 'plan') {
-//       localStorage.setItem('plan', e.target.value);
-//     };
-// });
-
 greetForm.addEventListener('keydown', (e) => {
   if (e.code == 'Enter') {
-    // e.preventDefault();
     e.target.blur();
   }else 
     return;
 });
 
 greetForm.addEventListener('change', (e) => {
-  if (e.target.name == 'name') {
-    localStorage.setItem('name', e.target.value);
-    } else if (e.target.name == 'plan') {
-      localStorage.setItem('plan', e.target.value);
-    };
+  const {name, value} = e.target;
+   
+  localStorage.setItem(name, value);
 });
-
-// greetForm.addEventListener('focusout', (e) => {
-//   if (e.target.name == 'name') {
-//     localStorage.setItem('name', e.target.value);
-//     } else if (e.target.name == 'plan') {
-//       localStorage.setItem('plan', e.target.value);
-//     };
-// });
 
 document.querySelector('.date__day-of-week').innerHTML = weekDay;
 document.querySelector('.date__date').innerHTML = dateNumber;
@@ -80,48 +61,36 @@ function showBackground() {
   const hour = time.getHours();
   
   if(hour >= 0 && hour < 6) {
-    let night = new DayPart('night');
-
-    changeBackground(night);
+    changeBackground('night');
   }else if(hour >= 6 && hour < 12) {
-    let morning = new DayPart('morning');
-
-    changeBackground(morning);
+    changeBackground('morning');
   }else if(hour >= 12 && hour < 18) {
-    let afternoon = new DayPart('afternoon');
-
-    changeBackground(afternoon);
+    changeBackground('afternoon');
   }else {
-    let evening = new DayPart('evening');
+    changeBackground('evening');
+  };
 
-    changeBackground(evening);
-  }
-}
+  setTimeout(showBackground, 1000);
+};
 
 function changeBackground(part) {
   const labelName = document.querySelector('.label-name');  
+  const partObj = new DayPart(part);
 
-  document.body.style.backgroundImage = part.background;
-  labelName.textContent = part.phase;
+  document.body.style.backgroundImage = partObj.background;
+  labelName.textContent = partObj.phase;
 };
 
-function getValue() {
-  let input = greetForm.elements.name;
-  let textarea = greetForm.elements.plan;
+function getValue1(formElemName) {
+  const a = greetForm.elements[formElemName];
 
-  input.value = localStorage.getItem('name');
-  textarea.value = localStorage.getItem('plan');
+  a.value = localStorage.getItem(formElemName);
 };
-
-// function getValue(formElemName) {
-//   const a = greetForm.elements.formElemName;
-
-//   a.value = localStorage.getItem(formElemName);
-// };
 
 showTime();
-showBackground();
-getValue();
+showBackground(); 
+getValue1('name');
+getValue1('plan');
 
 
 

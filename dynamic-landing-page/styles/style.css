@@ -8,6 +8,7 @@ body {
   background-image: url(../assets/images/morning.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   color: rgb(255, 255, 255);
 }
 
@@ -25,18 +26,12 @@ body {
   position: relative;
 }
 
-.daytime__time,
-.daytime__date {
-  margin: 0;
-}
-
 .greet-form {
   position: absolute;
   top: 10%;
   left: 50%;
-  width: 80%;
   transform: translateX(-50%);
-  font-size: 64px;
+  font-size: 68px;
   text-shadow: 2px 2px 5px black;
   font-family: "Do Hyeon", sans-serif;
   display: flex;
@@ -49,14 +44,19 @@ body {
 .form__textarea {
   padding: 0;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.2);
-  /* background-color: transparent; */
+  background-color: transparent;
   color: rgba(255, 255, 255, 1);
   font-family: "Do Hyeon", sans-serif;
-  font-size: 56px;
+  font-size: 64px;
   text-shadow: 2px 2px 5px black;
-  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.7);
   border: none;
+  outline: none;
+}
+
+.form__input:focus,
+.form__textarea:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.7);
 }
 
 .label-plan--margin_top {
@@ -77,6 +77,11 @@ body {
   text-shadow: 1px 1px 3px black;
 }
 
+.daytime__time,
+.daytime__date {
+  margin: 0;
+}
+
 .daytime__time {
   font-size: 32px;
 }
@@ -87,4 +92,78 @@ body {
 
 .daytime__date {
   font-size: 28px;
+}
+
+.date__day-of-week::after {
+  content: ',';
+}
+
+@media screen and (max-width: 1100px) {
+  .greet-form {
+    font-size: 58px;
+  }
+
+  .form__input,
+  .form__textarea {
+    font-size: 54px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .greet-form {
+    font-size: 52px;
+  }
+
+  .form__input,
+  .form__textarea {
+    font-size: 48px;
+  }
+
+  .daytime {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .greet-form {
+    font-size: 46px;
+  }
+
+  .form__input,
+  .form__textarea {
+    font-size: 40px;
+  }
+
+  .daytime {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .greet-form {
+    font-size: 42px;
+  }
+
+  .form__input,
+  .form__textarea {
+    font-size: 38px;
+  }
+
+  .daytime {
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .time__number {
+    font-size: 42px;
+  }
+
+  .date__day-of-week {
+    display: block;
+  }
 }
