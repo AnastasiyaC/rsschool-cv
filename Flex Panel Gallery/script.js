@@ -1,31 +1,36 @@
-const blocks = document.querySelectorAll(".block");
+const generalBlock = document.querySelector('.blocks');
+const blocks = generalBlock.querySelectorAll('.block');
 
-function closeOpens() {
-  const opens = document.querySelectorAll(".block-opened");
+generalBlock.addEventListener('mousemove', (e) => {
+  const blockFocused = e.target.closest('.block');
 
-  if (opens.length > 0) {
-    opens.forEach((openBlock) => {
-      openBlock.classList.remove("block-opened");
+  if(blockFocused.classList.contains('block')) {
+    blocks.forEach(block => block.classList.remove('block--focused'));
+  } 
+  e.target.classList.add('block--focused');
+})
+
+generalBlock.addEventListener('click', (e) => {
+  const blockOpened = e.target.closest('.block');
+
+  if(blockOpened.classList.contains('block')) {
+    blocks.forEach((block) => {
+      block.classList.remove('block--opened');
+      block.classList.add('block--font-size');
     });
   }
-};
-
-function toggleActive(e) {
-    if (e.propertyName.includes('flex')) {
-        this.classList.toggle('opened-active');
-    }
-};
-
-blocks.forEach((block) => {
-  block.addEventListener("click", () => {
-    closeOpens();
-    block.classList.add("block-opened");
-  });
+  e.target.classList.toggle('block--opened');
 });
 
-blocks.forEach((block) =>
-  block.addEventListener("transitionend", toggleActive)
-);
+function addClass() {
+  document.body.classList.add('active');
+};
+
+setTimeout(() => {
+  addClass();
+}, 500);
+
+
 
 
 
