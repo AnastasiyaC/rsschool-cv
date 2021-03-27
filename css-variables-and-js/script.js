@@ -6,6 +6,7 @@ const editorForm = document.querySelector('.modification__form');
 
 const CHANGE_TYPE_TO_INPUTS_MAP = {
     background: '<input class="modification__input input-color" type="color" name="background" value="#afafaf" data-name="background">',
+    resize: '<input class="modification__input input-range input-range--rotate" type="range" min="0" max="80" value="40" name="resize" step="1" data-suffix="px" data-name="resize">',
     contrast: ' <input class="modification__input input-range" type="range" min="30" max="200" value="100" name="contrast" step="1" data-suffix="%" data-name="contrast">',
     brightness: '<input class="modification__input input-range" type="range" min="20" max="200" value="100" name="brightness" step="1" data-suffix="%" data-name="brightness">',
     tint: '<input class="modification__input input-range" type="range" min="0" max="360" value="0" name="tint" step="1" data-suffix="deg" data-name="tint">',
@@ -32,7 +33,7 @@ editorArea.addEventListener('click', (e) => {
 
         editorForm.innerHTML = CHANGE_TYPE_TO_INPUTS_MAP[changeType];
         title.textContent = clickedButton.textContent;
-        editorArea.classList.toggle('form-opened');
+        editorArea.classList.toggle('form--opened');
         defaultImage.propName = `--${changeType}`;
         defaultImage.propValue = editorForm[changeType].value + (editorForm[changeType].dataset.suffix || '');
     }
@@ -48,7 +49,7 @@ editorArea.addEventListener('click', (e) => {
 });
 
 function removeToggle() {
-    editorArea.classList.remove('form-opened');
+    editorArea.classList.remove('form--opened');
     title.textContent = titleText;
 };
 
