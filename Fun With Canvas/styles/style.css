@@ -1,0 +1,229 @@
+:root {
+  --background: #e0dae0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* font-family: 'Mansalva', cursive;
+  font-size: 46px;
+  text-transform: uppercase; */
+}
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+.page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.paint {
+  display: flex;
+  height: 90vh;
+  width: 90%;
+  z-index: 1;
+
+}
+
+.paint__editor {
+  height: 100%;
+  width: 130px;
+  background-color: rgb(87, 67, 105);
+  border-radius: 18px 0 0 18px;
+  border: 5px solid wheat;
+  border-right: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+}
+
+.paint__editor::before {
+  content: "";
+  height: 130%;
+  width: 180%;
+  background-color: #93ac9e;
+  position: absolute;
+  right: 0;
+  top: -15%;
+  z-index: -2;
+}
+
+.paint__canvas {
+  height: 100%;
+  width: calc(100% - 130px);
+  background-color: var(--background);
+  box-shadow: 7px 0px 11px -6px rgba(2, 2, 2, 0.7) inset;
+  position: relative;
+  border-radius: 0 18px 18px 0;
+  transition: all 0.5s linear;
+}
+
+.canvas {
+  height: 100%;
+  width: 100%;
+  border-radius: 0 18px 18px 0;
+  border: 5px solid rgb(117, 148, 124);
+  border-left: none;
+ 
+}
+
+.paint__canvas::before {
+  content: "";
+  height: 130%;
+  width: 140%;
+  background-color: #a09aa3;
+  position: absolute;
+  left: 0;
+  top: -15%;
+  z-index: -1;
+}
+
+.paint__button {
+  height: 76px;
+  width: 76px;
+  background-color: rgba(255, 255, 255, 0);
+  margin-top: 14px;
+}
+
+.button {
+  border-radius: 10%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+
+.button:hover {
+  box-shadow: 4px 4px 6px 0px rgba(34, 60, 80, 0.6),
+    -4px -4px 6px 0px rgba(34, 60, 80, 0.6);
+}
+
+.paint__button--active {
+  border: 1px solid rgba(255, 228, 196, 0.4);
+  box-shadow: 4px 4px 6px 0px rgba(34, 60, 80, 0.6),
+    -4px -4px 6px 0px rgba(34, 60, 80, 0.6);
+}
+
+.button__icon {
+  height: 60px;
+  width: 60px;
+}
+
+.paint__form {
+  height: 20%;
+  width: 280%;
+  background-color: rgb(87, 67, 105);
+  box-shadow: 7px -6px 11px -6px rgba(0, 0, 0, 0.6);
+  border-radius: 0 0 0 18px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 0.3s linear;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+.paint__form--opened {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.paint__form--opened::after {
+  content: "";
+  height: 5px;
+  width: 80%;
+  position: absolute;
+  bottom: -5px;
+  right: 0;
+  background-color: wheat;
+}
+
+.form__input {
+  width: 80%;
+  padding: 20px;
+  background-color: transparent;
+}
+
+.input-range {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0 auto;
+}
+
+.input-range:focus {
+  outline: none;
+}
+
+.input-range::-ms-track {
+  cursor: pointer;
+  background: wheat;
+  border-color: transparent;
+  color: transparent;
+}
+
+.input-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 24px;
+  width: 14px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 10%;
+  background: wheat;
+  cursor: pointer;
+  margin-top: -11px;
+  box-shadow: 0 5px 15px -5px rgb(0, 0, 0);
+}
+
+.input-range::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  background: rgba(145, 189, 134, 0.4);
+  border-radius: 3px;
+  border: none;
+}
+
+.input-range:focus::-webkit-slider-runnable-track {
+  background: rgba(145, 189, 134, 0.6);
+}
+
+.input-color {
+  appearance: none;
+  padding: 0;
+  border: none;
+
+  height: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), 0 1px 7px rgba(0, 0, 0, 0.3);
+}
+
+.input-color:focus {
+  outline: none;
+}
+
+.input-color::-webkit-color-swatch {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 0;
+}
+.input-color::-webkit-color-swatch-wrapper {
+  border: none;
+  padding: 0;
+}
