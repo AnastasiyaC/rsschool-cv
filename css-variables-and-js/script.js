@@ -22,6 +22,8 @@ const defaultImage = {
 };
 
 let {propName, propValue} = defaultImage;
+let clickedButtonName = null; 
+let clickedInputValue = null;
 
 editorArea.addEventListener('click', (e) => {
     const clickedElement = e.target;
@@ -36,17 +38,19 @@ editorArea.addEventListener('click', (e) => {
         editorArea.classList.toggle('form--opened');
         defaultImage.propName = `--${changeType}`;
         defaultImage.propValue = editorForm[changeType].value + (editorForm[changeType].dataset.suffix || '');
+        clickedButtonName = changeType;
     }
     else if(clickedElement.classList.contains('modification__exit-button')) {
-        console.log(defaultImage);
-        // document.documentElement[defaultImage.propName]= defaultImage;
         removeToggle();
-
     }
     else if(clickedElement.classList.contains('modification__submit-button')) {
+        changeInputValue(clickedButtonName, clickedInputValue);
         removeToggle();
     }
 });
+
+editorForm.addEventListener('change', changeImage);
+editorForm.addEventListener('mousemove', changeImage);
 
 function removeToggle() {
     editorArea.classList.remove('form--opened');
@@ -57,7 +61,7 @@ function imageUpdate(propName, propValue, suffix) {
     document.documentElement.style.setProperty(`--${propName}`, propValue + suffix);
 };
 
-editorForm.addEventListener('change', (e) => {
+function changeImage(e) {
     const propName = e.target.dataset.name;
     const propValue = e.target.value;
     const suffix = e.target.dataset.suffix || '';
@@ -65,18 +69,17 @@ editorForm.addEventListener('change', (e) => {
     if(e.target.classList.contains('modification__input')) {
         imageUpdate(propName, propValue, suffix);
     };
-});
+    clickedInputValue = propValue;
+}
 
-editorForm.addEventListener('mousemove', (e) => {
-    const propName = e.target.dataset.name;
-    const propValue = e.target.value;
-    const suffix = e.target.dataset.suffix || '';
+function changeInputValue(buttonName, inputValue) {
+    const string = CHANGE_TYPE_TO_INPUTS_MAP[buttonName];
+    const substring = string.match(/value="([^ ]*)/gi)[0];
+    const newSubstring = `value="${inputValue}"`;
+    const newString = string.replace(substring, newSubstring);
 
-    if(e.target.classList.contains('modification__input')) {
-        imageUpdate(propName, propValue, suffix);
-    };
-
-});
+    CHANGE_TYPE_TO_INPUTS_MAP[buttonName] = newString;
+};
 
 
 
