@@ -22,7 +22,7 @@ const defaultImage = {
 };
 
 let {propName, propValue} = defaultImage;
-let clickedButtonName = null; 
+let clickedButtonName = null;    //NEW VARIABLES for function changeInputValue
 let clickedInputValue = null;
 
 editorArea.addEventListener('click', (e) => {
@@ -38,13 +38,18 @@ editorArea.addEventListener('click', (e) => {
         editorArea.classList.toggle('form--opened');
         defaultImage.propName = `--${changeType}`;
         defaultImage.propValue = editorForm[changeType].value + (editorForm[changeType].dataset.suffix || '');
-        clickedButtonName = changeType;
+        clickedButtonName = changeType;      //save cliked button name as variable
     }
-    else if(clickedElement.classList.contains('modification__exit-button')) {
+    else if(clickedElement.classList.contains('modification__exit-button')) {    // NEW CHANGES - all block
+        const propName = clickedButtonName;
+        const propValue = CHANGE_TYPE_TO_INPUTS_MAP[propName].match(/value="([^ ]*)/gi)[0].slice(7, -1);
+        const suffix = editorForm.querySelector('.modification__input').dataset.suffix || '';
+
+        imageUpdate(propName, propValue, suffix);
         removeToggle();
     }
     else if(clickedElement.classList.contains('modification__submit-button')) {
-        changeInputValue(clickedButtonName, clickedInputValue);
+        changeInputValue(clickedButtonName, clickedInputValue);    //NEW CHANGES - new function
         removeToggle();
     }
 });
@@ -72,7 +77,7 @@ function changeImage(e) {
     clickedInputValue = propValue;
 }
 
-function changeInputValue(buttonName, inputValue) {
+function changeInputValue(buttonName, inputValue) {     //NEW FUNCTION
     const string = CHANGE_TYPE_TO_INPUTS_MAP[buttonName];
     const substring = string.match(/value="([^ ]*)/gi)[0];
     const newSubstring = `value="${inputValue}"`;
