@@ -1,11 +1,14 @@
 const videoPlayer = document.querySelector('.player');
 const video = document.querySelector('.player__video');
 const form = document.forms.controls;
+const playerButtonIcon = document.querySelector('.player__button-icon');
 const inputDuration = form.elements.duration;
+const inputVolume = form.elements.volume;
 const generalTime = document.querySelector('.time__general-time');
 const currentTime = document.querySelector('.time__current-time');
-const iconPlay = document.querySelector('.icon-play');
+const iconAct = document.querySelector('.icon-act');
 const iconVolume = document.querySelector('.icon-volume');
+const iconResize = document.querySelector('.icon-resize');
 
 const playIcon = {
     play: './assets/icons/icon-play.jpg',
@@ -34,35 +37,63 @@ videoPlayer.addEventListener('click', (e) => {
     const clickedElement = e.target;
     e.preventDefault();
     if(clickedElement.classList.contains('player__video') || clickedElement.closest('.button-play')) {
+        videoPlayer.classList.add('player--button-apperance');
+        setTimeout(removeApperance, 600);
         playOrPause();
-        changeIcon(iconPlay);
     }else if(clickedElement.closest('.button-runback')) {
         video.currentTime -= 10;
     }else if(clickedElement.closest('.button-fastforward')) {
         video.currentTime += 10;
-    }else if(clickedElement.closest('.button-volume')) {             //////click on button-value ---???
-        if(form.elements.volume.value > 0) {
-            inputVolumeValue = form.elements.volume.value;
+    }else if(clickedElement.closest('.button-volume')) {
+        form.classList.toggle('form--volume-opened');
+        if(inputVolume.value > 0) {
+            console.log('hgh');
+            inputVolumeValue = inputVolume.value;
             video.volume = 0;
             iconVolume.setAttribute('src', icon.volume.mute);
-            form.elements.volume.value = 0;
-        }else if(form.elements.volume.value == 0) {
-            form.elements.volume.value = inputVolumeValue;
+            inputVolume.value = 0;
+        }else if(inputVolume.value == 0) {
+            console.log('iii');
+            inputVolume.value = inputVolumeValue;
             video.volume = inputVolumeValue;
             iconVolume.setAttribute('src', icon.volume.unmute);
         }
     }else if(clickedElement.closest('.button-fullscreen')) {
         if(videoPlayer.classList.contains('player--fullscreen')) {
+            iconResize.setAttribute('src', icon.resize.fullscreen);
             videoPlayer.classList.remove('player--fullscreen');
         }else{
             videoPlayer.classList.add('player--fullscreen');
-        }
+            iconResize.setAttribute('src', icon.resize.smallscreen);
+            
+        }      
     }
 })
 
+// videoPlayer.addEventListener('mouseover', (e) => {
+//     if(e.target.closest('.button-volume')) {
+//         form.classList.toggle('form--volume-opened');
+//     }else if(e.target.classList.contains('player__video')) {
+//         form.classList.add('form--opened');
+//         // if(e.relatedTarget.classList.contains('button-volume')) {
+//         //     form.classList.toggle('form--volume-opened');
+//         // }
+        
+//     }
+// })
+
+// videoPlayer.addEventListener('mouseout', (e) => {
+//     if(e.target.closest('.button-volume') && form.classList.contains('form--opened')) {
+//         form.classList.remove('form--volume-opened');
+//     }
+//     if(e.target.closest('.player')) {
+//         form.classList.remove('form--opened')
+//     }
+// })
+
 videoPlayer.addEventListener('mouseover', (e) => {
     if(e.target.closest('.player')) {
-        form.classList.add('form--opened')
+        form.classList.add('form--opened');
     }
 })
 
@@ -120,17 +151,19 @@ form.addEventListener('mouseup', (e) => {
 function playOrPause() {
     if(video.paused) {
         video.play();   
+        iconAct.setAttribute('src', icon.act.play);
+        playerButtonIcon.setAttribute('src', icon.act.play);
     }else {
         video.pause();
+        iconAct.setAttribute('src', icon.act.pause);
+        playerButtonIcon.setAttribute('src', icon.act.pause);
     }
 }
 
-function changeIcon(icon) {     
-    if(video.paused) {
-        icon.setAttribute('src', playIcon.play);
-    }else {
-        icon.setAttribute('src', playIcon.pause);
-    }
+function removeApperance() {
+    if(videoPlayer.classList.contains('player--button-apperance')) {
+        videoPlayer.classList.remove('player--button-apperance')
+    }else return
 }
 
 function changeCurrentTime(e) {
