@@ -10,11 +10,6 @@ const iconAct = document.querySelector('.icon-act');
 const iconVolume = document.querySelector('.icon-volume');
 const iconResize = document.querySelector('.icon-resize');
 
-const playIcon = {
-    play: './assets/icons/icon-play.jpg',
-    pause: './assets/icons/icon-pause.jpg',
-}
-
 const icon = {
     act: {
         play: './assets/icons/icon-play.jpg',
@@ -37,59 +32,19 @@ videoPlayer.addEventListener('click', (e) => {
     const clickedElement = e.target;
     e.preventDefault();
     if(clickedElement.classList.contains('player__video') || clickedElement.closest('.button-play')) {
-        videoPlayer.classList.add('player--button-apperance');
-        setTimeout(removeApperance, 600);
         playOrPause();
-    }else if(clickedElement.closest('.button-runback')) {
+        videoPlayer.classList.add('player--button-apperance');
+        setTimeout(removeApperance, 600);  
+    }if(clickedElement.closest('.button-runback')) {
         video.currentTime -= 10;
-    }else if(clickedElement.closest('.button-fastforward')) {
+    }if(clickedElement.closest('.button-fastforward')) {
         video.currentTime += 10;
-    }else if(clickedElement.closest('.button-volume')) {
-        form.classList.toggle('form--volume-opened');
-        if(inputVolume.value > 0) {
-            console.log('hgh');
-            inputVolumeValue = inputVolume.value;
-            video.volume = 0;
-            iconVolume.setAttribute('src', icon.volume.mute);
-            inputVolume.value = 0;
-        }else if(inputVolume.value == 0) {
-            console.log('iii');
-            inputVolume.value = inputVolumeValue;
-            video.volume = inputVolumeValue;
-            iconVolume.setAttribute('src', icon.volume.unmute);
-        }
-    }else if(clickedElement.closest('.button-fullscreen')) {
-        if(videoPlayer.classList.contains('player--fullscreen')) {
-            iconResize.setAttribute('src', icon.resize.fullscreen);
-            videoPlayer.classList.remove('player--fullscreen');
-        }else{
-            videoPlayer.classList.add('player--fullscreen');
-            iconResize.setAttribute('src', icon.resize.smallscreen);
-            
-        }      
+    }if(clickedElement.closest('.button-volume')) {
+        changeVolume();
+    }if(clickedElement.closest('.button-fullscreen')) {
+        changeScreenSize();
     }
 })
-
-// videoPlayer.addEventListener('mouseover', (e) => {
-//     if(e.target.closest('.button-volume')) {
-//         form.classList.toggle('form--volume-opened');
-//     }else if(e.target.classList.contains('player__video')) {
-//         form.classList.add('form--opened');
-//         // if(e.relatedTarget.classList.contains('button-volume')) {
-//         //     form.classList.toggle('form--volume-opened');
-//         // }
-        
-//     }
-// })
-
-// videoPlayer.addEventListener('mouseout', (e) => {
-//     if(e.target.closest('.button-volume') && form.classList.contains('form--opened')) {
-//         form.classList.remove('form--volume-opened');
-//     }
-//     if(e.target.closest('.player')) {
-//         form.classList.remove('form--opened')
-//     }
-// })
 
 videoPlayer.addEventListener('mouseover', (e) => {
     if(e.target.closest('.player')) {
@@ -120,11 +75,7 @@ form.addEventListener('change', (e) => {
         changeCurrentTime(e);
     }else if(e.target.classList.contains('input-volume')) {
         video.volume = e.target.value;
-        if(e.target.value == 0) {
-            iconVolume.setAttribute('src', icon.volume.mute);
-        }else if(e.target.value > 0) {
-            iconVolume.setAttribute('src', icon.volume.unmute);
-        }
+        e.target.value == 0 ? iconVolume.setAttribute('src', icon.volume.mute) : iconVolume.setAttribute('src', icon.volume.unmute);
     }
 })
 
@@ -151,12 +102,35 @@ form.addEventListener('mouseup', (e) => {
 function playOrPause() {
     if(video.paused) {
         video.play();   
-        iconAct.setAttribute('src', icon.act.play);
+        iconAct.setAttribute('src', icon.act.pause);
         playerButtonIcon.setAttribute('src', icon.act.play);
     }else {
         video.pause();
-        iconAct.setAttribute('src', icon.act.pause);
+        iconAct.setAttribute('src', icon.act.play);
         playerButtonIcon.setAttribute('src', icon.act.pause);
+    }
+}
+
+function changeVolume() {
+    if(inputVolume.value > 0) {
+        inputVolumeValue = inputVolume.value;
+        video.volume = 0;
+        iconVolume.setAttribute('src', icon.volume.mute);
+        inputVolume.value = 0;
+    }else if(inputVolume.value == 0) {
+        inputVolume.value = inputVolumeValue;
+        video.volume = inputVolumeValue;
+        iconVolume.setAttribute('src', icon.volume.unmute);
+    }
+}
+
+function changeScreenSize() {
+    if(videoPlayer.classList.contains('player--fullscreen')) {
+        iconResize.setAttribute('src', icon.resize.fullscreen);
+        videoPlayer.classList.remove('player--fullscreen');
+    }else{
+        videoPlayer.classList.add('player--fullscreen');
+        iconResize.setAttribute('src', icon.resize.smallscreen);
     }
 }
 
@@ -181,26 +155,3 @@ function convertSecondsIntoMinutes(seconds) {
     const result = `${Math.floor(seconds / 60)}:${modulo < 10 ? '0' : ''}${modulo}`;
     return result;
 }
-
-
-// class VideoPlay {
-//     constructor(videoName) {
-//         this.videoName = videoName;
-//         this._volume = 0;
-//         this._currentTime = 0;
-//         this._duration = 0;
-//     }
-//     openFullscreenVideo() {
-
-//     }
-//     getVolumeValue() {
-//         return this._volume;
-//     }
-//     setVolumeValue(volumeValue) {
-//         this._volume = volumeValue;
-//     }
-//     setCurrentVideoTime(currentTimeValue) {
-//         this._currentTime = currentTimeValue;
-//     }
-// }
-
