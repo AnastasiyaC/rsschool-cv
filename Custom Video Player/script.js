@@ -1,11 +1,11 @@
 const videoPlayer = document.querySelector('.player');
 const video = document.querySelector('.player__video');
 const form = document.forms.controls;
-const playerButtonIcon = document.querySelector('.player__button-icon');
 const inputDuration = form.elements.duration;
 const inputVolume = form.elements.volume;
 const generalTime = document.querySelector('.time__general-time');
 const currentTime = document.querySelector('.time__current-time');
+const playerButtonIcon = document.querySelector('.player__button-icon');
 const iconAct = document.querySelector('.icon-act');
 const iconVolume = document.querySelector('.icon-volume');
 const iconResize = document.querySelector('.icon-resize');
@@ -47,15 +47,17 @@ videoPlayer.addEventListener('click', (e) => {
 })
 
 videoPlayer.addEventListener('mouseover', (e) => {
-    if(e.target.closest('.player')) {
-        form.classList.add('form--opened');
-    }
+    // if(e.target.closest('.player')) {
+    //     form.classList.add('form--opened');
+    // }
+    e.target.closest('.player') && form.classList.add('form--opened');   // -is it a good decision to replace "if(){}"??
 })
 
 videoPlayer.addEventListener('mouseout', (e) => {
-    if(e.target.closest('.player')) {
-        form.classList.remove('form--opened')
-    }
+    // if(e.target.closest('.player')) {
+    //     form.classList.remove('form--opened')
+    // }
+    e.target.closest('.player') && form.classList.remove('form--opened');  // -is it a good decision to replace "if(){}"??
 })
 
 video.addEventListener('loadedmetadata', (e) => {
@@ -73,7 +75,7 @@ video.addEventListener('timeupdate', (e) => {
 form.addEventListener('change', (e) => {
     if(e.target.classList.contains('input-duration')) {
         changeCurrentTime(e);
-    }else if(e.target.classList.contains('input-volume')) {
+    }if(e.target.classList.contains('input-volume')) {
         video.volume = e.target.value;
         e.target.value == 0 ? iconVolume.setAttribute('src', icon.volume.mute) : iconVolume.setAttribute('src', icon.volume.unmute);
     }
@@ -86,10 +88,8 @@ form.addEventListener('mousedown', (e) => {
 })
 
 form.addEventListener('mousemove', (e) => {
-    if(e.target.classList.contains('input-duration')) {
-        if(clickedInputDuration) {
-            changeCurrentTime(e);
-        }     
+    if(e.target.classList.contains('input-duration')) {    
+        clickedInputDuration && changeCurrentTime(e);
     }
 })
 
@@ -135,9 +135,11 @@ function changeScreenSize() {
 }
 
 function removeApperance() {
-    if(videoPlayer.classList.contains('player--button-apperance')) {
-        videoPlayer.classList.remove('player--button-apperance')
-    }else return
+    // if(videoPlayer.classList.contains('player--button-apperance')) {
+    //     videoPlayer.classList.remove('player--button-apperance')
+    // }else return
+    videoPlayer.classList.contains('player--button-apperance') && videoPlayer.classList.remove('player--button-apperance');
+    // -is it a good decision to replace "if(){}"??
 }
 
 function changeCurrentTime(e) {
