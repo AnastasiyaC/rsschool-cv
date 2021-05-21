@@ -1,0 +1,396 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: rgb(174, 218, 230) url(../assets/images/grass.jpg) no-repeat;
+  background-size: cover;
+}
+
+.header {
+  height: 100px;
+  width: 100%;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+}
+
+.title {
+  font-size: 64px;
+  font-family: "Gloria Hallelujah", cursive;
+}
+
+@media screen and (max-width: 920px) {
+  .title {
+    font-size: 54px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .title {
+    font-size: 38px;
+  }
+}
+
+.game {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.button {
+  font-family: "Nerko One", cursive;
+  font-size: 38px;
+  border: 5px solid rgba(0, 0, 0, 0.7);
+  border-radius: 40px;
+  outline: none;
+  transition: all 0.4s linear;
+  cursor: pointer;
+}
+
+.game__button-start {
+  width: 150px;
+  background-color: rgba(63, 114, 18, 0.5);
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.game__button-start:hover {
+  background-color: rgba(63, 114, 18, 0.7);
+}
+
+.game--started > .game__button-start,
+.game--finished > .game__button-start {
+  animation-name: disappearing;
+  animation-duration: 0.3s;
+  animation-timing-function: linear;
+  opacity: 0;
+  cursor: none;
+}
+
+@keyframes disappearing {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.game__score {
+  height: 100px;
+  width: 170px;
+  background-color: rgba(63, 114, 18, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Nerko One", cursive;
+  position: absolute;
+  top: 20px;
+  right: 5%;
+  border-radius: 30px;
+  border: 4px solid rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  z-index: 2;
+}
+
+@media screen and (max-width: 1180px) {
+  .game__score {
+    height: 80px;
+    width: 140px;
+    right: 20px;
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .game__score {
+    height: 50px;
+    width: 90px;
+    border: 3px solid rgba(0, 0, 0, 0.7);
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .game__score {
+    top: calc(100% - 80px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.game--started > .game__score {
+  opacity: 1;
+  animation-name: apperance;
+  animation-duration: 0.8s;
+  animation-timing-function: linear;
+}
+
+.score__title {
+  font-size: 36px;
+}
+
+@media screen and (max-width: 1180px) {
+  .score__title {
+    font-size: 26px;
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .score__title {
+    font-size: 16px;
+  }
+}
+
+.score__line {
+  width: 110px;
+  background-color: rgb(0, 0, 0);
+  border: 1px solid rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
+  margin: 0;
+}
+
+@media screen and (max-width: 920px) {
+  .score__line {
+    width: 40px;
+  }
+}
+
+.score__number {
+  font-size: 36px;
+}
+
+@media screen and (max-width: 1180px) {
+  .score__number {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .score__number {
+    font-size: 20px;
+  }
+}
+
+.game--finished > .game__score {
+  opacity: 0;
+  animation-name: disappearing;
+  animation-duration: 0.4s;
+  animation-timing-function: linear;
+}
+
+.game__plaing-field {
+  height: 55%;
+  width: 100%;
+  position: absolute;
+  bottom: 15%;
+}
+
+@media screen and (max-width: 920px) {
+  .game__plaing-field {
+    height: 40%;
+    bottom: 20%;
+  }
+}
+
+.plaing-field__wrapper {
+  height: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+}
+
+@media screen and (max-width: 920px) {
+  .plaing-field__wrapper {
+    max-width: 450px;
+  }
+}
+
+.game__helper {
+  display: none;
+}
+
+.game--finished > .game__helper {
+  height: calc(85% - 100px);
+  width: 70%;
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 3px 3px 8px 8px rgba(255, 255, 255, 0.3),
+    -3px -3px 8px 8px rgba(255, 255, 255, 0.3);
+  font-family: "Nerko One", cursive;
+  color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 5;
+  text-shadow: 1px 1px rgb(255, 255, 255);
+  animation-name: apperance;
+  animation-duration: 0.6s;
+  animation-timing-function: linear;
+}
+
+@keyframes apperance {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .game--finished > .game__helper {
+    width: 85%;
+  }
+}
+
+.helper__text {
+  margin: 20px 0 0;
+  font-size: 60px;
+  text-align: center;
+}
+
+@media screen and (max-width: 480px) {
+  .helper__text {
+    font-size: 46px;
+  }
+}
+
+.helper__score {
+  font-size: 120px;
+  margin: 0;
+}
+
+@media screen and (max-width: 480px) {
+  .helper__score {
+    font-size: 80px;
+  }
+}
+
+.helper__button {
+  width: 250px;
+  background-color: rgba(228, 222, 197, 1);
+  margin: 20px 0 0;
+}
+
+.helper__button:hover {
+  background-color: rgb(199, 193, 170);
+}
+
+.plaing-field__unit {
+  height: 160px;
+  width: 220px;
+  position: relative;
+}
+
+@media screen and (max-width: 920px) {
+  .plaing-field__unit {
+    height: 90px;
+    width: 120px;
+  }
+}
+
+.plaing-field__mole {
+  height: 135px;
+  width: 150px;
+  border-radius: 40% 40% 0 0;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0) scale(1, 0);
+  transform-origin: bottom;
+  cursor: pointer;
+  transition: all 0.3s linear;
+  opacity: 0;
+}
+
+@media screen and (max-width: 920px) {
+  .plaing-field__mole {
+    height: 82px;
+    width: 93px;
+  }
+}
+
+.plaing-field__unit--activated > .plaing-field__mole {
+  transform: translate(-50%, 0) scale(1, 1);
+  opacity: 1;
+}
+
+.game--finished .plaing-field__mole {
+  transform: translate(-50%, 0) scale(1, 1);
+  transition: all 0.5s linear;
+  opacity: 0.7;
+}
+
+.plaing-field__hole {
+  height: 45px;
+  width: 100%;
+  border-radius: 50% 50% 0 0;
+  position: absolute;
+  bottom: 0;
+}
+
+@media screen and (max-width: 920px) {
+  .plaing-field__hole {
+    height: 20px;
+  }
+}
+
+.unit__score {
+  font-size: 52px;
+  font-family: "Nerko One", cursive;
+  color: azure;
+  text-shadow: 2px 2px 0px black, -1px -1px 0px black;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  transition: all 0.7s linear;
+  z-index: 2;
+  animation-name: score;
+  animation-delay: 0s;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+}
+
+@media screen and (max-width: 920px) {
+  .unit__score {
+    font-size: 38px;
+  }
+}
+
+@keyframes score {
+  0% {
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0.5;
+    transform: translate(-50%, -400px);
+  }
+}
+
+.mole__image,
+.hole__image {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
