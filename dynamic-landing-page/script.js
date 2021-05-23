@@ -6,16 +6,18 @@ const month = year[dateToday.getMonth()];
 const dateNumber = dateToday.getDate();
 const greetForm = document.forms.greet;
 
-greetForm.addEventListener('keydown', (e) => {
-  if (e.code == 'Enter') {
-    e.target.blur();
-  }else 
+greetForm.addEventListener('keydown', (event) => {
+  if (event.code == 'Enter') {
+    event.target.blur();
+  } else {
     return;
+  } 
 });
 
-greetForm.addEventListener('change', (e) => {
-  const {name, value} = e.target;
-   
+greetForm.addEventListener('change', (event) => {
+  const {name, value} = event.target;
+  
+  event.preventDefault();
   localStorage.setItem(name, value);
 });
 
@@ -60,13 +62,13 @@ function showBackground() {
   const time = new Date();
   const hour = time.getHours();
   
-  if(hour >= 0 && hour < 6) {
+  if (hour >= 0 && hour < 6) {
     changeBackground('night');
-  }else if(hour >= 6 && hour < 12) {
+  } if (hour >= 6 && hour < 12) {
     changeBackground('morning');
-  }else if(hour >= 12 && hour < 18) {
+  } if (hour >= 12 && hour < 18) {
     changeBackground('afternoon');
-  }else {
+  } else {
     changeBackground('evening');
   };
 
@@ -81,7 +83,7 @@ function changeBackground(part) {
   labelName.textContent = partObj.phase;
 };
 
-function getValue1(formElemName) {
+function getValue(formElemName) {
   const a = greetForm.elements[formElemName];
 
   a.value = localStorage.getItem(formElemName);
@@ -89,8 +91,8 @@ function getValue1(formElemName) {
 
 showTime();
 showBackground(); 
-getValue1('name');
-getValue1('plan');
+getValue('name');
+getValue('plan');
 
 
 

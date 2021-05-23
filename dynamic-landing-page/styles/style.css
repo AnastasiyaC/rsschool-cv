@@ -40,6 +40,24 @@ body {
   align-items: center;
 }
 
+@media screen and (max-width: 1100px) {
+  .greet-form {
+    font-size: 58px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .greet-form {
+    font-size: 52px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .greet-form {
+    font-size: 42px;
+  }
+}
+
 .form__input,
 .form__textarea {
   padding: 0;
@@ -51,6 +69,27 @@ body {
   text-shadow: 2px 2px 5px black;
   border: none;
   outline: none;
+}
+
+@media screen and (max-width: 1100px) {
+  .form__input,
+  .form__textarea {
+    font-size: 54px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .form__input,
+  .form__textarea {
+    font-size: 48px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .form__input,
+  .form__textarea {
+    font-size: 38px;
+  }
 }
 
 .form__input:focus,
@@ -77,6 +116,21 @@ body {
   text-shadow: 1px 1px 3px black;
 }
 
+@media screen and (max-width: 620px) {
+  .daytime {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .daytime {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 .daytime__time,
 .daytime__date {
   margin: 0;
@@ -90,6 +144,12 @@ body {
   font-size: 46px;
 }
 
+@media screen and (max-width: 420px) {
+  .time__number {
+    font-size: 42px;
+  }
+}
+
 .daytime__date {
   font-size: 28px;
 }
@@ -98,71 +158,7 @@ body {
   content: ',';
 }
 
-@media screen and (max-width: 1100px) {
-  .greet-form {
-    font-size: 58px;
-  }
-
-  .form__input,
-  .form__textarea {
-    font-size: 54px;
-  }
-}
-
-@media screen and (max-width: 620px) {
-  .greet-form {
-    font-size: 52px;
-  }
-
-  .form__input,
-  .form__textarea {
-    font-size: 48px;
-  }
-
-  .daytime {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .greet-form {
-    font-size: 46px;
-  }
-
-  .form__input,
-  .form__textarea {
-    font-size: 40px;
-  }
-
-  .daytime {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-
 @media screen and (max-width: 420px) {
-  .greet-form {
-    font-size: 42px;
-  }
-
-  .form__input,
-  .form__textarea {
-    font-size: 38px;
-  }
-
-  .daytime {
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .time__number {
-    font-size: 42px;
-  }
-
   .date__day-of-week {
     display: block;
   }
