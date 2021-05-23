@@ -31,38 +31,6 @@ body {
   justify-content: space-between;
 }
 
-.keyboard__key {
-  height: 90px;
-  width: 90px;
-  border-radius: 14%;
-  background-color: rgba(0, 0, 0, 0.8);
-  outline: none;
-  border: 2px solid rgba(0, 0, 0, 1);
-  box-shadow: 3px 3px 5px 2px rgba(67, 67, 68, 0.4);
-  cursor: pointer;
-  transition: all 0.2s linear;
-}
-
-.keyboard__key:hover {
-  border: 1px solid rgb(187, 187, 187);
-  box-shadow: 3px 3px 5px 2px rgba(187, 187, 187, 0.4);
-}
-
-.key__title,
-.key__description {
-  color: white;
-  text-transform: uppercase;
-}
-
-.key__title {
-  font-size: 30px;
-}
-
-.key__description {
-  font-size: 12px;
-  margin-top: 10%;
-}
-
 @media screen and (max-width: 1300px) {
   .keyboard {
     width: 80%;
@@ -92,7 +60,6 @@ body {
     justify-self: end;
     margin-right: -30px;
   }
-
 }
 
 @media screen and (max-width: 810px) {
@@ -104,21 +71,6 @@ body {
 @media screen and (max-width: 700px) {
   .keyboard {
     width: 90%;
-  }
-}
-
-@media screen and (max-width: 560px) {
-  .keyboard__key {
-    height: 80px;
-    width: 80px;
-  }
-
-  .key__title {
-    font-size: 26px;
-  }
-
-  .key__description {
-    font-size: 10px;
   }
 }
 
@@ -138,7 +90,57 @@ body {
     justify-self: center;
     margin-right: 0;
   }
+}
 
+.keyboard__key {
+  height: 90px;
+  width: 90px;
+  border-radius: 14%;
+  background-color: rgba(0, 0, 0, 0.8);
+  outline: none;
+  border: 2px solid rgba(0, 0, 0, 1);
+  box-shadow: 3px 3px 5px 2px rgba(67, 67, 68, 0.4);
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+@media screen and (max-width: 560px) {
+  .keyboard__key {
+    height: 80px;
+    width: 80px;
+  }
+}
+
+.keyboard__key:hover {
+  border: 1px solid rgb(187, 187, 187);
+  box-shadow: 3px 3px 5px 2px rgba(187, 187, 187, 0.4);
+}
+
+.key__title,
+.key__description {
+  color: white;
+  text-transform: uppercase;
+}
+
+.key__title {
+  font-size: 30px;
+}
+
+@media screen and (max-width: 560px) {
+  .key__title {
+    font-size: 26px;
+  }
+}
+
+.key__description {
+  font-size: 12px;
+  margin-top: 10%;
+}
+
+@media screen and (max-width: 560px) {
+  .key__description {
+    font-size: 10px;
+  }
 }
 
 
