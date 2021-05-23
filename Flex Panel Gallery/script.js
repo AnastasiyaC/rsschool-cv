@@ -1,35 +1,37 @@
 const generalBlock = document.querySelector('.blocks');
 const blocks = generalBlock.querySelectorAll('.block');
+const blocksArr = Array.from(blocks);
 
-generalBlock.addEventListener('mousemove', (e) => {
-  const blockFocused = e.target.closest('.block');
+generalBlock.addEventListener('mousemove', (event) => {
+  const blockFocused = event.target.closest('.block');
 
-  if(blockFocused.classList.contains('block')) {
+  if(!blockFocused) {
     blocks.forEach(block => block.classList.remove('block--focused'));
-  } 
-  e.target.classList.add('block--focused');
+  }if(blockFocused) {
+    blocks.forEach(block => block.classList.remove('block--focused'));
+    event.target.classList.add('block--focused');
+  }
 })
 
-generalBlock.addEventListener('click', (e) => {
-  const blockOpened = e.target.closest('.block');
+generalBlock.addEventListener('click', (event) => {
+  const clickedBlock = event.target.closest('.block');
 
-  if(blockOpened.classList.contains('block')) {
+  if(clickedBlock) {
     blocks.forEach((block) => {
       block.classList.remove('block--opened');
       block.classList.add('block--font-size');
     });
+    event.target.classList.toggle('block--opened')
+  }if(!clickedBlock) {
+    blocks.forEach((block) => {
+      block.classList.remove('block--opened', 'block--font-size');
+    });
   }
-  e.target.classList.toggle('block--opened');
 });
 
-function addClass() {
+document.addEventListener('DOMContentLoaded', () => {
   document.body.classList.add('active');
-};
-
-setTimeout(() => {
-  addClass();
-}, 500);
-
+});
 
 
 
