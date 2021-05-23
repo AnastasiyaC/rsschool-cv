@@ -1,0 +1,165 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url(../assets/images/morning.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  color: rgb(255, 255, 255);
+}
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+.page {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.greet-form {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 68px;
+  text-shadow: 2px 2px 5px black;
+  font-family: "Do Hyeon", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 1100px) {
+  .greet-form {
+    font-size: 58px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .greet-form {
+    font-size: 52px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .greet-form {
+    font-size: 42px;
+  }
+}
+
+.form__input,
+.form__textarea {
+  padding: 0;
+  text-align: center;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 1);
+  font-family: "Do Hyeon", sans-serif;
+  font-size: 64px;
+  text-shadow: 2px 2px 5px black;
+  border: none;
+  outline: none;
+}
+
+@media screen and (max-width: 1100px) {
+  .form__input,
+  .form__textarea {
+    font-size: 54px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .form__input,
+  .form__textarea {
+    font-size: 48px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .form__input,
+  .form__textarea {
+    font-size: 38px;
+  }
+}
+
+.form__input:focus,
+.form__textarea:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.7);
+}
+
+.label-plan--margin_top {
+  margin-top: 24px;
+}
+
+.form__textarea {
+  resize: none;
+  overflow: hidden;
+}
+
+.daytime {
+  font-family: "Roboto Condensed", sans-serif;
+  color: white;
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  text-shadow: 1px 1px 3px black;
+}
+
+@media screen and (max-width: 620px) {
+  .daytime {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .daytime {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.daytime__time,
+.daytime__date {
+  margin: 0;
+}
+
+.daytime__time {
+  font-size: 32px;
+}
+
+.time__number {
+  font-size: 46px;
+}
+
+@media screen and (max-width: 420px) {
+  .time__number {
+    font-size: 42px;
+  }
+}
+
+.daytime__date {
+  font-size: 28px;
+}
+
+.date__day-of-week::after {
+  content: ',';
+}
+
+@media screen and (max-width: 420px) {
+  .date__day-of-week {
+    display: block;
+  }
+}

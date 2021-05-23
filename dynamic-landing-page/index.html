@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day planner.</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1 class="visually-hidden">Day planner.</h1>
+    </header>
+    <main>
+        <div class="page">
+            <form class="greet-form form" name="greet">
+                <label class="form__label label-name" for="name">Good morning, </label>
+                <input class="form__input input" id="name" type="text" name="name" placeholder="Enter your name" maxlength="25">
+                <label class="form__label label-plan label-plan--margin_top" for="plan">My plan for today is: </label>
+                <textarea class="form__textarea textarea" id="plan" name="plan" placeholder="Enter your plan" rows="3" columns="30"></textarea>
+            </form>
+            <div class="daytime">
+                <div class="daytime__time time">
+                    <span class="time__hour time__number">12</span> :
+                    <span class="time__minute time__number">30</span> :
+                    <span class="time__second time__number">48</span>
+                </div>
+                <div class="daytime__date date">
+                    <span class="date__day-of-week">Monday</span> 
+                    <span class="date__date">17</span> 
+                    <span class="date__month">September</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <footer></footer>
+    <script src="./script.js"></script>
+</body>
+</html>
