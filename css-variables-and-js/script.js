@@ -21,15 +21,16 @@ const defaultImage = {
     propValue: null,
 };
 
-let {propName, propValue} = defaultImage;
-let clickedButtonName = null;    //NEW VARIABLES for function changeInputValue
+let {propName, propValue} = defaultImage;   
+//VARIABLES for function changeInputValue
+let clickedButtonName = null; 
 let clickedInputValue = null;
 
 editorArea.addEventListener('click', (e) => {
     const clickedElement = e.target;
     const clickedButton = clickedElement.closest('.filter__button');
 
-    if(clickedButton) {
+    if (clickedButton) {
         const button = clickedButton;
         const changeType = button.dataset.changeType;
 
@@ -37,19 +38,19 @@ editorArea.addEventListener('click', (e) => {
         title.textContent = clickedButton.textContent;
         editorArea.classList.toggle('form--opened');
         defaultImage.propName = `--${changeType}`;
-        defaultImage.propValue = editorForm[changeType].value + (editorForm[changeType].dataset.suffix || '');
-        clickedButtonName = changeType;      //save cliked button name as variable
+        defaultImage.propValue = editorForm[changeType].value + (editorForm[changeType].dataset.suffix ?? '');
+        clickedButtonName = changeType;
     }
-    else if(clickedElement.classList.contains('modification__exit-button')) {    // NEW CHANGES - all block
+    else if (clickedElement.classList.contains('modification__exit-button')) {
         const propName = clickedButtonName;
         const propValue = CHANGE_TYPE_TO_INPUTS_MAP[propName].match(/value="([^ ]*)/gi)[0].slice(7, -1);
-        const suffix = editorForm.querySelector('.modification__input').dataset.suffix || '';
+        const suffix = editorForm.querySelector('.modification__input').dataset.suffix ?? '';
 
         imageUpdate(propName, propValue, suffix);
         removeToggle();
     }
-    else if(clickedElement.classList.contains('modification__submit-button')) {
-        changeInputValue(clickedButtonName, clickedInputValue);    //NEW CHANGES - new function
+    else if (clickedElement.classList.contains('modification__submit-button')) {
+        changeInputValue(clickedButtonName, clickedInputValue);
         removeToggle();
     }
 });
@@ -69,7 +70,7 @@ function imageUpdate(propName, propValue, suffix) {
 function changeImage(e) {
     const propName = e.target.dataset.name;
     const propValue = e.target.value;
-    const suffix = e.target.dataset.suffix || '';
+    const suffix = e.target.dataset.suffix ?? '';
 
     if(e.target.classList.contains('modification__input')) {
         imageUpdate(propName, propValue, suffix);
@@ -77,7 +78,7 @@ function changeImage(e) {
     clickedInputValue = propValue;
 }
 
-function changeInputValue(buttonName, inputValue) {     //NEW FUNCTION
+function changeInputValue(buttonName, inputValue) {
     const string = CHANGE_TYPE_TO_INPUTS_MAP[buttonName];
     const substring = string.match(/value="([^ ]*)/gi)[0];
     const newSubstring = `value="${inputValue}"`;
