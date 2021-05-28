@@ -13,8 +13,8 @@ setValue = () => {
 
 document.addEventListener('DOMContentLoaded', setValue);
 
-inputSpeed.addEventListener('change', (e) => {
-    video.playbackRate = e.target.value;
+inputSpeed.addEventListener('change', (event) => {
+    video.playbackRate = event.target.value;
     setValue();
 });
 
