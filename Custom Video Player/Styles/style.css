@@ -38,12 +38,6 @@ body {
   transition: all 0.3s linear;
 }
 
-.player--fullscreen {
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-}
-
 .player::before {
   content: "";
   height: calc(100% + 80px);
@@ -57,6 +51,12 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: -1;
+}
+
+.player--fullscreen {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 1400px) {
@@ -85,14 +85,12 @@ body {
 
 @media screen and (max-width: 720px) {
   .player {
-    width: 90%;
     height: 60%;
   }
 }
 
 @media screen and (max-width: 580px) {
   .player {
-    width: 90%;
     height: 50%;
   }
 }
@@ -194,6 +192,7 @@ body {
   border: none;
   outline: none;
   background-color: #ffffff;
+  cursor: pointer;
   opacity: 0.8;
 }
 

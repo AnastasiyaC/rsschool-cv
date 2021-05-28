@@ -28,73 +28,80 @@ const icon = {
 let inputVolumeValue = null;
 let clickedInputDuration = false;
 
-videoPlayer.addEventListener('click', (e) => {
-    const clickedElement = e.target;
-    e.preventDefault();
-    if(clickedElement.classList.contains('player__video') || clickedElement.closest('.button-play')) {
+videoPlayer.addEventListener('click', (event) => {
+    const clickedElement = event.target;
+
+    event.preventDefault();
+    if (clickedElement.classList.contains('player__video') || clickedElement.closest('.button-play')) {
         playOrPause();
         videoPlayer.classList.add('player--button-apperance');
         setTimeout(removeApperance, 600);  
-    }if(clickedElement.closest('.button-runback')) {
+    } if (clickedElement.closest('.button-runback')) {
         video.currentTime -= 10;
-    }if(clickedElement.closest('.button-fastforward')) {
+    } if (clickedElement.closest('.button-fastforward')) {
         video.currentTime += 10;
-    }if(clickedElement.closest('.button-volume')) {
+    } if (clickedElement.closest('.button-volume')) {
         changeVolume();
-    }if(clickedElement.closest('.button-fullscreen')) {
+    } if (clickedElement.closest('.button-fullscreen')) {
         changeScreenSize();
     }
 })
 
-videoPlayer.addEventListener('mouseover', (e) => {
-    // if(e.target.closest('.player')) {
+videoPlayer.addEventListener('mouseover', (event) => {
+    // if(event.target.closest('.player')) {
     //     form.classList.add('form--opened');
     // }
-    e.target.closest('.player') && form.classList.add('form--opened');   // -is it a good decision to replace "if(){}"??
+    event.target.closest('.player') && form.classList.add('form--opened');   // -is it a good decision to replace "if(){}"??
 })
 
-videoPlayer.addEventListener('mouseout', (e) => {
+videoPlayer.addEventListener('mouseout', (event) => {
     // if(e.target.closest('.player')) {
     //     form.classList.remove('form--opened')
     // }
-    e.target.closest('.player') && form.classList.remove('form--opened');  // -is it a good decision to replace "if(){}"??
+    event.target.closest('.player') && form.classList.remove('form--opened');  // -is it a good decision to replace "if(){}"??
 })
 
-video.addEventListener('loadedmetadata', (e) => {
+video.addEventListener('loadedmetadata', () => {
     const duration = video.duration.toFixed();
     inputDuration.setAttribute('max', duration);
     generalTime.innerHTML = convertSecondsIntoMinutes(duration); 
 });
 
-video.addEventListener('timeupdate', (e) => {
+video.addEventListener('timeupdate', () => {
     const time =  Math.floor(video.currentTime);
     currentTime.innerHTML = convertSecondsIntoMinutes(time);
     moveInputThumb();
 });
 
-form.addEventListener('change', (e) => {
-    if(e.target.classList.contains('input-duration')) {
-        changeCurrentTime(e);
-    }if(e.target.classList.contains('input-volume')) {
-        video.volume = e.target.value;
-        e.target.value == 0 ? iconVolume.setAttribute('src', icon.volume.mute) : iconVolume.setAttribute('src', icon.volume.unmute);
+form.addEventListener('change', (event) => {
+    if (event.target.classList.contains('input-duration')) {
+        changeCurrentTime(event);
+    } if (event.target.classList.contains('input-volume')) {
+        video.volume = event.target.value;
+        event.target.value == 0 ? iconVolume.setAttribute('src', icon.volume.mute) : iconVolume.setAttribute('src', icon.volume.unmute);
     }
 })
 
-form.addEventListener('mousedown', (e) => {
-    if(e.target.classList.contains('input-duration')) {
+form.addEventListener('mousedown', (event) => {
+    if (!event.target.classList.contains('input-duration')) {
+        return;
+    } if (event.target.classList.contains('input-duration')) {
         clickedInputDuration = true;
     }
 })
 
-form.addEventListener('mousemove', (e) => {
-    if(e.target.classList.contains('input-duration')) {    
-        clickedInputDuration && changeCurrentTime(e);
+form.addEventListener('mousemove', (event) => {
+    if (!event.target.classList.contains('input-duration')) {
+        return;
+    } if (event.target.classList.contains('input-duration')) {    
+        clickedInputDuration && changeCurrentTime(event);
     }
 })
 
-form.addEventListener('mouseup', (e) => {
-    if(e.target.classList.contains('input-duration')) {
+form.addEventListener('mouseup', (event) => {
+    if (!event.target.classList.contains('input-duration')) {
+        return;
+    } if (event.target.classList.contains('input-duration')) {
         clickedInputDuration = false;
     }
 })
@@ -104,7 +111,7 @@ function playOrPause() {
         video.play();   
         iconAct.setAttribute('src', icon.act.pause);
         playerButtonIcon.setAttribute('src', icon.act.play);
-    }else {
+    } else {
         video.pause();
         iconAct.setAttribute('src', icon.act.play);
         playerButtonIcon.setAttribute('src', icon.act.pause);
@@ -112,12 +119,12 @@ function playOrPause() {
 }
 
 function changeVolume() {
-    if(inputVolume.value > 0) {
+    if (inputVolume.value > 0) {
         inputVolumeValue = inputVolume.value;
         video.volume = 0;
         iconVolume.setAttribute('src', icon.volume.mute);
         inputVolume.value = 0;
-    }else if(inputVolume.value == 0) {
+    } else if (inputVolume.value == 0) {
         inputVolume.value = inputVolumeValue;
         video.volume = inputVolumeValue;
         iconVolume.setAttribute('src', icon.volume.unmute);
@@ -125,25 +132,27 @@ function changeVolume() {
 }
 
 function changeScreenSize() {
-    if(videoPlayer.classList.contains('player--fullscreen')) {
+    if (videoPlayer.classList.contains('player--fullscreen')) {
         iconResize.setAttribute('src', icon.resize.fullscreen);
         videoPlayer.classList.remove('player--fullscreen');
-    }else{
+    }else {
         videoPlayer.classList.add('player--fullscreen');
         iconResize.setAttribute('src', icon.resize.smallscreen);
     }
 }
 
 function removeApperance() {
-    // if(videoPlayer.classList.contains('player--button-apperance')) {
+    // if (videoPlayer.classList.contains('player--button-apperance')) {
     //     videoPlayer.classList.remove('player--button-apperance')
-    // }else return
+    // }else {
+    //   return;
+    // }
     videoPlayer.classList.contains('player--button-apperance') && videoPlayer.classList.remove('player--button-apperance');
     // -is it a good decision to replace "if(){}"??
 }
 
-function changeCurrentTime(e) {
-    const time = e.target.value;
+function changeCurrentTime(event) {
+    const time = event.target.value;
     video.currentTime = time;
     currentTime.innerHTML = convertSecondsIntoMinutes(time);
 }
