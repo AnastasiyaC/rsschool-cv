@@ -31,9 +31,9 @@ class Keyboard {
         this._keysButtons = keyboard.querySelectorAll('.keyboard__key');
 
         form.addEventListener('focusin', () => {
-            if(form.classList.contains('form--opened')) {
+            if (form.classList.contains('form--opened')) {
                 return;
-            }else {
+            } else {
                 form.classList.add('form--opened');
             }
         });
@@ -45,27 +45,28 @@ class Keyboard {
 
             event.preventDefault();
             
-            if(!clickedButton) {
+            if (!clickedButton) {
                 return;
-            }if(clickedButton.dataset.name == 'backspace') {
+            } if (clickedButton.dataset.name == 'backspace') {
                 text.value = text.value.substring(0, text.value.length - 1);
                 text.focus();
-            }if(clickedButton.dataset.name == 'caps') {
+            } if (clickedButton.dataset.name == 'caps') {
                 this._capsLock = !this._capsLock ? true : false;
                 this._toggleCapsLock();
                 clickedButton.firstChild.setAttribute('src', !this._capsLock ? 'assets/icons/icon-caps.jpg' : 'assets/icons/icon-caps-on.jpg');
                 text.focus();
-            }if(clickedButton.dataset.name == 'enter') {
+            } if (clickedButton.dataset.name == 'enter') {
                 text.value += "\n";
                 text.focus();
-            }if(clickedButton.dataset.name == 'done') {
-                if(form.classList.contains('form--opened')) {
-                    form.classList.remove('form--opened');
-                }
-            }if(clickedButton.dataset.name == 'space') {
+            } if (clickedButton.dataset.name == 'done') {
+                // if (form.classList.contains('form--opened')) {
+                //     form.classList.remove('form--opened');
+                // }
+                form.classList.contains('form--opened') && form.classList.remove('form--opened');
+            } if (clickedButton.dataset.name == 'space') {
                 text.value += ' ';
                 text.focus();
-            }if(clickedElement.dataset.name == 'symbol'){
+            } if (clickedElement.dataset.name == 'symbol'){
                 text.value += clickedElement.innerHTML;
                 text.focus();
             }   
@@ -130,7 +131,7 @@ class Keyboard {
 
             fragment.appendChild(keyElement);
     
-            if(['backspace', 'p', 'enter', '?'].includes(key)) { 
+            if (['backspace', 'p', 'enter', '?'].includes(key)) { 
             fragment.appendChild(document.createElement('br'));
             };   
         });
@@ -138,7 +139,7 @@ class Keyboard {
     }
     _toggleCapsLock() {
         this._keysButtons.forEach(button => {
-            if(button.dataset.name == 'symbol') {
+            if (button.dataset.name == 'symbol') {
                 button.textContent = this._capsLock ? button.textContent.toUpperCase() : button.textContent.toLowerCase();
             } 
         });

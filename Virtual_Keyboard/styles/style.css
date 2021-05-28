@@ -46,6 +46,8 @@ body {
   font-size: 20px;
   font-family: 'Roboto Slab', serif;
   outline: none;
+  cursor: pointer;
+  caret-color: rgb(204, 226, 5);
 }
 
 .form__textarea::placeholder {
