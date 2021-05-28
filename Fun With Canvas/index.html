@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint online.</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1 class="visually-hidden">Paint online.</h1>
+    </header>
+    <main>
+        <div class="page">
+            <div class="paint">
+                <div class="paint__editor">
+                    <div class="paint__buttons">
+                        <button class="paint__button button paint__button--active" data-tooltip="pen" data-change-type="pen">
+                            <img class="button__icon" src="./assets/icons/icon-pen.jpg" alt="icon-pen">
+                        </button>
+                        <button class="paint__button button" data-tooltip="brush" data-change-type="brush">
+                            <img class="button__icon" src="./assets/icons/icon-brush.jpg" alt="icon-brush">
+                        </button>
+                        <button class="paint__button button" data-tooltip="pallette" data-change-type="palette">
+                            <img class="button__icon" src="./assets/icons/icon-palette.jpg" alt="icon-palette">
+                        </button>
+                        <button class="paint__button button" data-tooltip="background" data-change-type="background">
+                            <img class="button__icon" src="./assets/icons/icon-background.jpg" alt="icon-background">
+                        </button>
+                        <button class="paint__button button" data-tooltip="araser" data-change-type="eraser">
+                            <img class="button__icon" src="./assets/icons/icon-eraser.jpg" alt="icon-eraser">
+                        </button>
+                    </div>
+                    <div class="paint__line-width line-width">
+                        <span class="line-width__text">line<br>width</span>
+                        <div class="line-width__round"></div>
+                    </div>
+                    <form class="paint__form form">
+                    </form>
+                </div>
+                <div class="paint__canvas">
+                    <canvas class="canvas"></canvas>
+                </div>
+            </div>
+        </div>    
+    </main>
+    <footer></footer>
+    <script src="./script.js"></script>
+</body>
+</html>
