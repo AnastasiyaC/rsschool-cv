@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whack a mole!</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nerko+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <h1 class="title">Whack A Mole!</h1>
+    </header>
+    <main class="main">
+        <div class="game">
+            <button class="game__button-start button">start</button>
+            <div class="game__score score">
+                <span class="score__title">score:</span>
+                <hr class="score__line">
+                <span class="score__number">0</span>
+            </div>
+            <div class="game__plaing-field plaing-field">
+                <div class="plaing-field__wrapper">
+                    <div class="plaing-field__unit unit" data-number="1">
+                        <div class="plaing-field__mole mole">
+                            <img class="mole__image" src="./assets/images/mole.jpg" alt="mole">
+                        </div>
+                        <div class="plaing-field__hole hole">
+                            <img class="hole__image" src="./assets/images/hole.jpg" alt="hole">
+                        </div>
+                    </div>
+                    <div class="plaing-field__unit unit" data-number="2">
+                        <div class="plaing-field__mole mole">
+                            <img class="mole__image" src="./assets/images/mole.jpg" alt="mole">
+                        </div>
+                        <div class="plaing-field__hole hole">
+                            <img class="hole__image" src="./assets/images/hole.jpg" alt="hole">
+                        </div>
+                    </div>
+                    <div class="plaing-field__unit unit" data-number="3">
+                        <div class="plaing-field__mole mole">
+                            <img class="mole__image" src="./assets/images/mole.jpg" alt="mole">
+                        </div>
+                        <div class="plaing-field__hole hole">
+                            <img class="hole__image" src="./assets/images/hole.jpg" alt="hole">
+                        </div>
+                    </div>
+                    <div class="plaing-field__unit unit" data-number="4">
+                        <div class="plaing-field__mole mole">
+                            <img class="mole__image" src="./assets/images/mole.jpg" alt="mole">
+                        </div>
+                        <div class="plaing-field__hole hole">
+                            <img class="hole__image" src="./assets/images/hole.jpg" alt="hole">
+                        </div>
+                    </div>
+                    <div class="plaing-field__unit unit" data-number="5">
+                        <div class="plaing-field__mole mole">
+                            <img class="mole__image" src="./assets/images/mole.jpg" alt="mole">
+                        </div>
+                        <div class="plaing-field__hole hole">
+                            <img class="hole__image" src="./assets/images/hole.jpg" alt="hole">
+                        </div>
+                    </div>
+                    <div class="plaing-field__unit unit" data-number="6">
+                        <div class="plaing-field__mole mole">
+                            <img class="mole__image" src="./assets/images/mole.jpg" alt="mole">
+                        </div>
+                        <div class="plaing-field__hole hole">
+                            <img class="hole__image" src="./assets/images/hole.jpg" alt="hole">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="game__helper helper">
+                <p class="helper__text">TIME IS OUT!<br>
+                    YOUR SCORE IS:</p>
+                <span class="helper__score">0</span>
+                <button class="helper__button button">try again</button>
+            </div>
+        </div>
+
+    </main>
+    <footer></footer>
+    <script src="./script.js"></script>
+</body>
+</html>
