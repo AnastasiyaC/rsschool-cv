@@ -1,0 +1,260 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+.page {
+  height: 100vh;
+  width: 100vw;
+  background-color: blue;
+}
+
+.form {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(114, 102, 119);
+  overflow: hidden;
+  position: relative;
+}
+
+.form__textarea {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  padding: 0;
+  border: 6px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  background-color: rgb(131, 128, 133);
+  box-shadow: 1px 1px 8px 0px rgba(34, 60, 80, 0.6), -1px -1px 8px 0px rgba(34, 60, 80, 0.6);
+  resize: none;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  font-family: 'Roboto Slab', serif;
+  outline: none;
+  cursor: pointer;
+  caret-color: rgb(204, 226, 5);
+}
+
+.form__textarea::placeholder {
+  color: rgb(255, 255, 255);
+  font-size: 26px;
+  opacity: 1;
+}
+
+@media screen and (max-width: 500px) {
+  .form__textarea::placeholder {
+    font-size: 22px;
+  }
+}
+
+.form--opened > .form__textarea::placeholder {
+  opacity: 0; 
+  transition: opacity 0.5s ease;
+}
+
+.form--opened > .form__textarea {
+  height: 50%;
+}
+
+@media screen and (max-width: 500px) {
+  .form--opened > .form__textarea {
+    height: 60%;
+  }
+}
+
+.form__keyboard {
+  position: absolute;
+  top: 110%;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to bottom, #3c005f, #012024);
+  position: relative;
+  box-shadow: 0px -4px 11px 0px rgba(0, 0, 0, 0.4);
+}
+
+.form__textarea,
+.form__keyboard {
+  transition: all 0.5s linear;
+}
+
+.form--opened > .form__keyboard {
+  top: calc(50% + 40px);
+}
+
+@media screen and (max-width: 500px) {
+  .form--opened > .form__keyboard {
+    top: calc(60% + 40px);
+  }
+}
+
+.keyboard__keys {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  background-color: transparent;
+  text-align: center;
+}
+
+.keyboard__key {
+  height: 45px;
+  border-radius: 4px;
+  border: 1px solid black;
+  outline: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: top;
+  padding: 0;
+  margin-top: 3px;
+  margin-left: 3px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+}
+
+.keyboard__key:focus {
+  border: 2px solid black;
+}
+
+@media screen and (max-width: 840px) {
+  .keyboard__key {
+    height: 40px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .keyboard__key {
+    height: 30px;
+    margin-top: 0;
+    margin-left: 0;
+  }
+}
+
+.keyboard__key--width_size-s {
+  width: 60px;
+}
+
+@media screen and (max-width: 840px) {
+  .keyboard__key--width_size-s {
+    width: 50px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .keyboard__key--width_size-s {
+    width: 40px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .keyboard__key--width_size-s {
+    width: 30px;
+  }
+}
+
+.keyboard__key--width_size-m {
+  width: 75px;
+}
+
+@media screen and (max-width: 840px) {
+  .keyboard__key--width_size-m {
+    width: 65px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .keyboard__key--width_size-m {
+    width: 50px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .keyboard__key--width_size-m {
+    width: 30px;
+  }
+}
+
+.keyboard__key--width_size-l {
+  width: 360px;
+}
+
+@media screen and (max-width: 840px) {
+  .keyboard__key--width_size-l {
+    width: 280px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .keyboard__key--width_size-l {
+    width: 230px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .keyboard__key--width_size-l {
+    width: 180px;
+  }
+}
+
+.keyboard__key--color-blue {
+  background-color: rgba(195, 204, 195, 0.4);
+}
+
+.keyboard__key--color-blue:hover {
+  background-color: rgba(195, 204, 195, 0.3);
+}
+
+.keyboard__key--color-symbol {
+  background-color: rgba(240, 255, 240, 0.5);
+}
+
+.keyboard__key--color-symbol:hover {
+  background-color: rgba(240, 255, 240, 0.4);
+}
+
+.keyboard__key-symbol {
+  color: #000000;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 24px;
+}
+
+@media screen and (max-width: 640px) {
+  .keyboard__key-symbol {
+    font-size: 20px;
+  }
+}
+
+.keyboard__key-icon {
+  height: 35px;
+  width: 35px;
+}
+
+@media screen and (max-width: 840px) {
+  .keyboard__key-icon {
+    height: 30px;
+    width: 30px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .keyboard__key-icon {
+    height: 20px;
+    width: 20px;
+  }
+}
