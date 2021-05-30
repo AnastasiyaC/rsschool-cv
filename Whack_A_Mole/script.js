@@ -5,6 +5,7 @@ const playingField = document.querySelector('.game__plaing-field');
 const finalScore = document.querySelector('.helper__score');
 
 let lastHole = null;
+let timeUp = false;
 let score = 0;
 
 const holesArray = Array.prototype.slice.call(holes);
