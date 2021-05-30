@@ -162,6 +162,25 @@ body {
   transition: all 0.4s linear;
 }
 
+.form--opened .editor-area__title {
+  animation: 1s linear apperance-title;
+}
+
+@keyframes apperance-title {
+  0% { 
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.1;
+  }
+  50% { 
+    opacity: 0.8;
+  }
+  100% { 
+    opacity: 1;
+  }
+}
+
 hr {
   height: 3px;
   width: 100%;
@@ -183,6 +202,36 @@ hr {
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   justify-items: center;
+  animation: 0.6s linear apperance;
+}
+
+@keyframes apperance {
+  0% { 
+    opacity: 0;
+  }
+  50% { 
+    opacity: 0.5;
+  }
+  100% { 
+    opacity: 1;
+  }
+}
+
+.form--opened .editor-area__filter {
+  animation: 1s linear disapperance;
+  visibility: hidden;
+}
+
+@keyframes disapperance {
+  0% { 
+    opacity: 1;
+  }
+  50% { 
+    opacity: 0.5;
+  }
+  100% { 
+    opacity: 0;
+  }
 }
 
 @media screen and (max-width: 1024px) {
@@ -210,8 +259,8 @@ hr {
 .editor-area__modification {
   width: 100%;
   transform: translateY(100vh);
-  transition-delay: 0.2s;
-  transition: all 0.4s linear;
+  transition-delay: 0.5s;
+  transition: all 0.5s linear;
 }
 
 @media screen and (max-width: 880px) {
@@ -220,14 +269,10 @@ hr {
   }
 }
 
-.form--opened .editor-area__filter {
-  visibility: hidden;
-}
-
 .form--opened .editor-area__modification {
   transform: translateY(0);
-  transition-delay: 0.2s;
-  transition: all 0.4s linear;
+  transition-delay: 0.5s;
+  transition: all 0.5s linear;
 }
 
 .button {
