@@ -1,0 +1,321 @@
+* {
+  box-sizing: border-box;
+}
+  
+body {
+  margin: 0;
+  padding: 0;
+  background-color: rgb(39, 50, 56);
+}
+  
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+  
+main {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+  
+.video-container {
+  height: 400px;
+  width: 720px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  background-color: rgba(0, 0, 0, 0.7);
+}
+  
+.video-container::before {
+  content: "";
+  height: calc(100% + 40px);
+  width: calc(100% + 40px);
+  background-color: rgb(53, 52, 57);
+  border-radius: 5px;
+  box-shadow: 8px 8px 12px 0px rgba(0, 0, 0, 0.5),
+    -8px -8px 12px 0px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+  
+.video-container::after {
+  content: "";
+  height: 70%;
+  width: 80%;
+  background-color: rgb(59, 130, 112);
+  box-shadow: -8px -8px 12px 0px rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  z-index: -2;
+}
+  
+@media screen and (max-width: 1080px) {
+  .video-container {
+    height: 350px;
+    width: 630px;
+  }
+}
+  
+@media screen and (max-width: 880px) {
+  .video-container {
+    height: 300px;
+    width: 540px;
+  }
+}
+  
+@media screen and (max-width: 760px) {
+  .video-container {
+    height: 250px;
+    width: 450px;
+  }
+}
+  
+@media screen and (max-width: 620px) {
+  .video-container {
+    height: 225px;
+    width: 405px;
+  }
+  
+  .video-container::before {
+    height: calc(100% + 20px);
+    width: calc(100% + 20px);
+  }
+    
+  .video-container::after {
+    top: -30px;
+    left: -30px;
+  }
+}
+  
+@media screen and (max-width: 540px) {
+  .video-container {
+    height: 200px;
+    width: 360px;
+  }
+}
+  
+@media screen and (max-width: 450px) {
+  .video-container {
+    height: 175px;
+    width: 310px;
+  }
+  
+  .video-container::before {
+    height: calc(100% + 10px);
+    width: calc(100% + 10px);
+  }
+    
+  .video-container::after {
+    top: -20px;
+    left: -20px;
+  }
+}
+  
+.video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+  
+.form {
+  position: absolute;
+  top: 80%;
+  left: 42%;
+}
+
+@media screen and (max-width: 1080px) {
+  .form {
+    top: 77%;
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .form {
+    top: 75%;
+  }
+}
+    
+@media screen and (max-width: 760px) {
+  .form {
+    top: 70%;
+  }
+}
+
+ @media screen and (max-width: 620px) {
+  .form {
+    top: 67%;
+    left: 38%;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .form {
+    top: 65%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .form {
+    top: 63%;
+    left: 45%;
+  }
+}
+
+.form::before {
+  content: "";
+  height: 700%;
+  width: calc(100% + 80px);
+  background-color: rgb(199, 85, 74);
+  box-shadow: 8px 8px 12px 0px rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -2;
+}
+
+@media screen and (max-width: 620px) {
+  .form::before {
+    width: calc(100% + 40px);
+    bottom: -10px;
+  }
+}
+  
+.form__input {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 540px;
+  border-radius: 5px;
+  background-color: rgb(185, 197, 171);
+  box-shadow: 1px 1px 4px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+  outline: none;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+
+@media screen and (max-width: 1080px) {
+  .form__input {
+    width: 440px;
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .form__input {
+    width: 380px;
+  }
+}
+    
+@media screen and (max-width: 760px) {
+  .form__input {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .form__input {
+    height: 10px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .form__input {
+    width: 250px;
+    height: 8px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .form__input {
+    width: 170px;
+  }
+}
+  
+.form__input:hover {
+  outline: none;
+  border: none;
+}
+  
+.form__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 18px;
+  width: 30px;
+  border-radius: 0px 5px 5px 0;
+  background: linear-gradient(
+    90deg,
+    rgb(124, 16, 4) 0%,
+    rgb(83, 12, 4) 50%,
+    rgb(68, 8, 2) 100%
+  );
+  box-shadow: -580px 0px 0px 570px rgb(124, 16, 4);
+  outline: none;
+  border: none;
+}
+
+@media screen and (max-width: 620px) {
+  .form__input::-webkit-slider-thumb {
+    height: 12px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .form__input::-webkit-slider-thumb {
+    height: 8px;
+  }
+}
+  
+.form__input-value {
+  margin-top: 66px;
+  height: 36px;
+  width: 60px;
+  background-color: rgb(121, 171, 2);
+  border-radius: 5px;
+  text-align: center;
+  font-size: 30px;
+  position: relative;
+  font-family: "Patrick Hand", cursive;
+  position: absolute;
+  top: -50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  
+.form__input-value::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-bottom: 10px solid rgb(121, 171, 2);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+  
+@media screen and (max-width: 620px) {
+  .form__input-value {
+    margin-top: 56px;
+    height: 30px;
+    width: 50px;
+    font-size: 24px;
+  }
+}
