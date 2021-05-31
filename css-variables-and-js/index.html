@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <title>Photo editor online.</title>
+</head>
+<body>
+    <header>
+        <h1 class="visually-hidden">Photo editor.</h1>
+    </header>
+    <main>
+        <div class="photo-editor">
+            <div class="photo-area">
+                <div class="photo-area__photo">
+                    <img class="photo-area__image" src="./assets/images/photo-editor.jpg" alt="dog">
+                </div>
+            </div>
+            <div class="editor-area">
+                <div class="editor-area__wrapper">
+                    <h2 class="editor-area__title title">Editor</h2>
+                    <hr>
+                    <div class="editor-area__filter filter">
+                        <button class="filter__button button" data-change-type="background" data-tooltip="background">
+                            <img class="button__icon" src="./assets/icons/icon-background.jpg" alt="icon-background">
+                            <span class="button__discription">background</span>
+                        </button>
+                        <button class="filter__button button" data-change-type="resize" data-tooltip="resize">
+                            <img class="button__icon" src="./assets/icons/icon-resize.jpg" height="50px" width="50px" alt="icon-resize">
+                            <span class="button__discription">resize</span>
+                        </button>
+                        <button class="filter__button button" data-change-type="contrast" data-tooltip="contrast">
+                            <img class="button__icon" src="./assets/icons/icon-contrast.jpg" height="50px" width="50px" alt="icon-contrast">
+                            <div class="button__discription">contrast</div>
+                        </button>
+                        <button class="filter__button button" data-change-type="brightness" data-tooltip="brightness">
+                            <img class="button__icon" src="./assets/icons/icon-brightness.jpg" height="50px" width="50px" alt="icon-brightness">
+                            <span class="button__discription">brightness</span>
+                        </button>
+                        <button class="filter__button button" data-change-type="tint" data-tooltip="tint">
+                            <img class="button__icon" src="./assets/icons/icon-tint.jpg" alt="icon-tint">
+                            <span class="button__discription">tint</span>
+                        </button>
+                        <button class="filter__button button filter__button--transform" data-change-type="blur" data-tooltip="blur">
+                            <img class="button__icon" src="./assets/icons/icon-blur.png" height="50px" width="50px" alt="icon-blur">
+                            <span class="button__discription">blur</span>
+                        </button>
+                        <button class="filter__button button filter__button--transform" data-change-type="suturation" data-tooltip="suturation">
+                            <img class="button__icon" src="./assets/icons/icon-suturation.jpg" height="50px" width="50px" alt="icon-suturation">
+                            <span class="button__discription">suturation</span>
+                        </button>
+                        <button class="filter__button button filter__button--transform" data-change-type="grayscale" data-tooltip="grayscale">
+                            <img class="button__icon" src="./assets/icons/icon-grayscale.jpg" height="50px" width="50px" alt="icon-grayscale">
+                            <span class="button__discription">greyscale</span>
+                        </button>
+                        <button class="filter__button button filter__button--transform" data-change-type="sepia" data-tooltip="sepia">
+                            <img class="button__icon" src="./assets/icons/icon-sepia.jpg" height="50px" width="50px" alt="icon-sepia">
+                            <span class="button__discription">sepia</span>
+                        </button>
+                    </div>
+                    <div class="editor-area__modification modification">
+                        <form class="modification__form form">
+                        </form>
+                        <div class="modification__buttons">
+                            <button class="modification__exit-button button">exit</button>
+                            <button class="modification__submit-button button">submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+    <script src="./script.js"></script>
+</body>
+</html>
