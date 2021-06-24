@@ -10,13 +10,10 @@ const seconds = document.querySelector('.timer__seconds');
 
 let elementName = document.querySelector('.button-element--active').dataset.name;
 let playTime = getTime(document.querySelector('.button-time--active').innerHTML);
-
+let count = playTime;
 let currentVideo = getCurrentMedia(elementName, videos);
 let currentAudio = getCurrentMedia(elementName, audios);
-
 let videoIsActive = false;
-
-let count = playTime;
 
 document.addEventListener('click', (event) => {
     const clickedElement = event.target;
@@ -26,17 +23,16 @@ document.addEventListener('click', (event) => {
         document.querySelector('.button-element--active').classList.remove('button-element--active');
         clickedNavigationButton.classList.add('button-element--active'); 
         stopMedia(currentVideo, currentAudio);
-        
         elementName = clickedNavigationButton.dataset.name;
-        
         currentVideo = getCurrentMedia(elementName, videos);
         currentAudio = getCurrentMedia(elementName, audios);
         slideSlider(clickedNavigationButton);
-
         count = playTime;
         innerTime(count);
     } if (clickedElement.classList.contains('controll__button-time')) {
         document.querySelector('.button-time--active').classList.remove('button-time--active');
+        stopMedia(currentVideo, currentAudio);
+        playButtonText.textContent = 'play';
         clickedElement.classList.add('button-time--active'); 
         playTime = getTime(clickedElement.innerHTML);
         count = playTime;
@@ -62,8 +58,6 @@ function slideSlider(elem) {
 }
 
 function playMedia(video, audio) {
-    console.log(video)
-    console.log(audio)
     if(video.paused) {
         video.play();
         audio.play();
@@ -77,6 +71,14 @@ function playMedia(video, audio) {
     }
 }
 
+function stopMedia(video, audio) {
+    video.pause();
+    audio.pause();
+    video.currentTime = 0;
+    audio.currentTime = 0;
+    videoIsActive = false;
+}
+
 function getCurrentMedia(name, arr) {
     return Array.from(arr).find((item) => item.dataset.name === name);
 }
@@ -84,30 +86,6 @@ function getCurrentMedia(name, arr) {
 function getTime(string) {
     return +string.replace(/[^0-9]/g, '') * 60;
 }
-
-// function mediaRepeat(media, n) {
-//     let timesRepeat = Math.floor(playTime / media.duration);
-//     let timeModulo = Math.floor(playTime % media.duration);
-
-//     console.log(n)
-
-//     if (timesRepeat == n) {
-//         media.addEventListener('timeupdate', () => {
-//             if (timeModulo == Math.floor(media.currentTime)) {
-//                 media.pause();
-//                 media.currentTime = 0;
-//             } else {
-//                 return;
-//             }
-//         })
-//     } else {
-//         media.addEventListener('ended', () => {
-//             media.currentTime = 0;
-//             media.play();  
-//             return mediaRepeat(media, n + 1)
-//         })
-//     }
-// }
 
 function mediaRepeat(media) {
     media.addEventListener('ended', () => {
@@ -124,7 +102,6 @@ function countdown() {
         count -= 1;
     
         if (count <= -1) {
-            console.log('stop')
             clearTimeout(timer);
             stopMedia(currentVideo, currentAudio);
             count = playTime;
@@ -142,13 +119,3 @@ function innerTime(n) {
     minutes.innerHTML = min < 10 ? `0${min}` : min;
     seconds.innerHTML = sec < 10 ? `0${sec}` : sec;
 }
-
-function stopMedia(video, audio) {
-        console.log('stop media')
-        video.pause();
-        audio.pause();
-        video.currentTime = 0;
-        audio.currentTime = 0;
-        videoIsActive = false;
-}
-
