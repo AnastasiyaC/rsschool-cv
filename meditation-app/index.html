@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classical elements meditation.</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="shortcut icon" href="./assets/favicon/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <h1 class="visually-hidden">Classical elements meditation.</h1> 
+    </header>
+    <main>
+        <div class="meditation">
+            <div class="meditation__video-block">
+                <div class="video-block__wrapper">
+                    <div class="video__block">
+                        <video class="meditation__video video" data-name="fire">
+                            <source class="video-src" src="./assets/videos/fire.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video__block">
+                        <video class="meditation__video video" data-name="air">
+                            <source class="video-src" src="./assets/videos/air.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video__block">
+                        <video class="meditation__video video" data-name="water">
+                            <source class="video-src" src="./assets/videos/water.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video__block">
+                        <video class="meditation__video video" data-name="earth">
+                            <source class="video-src" src="./assets/videos/earth.mp4" type="video/mp4"> 
+                        </video>
+                    </div>
+                </div>
+            </div>
+            <div class="meditation__navigation navigation">
+                <button class="navigation__button-element button button-element--background_fire button-element--active" data-name="fire">
+                    <span class="button-element__name">fire</span>
+                </button>
+                <button class="navigation__button-element button button-element--background_air" data-name="air">
+                    <span class="button-element__name">air</span>
+                </button>
+                <button class="navigation__button-element button button-element--background_water" data-name="water">
+                    <span class="button-element__name">water</span>
+                </button>
+                <button class="navigation__button-element button button-element--background_earth" data-name="earth">
+                    <span class="button-element__name">earth</span>
+                </button>
+            </div>
+            <div class="meditation__sounds">
+                <audio class="sounds" data-name="fire">
+                    <source src="./assets/sounds/fire.mp3">
+                </audio>
+                <audio class="sounds" data-name="air">
+                    <source src="./assets/sounds/air.mp3">
+                </audio>
+                <audio class="sounds" data-name="water">
+                    <source src="./assets/sounds/water.mp3">
+                </audio>
+                <audio class="sounds" data-name="earth">
+                    <source src="./assets/sounds/earth.mp3">
+                </audio>
+            </div>
+            <div class="meditation__controll controll">
+                <button class="controll__button-time button button-time button-time--active">2 minutes</button>
+                <button class="controll__button-time button button-time">5 minutes</button>
+                <button class="controll__button-time button button-time">10 minutes</button>
+                <button class="controll__button-play button button-play">
+                    <span class="button-play__text">play</span>
+                    <div class="button-play__timer timer">
+                        <span class="timer__minutes">02</span>:<span class="timer__seconds">00</span>
+                    </div>    
+                </button>
+                <button class="controll__button-reset button">reset</button>
+            </div>
+
+    </main> 
+    <footer></footer>
+    <script src="script.js"></script>
+</body>
+</html>
