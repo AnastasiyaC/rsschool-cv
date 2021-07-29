@@ -16,16 +16,13 @@
         <div class="game">
             <div class="game__playing-field playing-field">
                 <div class="playing-field__drops">
-                    <div class="playing-field__drop drop drop--color_blue">
+                    <!-- <div class="playing-field__drop drop drop--color_blue">
                         <div class="drop__expression">
                             <span class="drop__operand drop__operand--position_first">26</span>
                             <span class="drop__operator">+</span>
                             <span class="drop__operand drop__operand--position_second">76</span>
                         </div>
-                        <!-- <div class="drop__spray">
-                            <img class="drop__img" src="./assets/images/spray--blue.png" alt="spray">
-                        </div> -->
-                    </div>
+                    </div> -->
                     <!-- <div class="playing-field__drop drop drop--color_bonus">
                         <span class="drop__operand drop__operand--position_first">2</span>
                         <span class="drop__operator">+</span>
@@ -40,17 +37,9 @@
                     <div class="playing-field__wawe-2"></div>
                     <div class="playing-field__wawe-3"></div>
                 </div>
-
             </div>
-            <div class="game__result-field result-field">
-                <div class="result-field__score score">
-                    <div class="score__icon">
-                        <img class="score__image image" src="./assets/icons/icon_star.png" alr="icon-star">
-                    </div>
-                    <span class="score__text">score:</span>
-                    <span class="score__number">268</span>
-                </div>
-                <div class="result-field__keyboard keyboard">
+            <div class="game__keyboard-field keyboard-field">      
+                <div class="keyboard-field__keyboard keyboard">
                     <div class="keyboard__display">
                         <form class="keyboard__form">
                             <input type="text" class="keyboard__input" readonly="readonly">
@@ -72,6 +61,13 @@
                         <button class="keyboard__button button keyboard__button-operation button-operation--hover_red">delete</button>
                     </div>
                 </div>
+            </div>
+            <div class="game__score score">
+                <div class="score__icon">
+                    <img class="score__image image" src="./assets/icons/icon_star.png" alr="icon-star">
+                </div>
+                <span class="score__text">score:</span>
+                <span class="score__number">268</span>
             </div>
         </div>
     </main>

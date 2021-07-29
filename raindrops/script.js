@@ -215,6 +215,9 @@ class Game {
     }
 }
 
+const game = new Game();
+game.playGame();
+
 buttons.addEventListener('click', (event) => {
     if (event.target.classList.contains('keyboard__button-number')) {
         keyboardInput.value += event.target.textContent;

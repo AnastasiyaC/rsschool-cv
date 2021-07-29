@@ -23,11 +23,12 @@ body {
     background: linear-gradient(180deg, rgba(122,195,224,1) 0%, rgba(170,228,250,1) 25%, rgba(237,248,254,1) 100%);
 }
 
-.game__result-field {
+.game__keyboard-field {
     height: 100%;
     width: 350px;
     background-color: rgba(40, 62, 85, 1);
     position: relative;
+    z-index: 4;
 }
 
 .playing-field__drop {
@@ -39,6 +40,18 @@ body {
     border-radius: 50%;
     border-top-right-radius: 5px;
     transform: rotate(-45deg);
+    animation: drop-down 15s linear forwards;
+    z-index: 2;
+}
+
+@keyframes drop-down {
+    0% {
+        top: 0;
+    }
+
+    100% {
+        top: 100%;
+    }
 }
 
 .drop--color_blue {
@@ -84,144 +97,6 @@ body {
     font-weight: 700;
 }
 
-.move {
-    animation: yes 0.5s linear 2s forwards;
-}
-
-.move .drop__expression {
-    display: none;
-}
-
-@keyframes yes {
-    100% {
-        border-top-right-radius: 0;
-        border-radius: 50%;
-        /* opacity: 0; */
-    }
-}
-
-.drop__spray {
-    display: none;
-}
-
-.move .drop__spray {
-    height: 150%;
-    width: 150%;
-    background-color: rgba(0, 0, 0, 0.1);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: spray 1s linear 2.5s forwards;
-    opacity: 0;
-}
-
-.drop__image {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
-
-@keyframes spray {
-    o {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
-/* .playing-field__drop {
-    height: 56px;
-    width: 56px;
-    position: absolute;
-    top:10%;
-    left: 10%;
-    animation: drop-down 15s linear;
-    z-index: 2;
-}
-
-@keyframes drop-down {
-    0% {
-        top: 0;
-    }
-
-    100% {
-        top: 100%;
-    }
-}
-
-.drop--color_blue {
-    top:10%;
-    left: 10%;
-}
-
-.drop--color_bonus {
-    top: 20%;
-    left: 20%;
-}
-
-.playing-field__drop::before {
-    content: '';
-    height: 64px;
-    width: 64px;
-    background: rgb(241,247,249);
-    position: absolute;
-    left: -8px;
-    transform: rotate(-45deg);
-    border-radius: 50%;
-    border-top-right-radius: 5px;
-    
-    transform-origin: center;
-    animation: yes 1s linear forwards;
-}
-
-.drop--color_blue::before {
-    background: linear-gradient(225deg, #f1f7f9 0%, #66bbda 60%, #3a84ab 100%);
-    border: 4px solid #2a6c8f;
-}
-
-.drop--color_bonus::before {
-    background: linear-gradient(225deg, #e7cfe7 0%, #c279c2 60%, #964b96 100%);
-    border: 4px solid #a0307e;
-}
-
-@keyframes yes {
-    100% {
-        height: 20px;
-        width: 20px;
-        border-top-right-radius: 0;
-        border-radius: 50%;
-        transform: rotate(360deg);
-        background: green;
-        border: 2px dashed #000000;
-    }
-}
-
-.drop__operand {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 22px;
-}
-
-.drop__operand--position_first {
-    bottom: 40%;
-}
-
-.drop__operand--position_second {
-    top: 60%;
-}
-
-.drop__operator {
-    position: absolute;
-    top: 60%;
-    left: 5%;
-    transform: translateY(-50%);
-    font-size: 28px;
-    font-weight: 900;
-} */
-
 .playing-field__rock {
     height: 140px;
     width: 530px;
@@ -229,6 +104,7 @@ body {
     position: relative;
     top: 77%;
     left: 29%;
+    z-index: 1;
 }
 
 .image {
@@ -287,18 +163,19 @@ body {
     }
 }
 
-.result-field__score {
+.game__score {
     height: 60px;
-    width: 68%;
+    width: 220px;
     background: linear-gradient(to bottom, #4195be, #2e6c8d);
     position: absolute;
     top: 0;
-    left: 50%;
+    left: calc(100% - 175px);
     transform: translateX(-50%);
     border-radius: 10px;
     display: flex;
     align-items: center;
     font-size: 34px;
+    z-index: 5;
 }
 
 .score__icon {
@@ -307,11 +184,19 @@ body {
     margin-left: 10px;
 }
 
-/* .score__image {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-} */
+.score__image {
+    transform-origin: 50% 50%;
+    animation: rotate 0.5s linear;
+}
+
+@keyframes rotate {
+    50% {
+        transform: scale(1.4) rotate(180deg);
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+    }
+}
 
 .score__text {
     margin-left: 10px;
@@ -321,7 +206,7 @@ body {
     margin-left: 6px;
 }
 
-.result-field__keyboard {
+.keyboard-field__keyboard {
     height: 380px;
     width: calc(100% - 60px);
     background: linear-gradient(to bottom, #4195be, #2e6c8d);
