@@ -1,17 +1,25 @@
+const game = document.querySelector('.game');
 const buttons = document.querySelector('.keyboard__buttons');
 const keyboardInput = document.querySelector('.keyboard__input');
 const score = document.querySelector('.score__number');
-
-// const firstOperand = document.querySelector('.drop__operand--position_first');
-// const secondOperand = document.querySelector('.drop__operand--position_second');
-// const operation = document.querySelector('.drop__operator');
+const lives = document.querySelectorAll('.lives__heart');
+const answerSounds = document.querySelectorAll('.sounds__sound-short');
+const wawesSound =document.querySelector('.sounds__sound-waves');
+const settingButtons = document.querySelector('.game__setting');
+const buttonFullscreen = document.querySelector('.button-fullscreen__icon');
 
 const drops = document.querySelector('.playing-field__drops');
+const waves = document.querySelectorAll('.wave');
 
-let timeUp = false;
-let expressionResult = [];
-let playerExpressionResult = null;
+const dropsArr = [];  // {element: this._dropElement, result: this._expressionResult, bonus: this._bonus, check: false,};
+const mistakesNamber = 3;
 
+let dropCounter = 0;
+let mistakesCounter = 0;
+let usersExpressionResult = null;  // entered user's answer
+let points = 10;  // accrued number of points
+let gameScore = 0;
+let correctAnswer = false;
 
 
 function getRandomNumber(min, max) {
@@ -30,10 +38,16 @@ class Drop {
         this._operandTwo = null;
         this._expressionString = null;
         this._expressionResult = null;
+        this._bonus = false;
     }
     init() {
         drops.appendChild(this._createDrop());
-        return this._dropElement;
+        return {
+            element: this._dropElement,
+            result: this._expressionResult,
+            bonus: this._bonus,
+            check: false,
+        };
     }
     _createDrop() {
         const drop = document.createElement('div');
@@ -64,11 +78,11 @@ class Drop {
 
         return drop;
     }
-    _moveDrop() {
-        this._dropElement.classList.add('playing-field__drop--active');
-    }
+    // _moveDrop() {
+    //     this._dropElement.classList.add('playing-field__drop--move-down');
+    // }
     _getPositionLeft() {
-        return this._getRandomNumber(10, 90);
+        return this._getRandomNumber(5, 90);
     }
     _getRandomOperator() {
         const randomIndex = Math.floor(Math.random() * this._operators.length);
@@ -133,90 +147,163 @@ class Drop {
 }
 
 class BonusDrop extends Drop {
-    init () {
+    init() {
         super.init();
         this._dropElement.classList.remove('drop--color_blue');
         this._dropElement.classList.add('drop--color_bonus');
+        this._bonus = true;
+        return  {
+            element: this._dropElement,
+            result: this._expressionResult,
+            bonus: this._bonus,
+            check: false,
+        };
     }
 }
 
-function createDrops(level) {
-    const time = getRandomNumber(2000, 3000);
-    const drop = new Drop(level);
-
-    drop.init();
-    expressionResult = drop.getExpressionResult();
-    console.log(expressionResult);
-
-    setTimeout(() => {
-        if (!timeUp) {
-            createDrops();
-        }  
-    }, time);
-}
-
-function startLevel() {
+function playGame() {
     createDrops();
-    setTimeout(() => {
-        timeUp = true;
-    }, 15000);
+    startWavesAnimation();
+    playWavesSound();
 }
 
-// startLevel();
+// playGame();
 
-class Game {
-    gameLevel = 1;
-    gameScore = 0;
-    dropsCount = 0;
-    bonusDrop = false;
-    dropElements = [];
-    expressionResults = [];
-    usersExpressionResult = null;
-    wrongExpressionResult = 0;
-    timeUp = false;
+function startWavesAnimation() {
+    Array.from(waves).map((wave) => {
+        wave.style.animationPlayState = 'running';
+    })
+}
 
-    constructor() {
-        this._gameLevel = 1;
+function stopWavesAnimation() {
+    Array.from(waves).map((wave) => {
+        wave.style.animationPlayState = 'paused';
+    })
+}
+
+function createDrops() {
+    const drop = new Drop(1)
+    const bonusDrop = new BonusDrop(1);
+    const time = getRandomNumber(2000, 4000);
+
+    if (dropCounter === 3) {
+        dropsArr.push(bonusDrop.init());
+        dropCounter = 0;
+    } else {
+        dropsArr.push(drop.init());
+        dropCounter++;
     }
 
-    playGame() {
-        this.createDrop();
-        setTimeout(() => {
-            this.timeUp = true;
-        }, 25000);
+    let timerId = setTimeout(() => {
+       createDrops();
+    }, time);
+
+    if (mistakesCounter === mistakesNamber) {
+        clearTimeout(timerId);
     }
+}
 
-    createDrop() {
-        const time = getRandomNumber(4000, 5000);
-        const drop = new Drop(1);
-        const bonusDrop = new BonusDrop(1);
-    
-        
-        this.dropsCount += 1;
+// createDrops();
 
-        if (this.dropsCount == 5) {
-            this.dropElements.push(bonusDrop.init());
-            this.expressionResults.push(bonusDrop.getExpressionResult());
-        } else {
-            drop.init();
-            this.dropElements.push(drop.init());
-            this.expressionResults.push(drop.getExpressionResult());
+function finishGame() {
+    stopWavesAnimation();
+    stopWavesSound();
+}
+
+function checkUsersAnswer(value) {
+    const targetDrop = dropsArr.find(i => i.result === value && !i.check);
+
+    if (targetDrop && !targetDrop.bonus) {
+        removeDrop(targetDrop);
+    }
+    if (targetDrop && targetDrop.bonus) {
+        removeDrop(targetDrop);
+        removeDropsWithBonus(); 
+    }
+    if (!targetDrop) {
+        correctAnswer = false;
+        mistakesCounter++;
+        playSound('incorrect');
+        minusLive(mistakesCounter);
+   }
+   
+   updateScore(correctAnswer);
+}
+
+function removeDrop(dropEl) {
+    correctAnswer = true;
+    dropEl.check = true;
+    removeDropWithCorrectAnswer(dropEl.element);
+}
+
+function removeDropWithCorrectAnswer(dropEl) {
+    const dropPos = dropEl.getBoundingClientRect();
+
+    dropEl.innerHTML = '<img src="./assets/icons/icon_check.png" class="drop__icon" alt="icon-check">';
+    dropEl.classList.add('drop--burst');
+    dropEl.style.top = `${dropPos.top}px`;
+}
+
+function removeDropsWithBonus() { 
+    dropsArr.map((drop) => {
+        if (!drop.check) {
+            const dropPos = drop.element.getBoundingClientRect();
+
+            drop.element.classList.add('drop--burst_all');
+            drop.element.style.top = `${dropPos.top}px`;
+            drop.check = true;
         }
-        
-        console.log(this.expressionResults);
-        console.log(this.dropElements)
-        console.log(this.dropsCount)
-    
-        setTimeout(() => {
-            if (!this.timeUp) {
-                this.createDrop();
-            }  
-        }, time);
-    }
+        else {
+            return;
+        }
+    })    
 }
 
-const game = new Game();
-game.playGame();
+function updateScore(booleanResult) {
+    if (booleanResult) {
+        gameScore += points;
+        points++;
+        playAnswerSound('correct');
+    } if (!booleanResult) {
+        gameScore--;
+        playAnswerSound('incorrect');
+    }
+
+    score.innerHTML = gameScore;
+}
+
+function minusLive(num) {
+    Array.from(lives).map((item => {
+        const checkNum = +item.dataset.count === num;
+        
+        if (checkNum) {
+            item.classList.add('heart--minus');
+        } else {
+            return;
+        } 
+    }))
+}
+
+function playWavesSound() {
+    wawesSound.currenttime = 0;
+    wawesSound.play();
+
+    wawesSound.addEventListener('ended', () => {
+        wawesSound.currenttime = 0;
+        wawesSound.play(); 
+    })
+}
+
+function stopWavesSound() {
+    wawesSound.pause();
+}
+
+function playAnswerSound(dataName) {
+    const targetSound = Array.from(answerSounds).find(sound => sound.dataset.sound === dataName);
+
+    targetSound.currenttime = 0;
+    targetSound.play(); 
+}
 
 buttons.addEventListener('click', (event) => {
     if (event.target.classList.contains('keyboard__button-number')) {
@@ -227,12 +314,33 @@ buttons.addEventListener('click', (event) => {
         } if (event.target.textContent == 'clear') {
             keyboardInput.value = '';
         } if (event.target.textContent == 'enter') {
-            playerExpressionResult = +keyboardInput.value;
-            console.log(playerExpressionResult);
-            if (playerExpressionResult === expressionResult) {
-                score.textContent = +score.textContent + 1;   
+            if (keyboardInput.value.length > 0) {
+                usersExpressionResult = +keyboardInput.value;
+                checkUsersAnswer(usersExpressionResult);
+                keyboardInput.value = '';
+            } else {
+                return;
             }
-            keyboardInput.value = '';
         }
     }
+})
+
+function toggleFullscreen() {
+    if (!game.fullscreenElement) {
+        game.requestFullscreen();
+    } if (document.exitFullscreen) {
+        document.exitFullscreen();
+    };
+}
+
+function changeVolume() {
+
+}
+
+settingButtons.addEventListener('click', (event) => {
+    if (event.target.closest('.button-fullscreen')) {
+        toggleFullscreen();
+    } if (event.target.closest('.button-sound')) {
+        console.log('sound');
+    } 
 })

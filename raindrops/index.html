@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-
+        <h1 class="visually-hidden">Raindrops.</h1>
     </header>
     <main>
         <div class="game">
@@ -21,7 +21,9 @@
                             <span class="drop__operand drop__operand--position_first">26</span>
                             <span class="drop__operator">+</span>
                             <span class="drop__operand drop__operand--position_second">76</span>
+                           
                         </div>
+                        <img src="./assets/icons/icon_check.png" class="drop__icon" alt="icon-check">
                     </div> -->
                     <!-- <div class="playing-field__drop drop drop--color_bonus">
                         <span class="drop__operand drop__operand--position_first">2</span>
@@ -32,10 +34,10 @@
                 <div class="playing-field__rock rock">
                     <img class="rock__image image" src="./assets/images/stones.png">
                 </div>
-                <div class="playing-field__wawes">
-                    <div class="playing-field__wawe-1"></div>
-                    <div class="playing-field__wawe-2"></div>
-                    <div class="playing-field__wawe-3"></div>
+                <div class="playing-field__waves">
+                    <div class="playing-field__wave-one wave"></div>
+                    <div class="playing-field__wave-two wave"></div>
+                    <div class="playing-field__wave-three wave"></div>
                 </div>
             </div>
             <div class="game__keyboard-field keyboard-field">      
@@ -63,11 +65,53 @@
                 </div>
             </div>
             <div class="game__score score">
-                <div class="score__icon">
-                    <img class="score__image image" src="./assets/icons/icon_star.png" alr="icon-star">
-                </div>
                 <span class="score__text">score:</span>
-                <span class="score__number">268</span>
+                <!-- <div class="score__icon">
+                    <img class="score__image image" src="./assets/icons/icon_star.png" alr="icon-star">
+                </div> -->
+                <span class="score__number">0</span>
+            </div>
+            <div class="game__lives lives">
+                <span class="lives__text">lives:</span>
+                <div class="lives__hearts">
+                    <div class="lives__heart heart" data-count="3">
+                        <div class="heart__part heart__part--left"></div>
+                        <div class="heart__part heart__part--rigth"></div>
+                    </div>
+                    <div class="lives__heart" data-count="2">
+                        <div class="heart__part heart__part--left"></div>
+                        <div class="heart__part heart__part--rigth"></div>
+                    </div>
+                    <div class="lives__heart" data-count="1">
+                        <div class="heart__part heart__part--left"></div>
+                        <div class="heart__part heart__part--rigth"></div>
+                    </div>
+                </div>  
+            </div>
+            <div class="game__sounds sounds">
+                <audio src="./assets/sounds/sound_correct.mp3" class="sounds__sound-short" data-sound="correct"></audio>
+                <audio src="./assets/sounds/sound_incorrect.mp3" class="sounds__sound-short" data-sound="incorrect"></audio>
+                <audio src="./assets/sounds/sound_wawes.mp3" class="sounds__sound-waves" data-sound="waves"></audio>
+            </div>
+            <div class="game__setting setting">
+                <button class="setting__button button button-fullscreen">
+                    <img src="./assets/icons/icon_fullscreen.png" class="button__icon button-fullscreen__icon" alt="icon-fullscreen">
+                </button>
+                <button class="setting__button button button-sound">
+                    <img src="./assets/icons/icon_sound_off.png" class="button__icon button-sound__icon" alt="icon-sound">
+                </button>
+            </div>
+            <div class="game__window window window-start">
+                <div class="window-start__title">raindrops</div>
+                <div class="window-start__container container">
+                    <div class="window-start__buttons">
+                        <button class="window-start__button">how to play</button>
+                        <button class="window-start__button">play</button>
+                    </div>
+                </div>
+            </div>
+            <div class="game__window window window-end">
+
             </div>
         </div>
     </main>

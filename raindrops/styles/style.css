@@ -7,6 +7,14 @@ body {
     padding: 0;
     background-color: #7f868b;
 }
+
+.visually-hidden {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+  }
   
 .game {
     height: 100vh;
@@ -31,15 +39,14 @@ body {
     z-index: 4;
 }
 
+/* DROPS STYLES START */
 .playing-field__drop {
     height: 64px;
     width: 64px;
     position: absolute;
-    top: 10%;
-    left: 10%;
     border-radius: 50%;
     border-top-right-radius: 5px;
-    transform: rotate(-45deg);
+    transform: rotate(-45deg) translateY(0px);
     animation: drop-down 15s linear forwards;
     z-index: 2;
 }
@@ -64,12 +71,72 @@ body {
     border: 4px solid #a0307e;
 }
 
+.drop--burst {
+    transform-origin: center;  
+    animation: burst 1s linear forwards;
+}
+
+@keyframes burst {
+    40% {
+        transform: rotate(-45deg) scale(0.5);
+        border-top-right-radius: 50%;
+        background: green;
+        border: 4px solid rgb(3, 80, 3);
+    }
+    80% {
+        transform: rotate(-45deg) scale(0.5);
+        border-top-right-radius: 50%;
+        background: green;
+        border: 4px solid rgb(3, 80, 3);
+    }
+    90% {
+        transform: rotate(-45deg) scale(0.7);
+        border-top-right-radius: 50%;
+        background: green;
+        border: 4px solid rgb(3, 80, 3);
+    }
+    100% {
+        transform: rotate(-45deg) scale(0);
+        border-top-right-radius: 50%;
+        background: green;
+        border: 4px solid rgb(3, 80, 3);
+    }
+}
+
+.drop--burst_all {
+    animation: burst-all 1s linear forwards;
+}
+
+@keyframes burst-all {
+    40% {
+        transform: rotate(-45deg) scale(0.5);
+        border-top-right-radius: 50%;
+    }
+    80% {
+        transform: rotate(-45deg) scale(0.5);
+        border-top-right-radius: 50%;
+    }
+    90% {
+        transform: rotate(-45deg) scale(0.7);
+        border-top-right-radius: 50%;
+    }
+    100% {
+        transform: rotate(-45deg) scale(0);
+        border-top-right-radius: 50%;
+    }
+}
+
 .drop__expression {
     height: 100%;
     width: 100%;
     background-color: transparent;
     position: relative;
     transform: rotate(45deg);
+}
+
+.drop--burst > .drop__expression,
+.drop--burst_all > .drop__expression {
+    display: none;
 }
 
 .drop__operand {
@@ -97,15 +164,39 @@ body {
     font-weight: 700;
 }
 
+.drop--burst > .drop__icon {
+    display: block;
+    opacity: 0;
+    height: 80%;
+    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    animation: apperance 0.4s linear forwards;
+}
+
+@keyframes apperance {
+    100% {
+        opacity: 1;
+    } 
+}
+/* DROPS STYLES END */
+
+
+
+/* ROCKS STYLES START */
 .playing-field__rock {
-    height: 140px;
-    width: 530px;
+    height: 20%;
+    width: 44%;
     background-color: transparent;
     position: relative;
     top: 77%;
     left: 29%;
     z-index: 1;
 }
+/* ROCKS STYLES END */
+
 
 .image {
     height: 100%;
@@ -113,7 +204,10 @@ body {
     object-fit: contain;
 }
 
-.playing-field__wawes {
+
+
+/* WAWES STYLES START */
+.playing-field__waves {
     height: 100%;
     width: 100%;
     position: absolute;
@@ -122,9 +216,10 @@ body {
     background-color: transparent;
     overflow: hidden;
     z-index: 3;
+    
 }
 
-.playing-field__wawe-1 {
+.playing-field__wave-one {
     height: 1500px;
     width: 1500px;
     background-color: #66bbda;
@@ -133,9 +228,10 @@ body {
     left: -7%;
     top: 6%;
     animation: wave 6s linear infinite;
+    animation-play-state: paused;
 }
 
-.playing-field__wawe-2 {
+.playing-field__wave-two {
     height: 1500px;
     width: 1500px;
     background-color: #4694ba;
@@ -144,9 +240,10 @@ body {
     left: 17%;
     top: 11%;
     animation: wave 10s linear infinite;
+    animation-play-state: paused;
 }
 
-.playing-field__wawe-3 {
+.playing-field__wave-three {
     height: 2000px;
     width: 2000px;
     background-color: #3a84ab;
@@ -155,6 +252,7 @@ body {
     left: -56%;
     top: 7%;
     animation: wave 8s linear infinite;
+    animation-play-state: paused;
 }
 
 @keyframes wave {
@@ -162,19 +260,23 @@ body {
        transform: rotate(360deg);
     }
 }
+/* WAWES STYLES END */
 
+
+
+/* SCORE STYLES START */
 .game__score {
-    height: 60px;
-    width: 220px;
-    background: linear-gradient(to bottom, #4195be, #2e6c8d);
+    width: 100px;
+    /* background: linear-gradient(to bottom, #4195be, #2e6c8d); */
     position: absolute;
-    top: 0;
-    left: calc(100% - 175px);
-    transform: translateX(-50%);
+    top: 2%;
+    left: calc(103% - 350px);
+    /* transform: translateX(-50%); */
     border-radius: 10px;
     display: flex;
-    align-items: center;
-    font-size: 34px;
+    flex-direction: column;
+    /* align-items: center; */
+    /* font-size: 34px; */
     z-index: 5;
 }
 
@@ -199,13 +301,23 @@ body {
 }
 
 .score__text {
-    margin-left: 10px;
+    text-align: center;
+    font-size: 23px;
+    color: white;
+    
 }
 
 .score__number {
-    margin-left: 6px;
+    font-size: 34px;
+    color: white;
+    text-align: center;
+    margin-top: -8px;
 }
+/* SCORE STYLES END */
 
+
+
+/* KEYBOARD STYLES START */
 .keyboard-field__keyboard {
     height: 380px;
     width: calc(100% - 60px);
@@ -287,7 +399,204 @@ body {
     grid-row: 4/5;
     grid-column: 1/3;
 }
+/* KEYBOARD STYLES END */
+
+/* LIVES STYLES START */
+.game__lives {
+    position: absolute;
+    top: 2%;
+    right: 3%;
+    display: flex;
+    flex-direction: column;
+    z-index: 5;
+}
+
+.lives__text {
+    text-align: center;
+    font-size: 23px;
+    color: white;
+}
+
+.lives__hearts {
+    display: flex;
+}
+
+.lives__heart {
+    position: relative;
+    width: 30px;
+    height: 27px;
+}
+
+.lives__heart::before,
+.lives__heart::after {
+    content: "";
+    position: absolute;
+    top: -1px;
+    width: 17px;
+    height: 26px;
+    border-radius: 50px 50px 0 0;
+    background: rgb(37, 37, 37);
+    
+}
+  
+.lives__heart::before {
+    left: 11px;
+    transform-origin: 0 100%;
+    transform: rotate(-45deg);
+}
+
+.lives__heart::after {
+    left: -4px;
+    transform-origin: 100% 100%;
+    transform: rotate(45deg);
+} 
+
+.lives__heart + .lives__heart {
+    margin-left: 4px;
+}
+
+.heart__part{
+    position: absolute;
+    top: 0;
+    width: 13px;
+    height: 23px;
+    border-radius: 50px 50px 0 0;
+    background: rgb(153, 40, 40);
+   
+}
+
+.heart__part--left {
+    left: 12px;
+    transform-origin: 0 100%;
+    transform: rotate(-45deg);
+    z-index: 6;
+}
+
+.heart__part--rigth {
+    left: 0;
+    transform-origin: 100% 100%;
+    transform: rotate(45deg);
+    z-index: 6;
+}
+
+.heart--minus > .heart__part {
+    animation: minus-color 0.5s linear forwards;
+}
+
+@keyframes minus-color {
+    0% {
+        background: rgb(37, 34, 34);
+    }
+    50% {
+        background: rgb(49, 41, 41);
+    }
+    100% {  
+        background: rgb(92, 61, 61);
+    } 
+}
+/* LIVES STYLES END */
+
+
+/* SETTING STYLES START */
+.game__setting {
+    position: absolute;
+    bottom: 2%;
+    right: 30px;
+    z-index: 5;  
+}
+
+.setting__button {
+    height: 36px;
+    width: 46px;
+    background-color: transparent;
+    /* outline: none; */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.3);
+    transition: all 0.5s linear;
+    cursor: pointer;
+}
+
+.setting__button:hover {
+    border: 1px solid rgba(255, 255, 255, 1);
+    box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.5);
+}
+
+.setting__button + .setting__button {
+    margin-left: 194px;
+}
+
+.button-fullscreen:hover {
+    background-color: rgba(32, 32, 32, 0.1);
+}
+
+.button-sound {
+    background-color: rgba(31, 122, 69, 0.8);
+}
+
+.button-sound:hover {
+    background-color: rgb(36, 138, 78);
+}
+
+.button__icon {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+/* SETTING STYLES END */
 
 
 
+/* WINDOW STYLES START */
+.game__window {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 7;
+}
+
+.window-start {
+    background-color: rgba(22, 22, 22, 1);
+    background: linear-gradient(180deg, rgba(122,195,224,1) 0%, rgba(170,228,250,1) 45%, rgba(237,248,254,1) 100%);
+}
+
+.window-start__title {
+    font-size: 86px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 40px;
+    color: rgb(23, 10, 71);
+}
+
+.window-start__container {
+    height: 60%;
+    width: 70%;
+    background-color: chocolate;
+    margin: 50px auto 0;
+    position: relative;
+}
+
+.window-start__buttons {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.window-start__button {
+    height: 50px;
+    width: 150px;
+    background-color: darkblue;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.window-start__button + .window-start__button {
+    margin-left: 50px;
+}
+
+.window-end {
+    display: none;
+}
 
