@@ -5,21 +5,41 @@ const score = document.querySelector('.score__number');
 const lives = document.querySelectorAll('.lives__heart');
 const answerSounds = document.querySelectorAll('.sounds__sound-short');
 const wawesSound =document.querySelector('.sounds__sound-waves');
-const settingButtons = document.querySelector('.game__setting');
+
+
+//buttons
 const buttonFullscreen = document.querySelector('.button-fullscreen__icon');
+const settingButtons = document.querySelector('.game__setting');
+const buttonStart = document.querySelector('.window-start__button-start');
+const buttonPlayAgain = document.querySelector('.window-end__button-start');
+const buttonExit = document.querySelector('.window-end__button-exit');
 
 const drops = document.querySelector('.playing-field__drops');
 const waves = document.querySelectorAll('.wave');
+const wavesContainer = document.querySelector('.playing-field__waves');
 
 const dropsArr = [];  // {element: this._dropElement, result: this._expressionResult, bonus: this._bonus, check: false,};
-const mistakesNamber = 3;
+// const mistakesNumber = 3;
+
+const DEFAULT = {
+    points: 10,
+    mistakes: 3,
+    speed: 15,
+    level: 1,
+    pointsToChangeLevel: 100,
+    wavesStartLevet: 84,
+}
 
 let dropCounter = 0;
+let randomBonusNumber = getRandomNumber(3, 10);;
 let mistakesCounter = 0;
 let usersExpressionResult = null;  // entered user's answer
 let points = 10;  // accrued number of points
 let gameScore = 0;
 let correctAnswer = false;
+let level = 1;
+let dropSpeed = DEFAULT.speed;
+let wavesLevel = DEFAULT.wavesStartLevet;
 
 
 function getRandomNumber(min, max) {
@@ -27,8 +47,9 @@ function getRandomNumber(min, max) {
 };
 
 class Drop {
-    constructor(gameLevel) {
+    constructor(gameLevel, speed) {
         this._gameLevel = gameLevel;
+        this._dropDownSpeed = speed;
         this._operators = ['+', '-', '×', '÷'];
         this._dropElement = null;
         this._expressionElement = null;
@@ -41,7 +62,7 @@ class Drop {
         this._bonus = false;
     }
     init() {
-        drops.appendChild(this._createDrop());
+        drops.appendChild(this._createDrop(this._dropDownSpeed));
         return {
             element: this._dropElement,
             result: this._expressionResult,
@@ -49,7 +70,7 @@ class Drop {
             check: false,
         };
     }
-    _createDrop() {
+    _createDrop(speed) {
         const drop = document.createElement('div');
         const expression = document.createElement('div');
         const operandOne = document.createElement('span');
@@ -60,6 +81,7 @@ class Drop {
 
         drop.classList.add('playing-field__drop', 'drop', 'drop--color_blue');
         drop.style.left = `${this._positionLeft}%`;
+        drop.style.animationDuration = `${speed}s`;
         expression.classList.add('drop__expression');
         operandOne.classList.add('drop__operand', 'drop__operand--position_first');
         operandOne.innerHTML = this._operandOne;
@@ -78,9 +100,6 @@ class Drop {
 
         return drop;
     }
-    // _moveDrop() {
-    //     this._dropElement.classList.add('playing-field__drop--move-down');
-    // }
     _getPositionLeft() {
         return this._getRandomNumber(5, 90);
     }
@@ -89,7 +108,8 @@ class Drop {
         const randomOperator = this._operators[randomIndex];
         return randomOperator;
     }
-    _getRandomNumber(min = 1, max = 10) {
+    _getRandomNumber(min = 1, max = 10 * this._gameLevel) {
+        // max = 10 * this._gameLevel;
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
     _createExpression() {
@@ -162,12 +182,36 @@ class BonusDrop extends Drop {
 }
 
 function playGame() {
+    if (game.classList.contains('game--finish')) {
+        game.classList.remove('game--finish');
+    }
+    if (game.classList.contains('game--start')) {
+        game.classList.remove('game--start');
+    }
+    game.classList.add('game--play');
+    resetGameScore();
+    deleteDrops();
+    resetLives();
     createDrops();
     startWavesAnimation();
     playWavesSound();
 }
 
+function resetGameScore() {
+    dropCounter = 0;  //make drops counter and mistakes reset or make function for the future
+    gameScore = 0;
+    points = DEFAULT.points;
+    mistakesCounter = 0;
+    dropsArr.length = 0;
+    score.innerHTML = gameScore;
+    wavesContainer.style.top = `${DEFAULT.wavesStartLevet}%`;
+}
+
 // playGame();
+
+function getRandomBonus() {
+    randomBonusNumber = getRandomNumber(3, 10);
+}
 
 function startWavesAnimation() {
     Array.from(waves).map((wave) => {
@@ -182,13 +226,14 @@ function stopWavesAnimation() {
 }
 
 function createDrops() {
-    const drop = new Drop(1)
-    const bonusDrop = new BonusDrop(1);
+    const drop = new Drop(level, dropSpeed);
+    const bonusDrop = new BonusDrop(level, dropSpeed);
     const time = getRandomNumber(2000, 4000);
 
-    if (dropCounter === 3) {
+    if (dropCounter === randomBonusNumber) {
         dropsArr.push(bonusDrop.init());
         dropCounter = 0;
+        getRandomBonus();
     } else {
         dropsArr.push(drop.init());
         dropCounter++;
@@ -198,16 +243,33 @@ function createDrops() {
        createDrops();
     }, time);
 
-    if (mistakesCounter === mistakesNamber) {
-        clearTimeout(timerId);
+    if (mistakesCounter === DEFAULT.mistakes) {
+        clearTimeout(timerId);  
+    }
+}
+
+function stopDropsFall() {
+    dropsArr.forEach(drop => {
+        if(drop.check === false) {
+            drop.element.style.animationPlayState = 'paused';
+        }
+    })
+}
+
+function deleteDrops() {
+    while (drops.firstChild) {
+        drops.firstChild.remove();
     }
 }
 
 // createDrops();
 
 function finishGame() {
+    game.classList.remove('game--play');
+    game.classList.add('game--finish');
     stopWavesAnimation();
     stopWavesSound();
+    stopDropsFall();
 }
 
 function checkUsersAnswer(value) {
@@ -223,11 +285,22 @@ function checkUsersAnswer(value) {
     if (!targetDrop) {
         correctAnswer = false;
         mistakesCounter++;
-        playSound('incorrect');
+        playAnswerSound('incorrect');
         minusLive(mistakesCounter);
+        upWaves();
+        if (mistakesCounter === DEFAULT.mistakes) {
+            setTimeout(() => finishGame(), 1000); ;
+        }
    }
    
    updateScore(correctAnswer);
+}
+
+function updateGameLevel() {
+    if (gameScore / DEFAULT.pointsToChangeLevel >= level) {
+        level++;
+        dropSpeed -= 0.5;
+    }
 }
 
 function removeDrop(dropEl) {
@@ -241,6 +314,7 @@ function removeDropWithCorrectAnswer(dropEl) {
 
     dropEl.innerHTML = '<img src="./assets/icons/icon_check.png" class="drop__icon" alt="icon-check">';
     dropEl.classList.add('drop--burst');
+    dropEl.style.animationDuration = '1s';
     dropEl.style.top = `${dropPos.top}px`;
 }
 
@@ -250,6 +324,7 @@ function removeDropsWithBonus() {
             const dropPos = drop.element.getBoundingClientRect();
 
             drop.element.classList.add('drop--burst_all');
+            drop.element.style.animationDuration = '1s';
             drop.element.style.top = `${dropPos.top}px`;
             drop.check = true;
         }
@@ -266,14 +341,16 @@ function updateScore(booleanResult) {
         playAnswerSound('correct');
     } if (!booleanResult) {
         gameScore--;
+        gameScore = gameScore < 0 ? 0 : gameScore;
         playAnswerSound('incorrect');
     }
 
     score.innerHTML = gameScore;
+    updateGameLevel();
 }
 
 function minusLive(num) {
-    Array.from(lives).map((item => {
+    Array.from(lives).map(item => {
         const checkNum = +item.dataset.count === num;
         
         if (checkNum) {
@@ -281,7 +358,22 @@ function minusLive(num) {
         } else {
             return;
         } 
-    }))
+    })
+}
+
+function upWaves() {
+    wavesLevel -= 10;
+    wavesContainer.style.top = `${wavesLevel}%`;
+}
+
+function resetLives() {
+    Array.from(lives).map((item) => {
+        if (item.classList.contains('heart--minus')) {
+            item.classList.remove('heart--minus')
+        } else {
+            return;
+        }
+    })
 }
 
 function playWavesSound() {
@@ -344,3 +436,14 @@ settingButtons.addEventListener('click', (event) => {
         console.log('sound');
     } 
 })
+
+buttonStart.addEventListener('click', playGame);
+
+buttonPlayAgain.addEventListener('click', playGame);
+
+function exit() {
+    game.classList.remove('game--finish')
+    game.classList.add('game--start');
+}
+
+buttonExit.addEventListener('click', exit);
