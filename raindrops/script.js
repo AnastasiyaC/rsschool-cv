@@ -18,8 +18,14 @@ const drops = document.querySelector('.playing-field__drops');
 const waves = document.querySelectorAll('.wave');
 const wavesContainer = document.querySelector('.playing-field__waves');
 
+const finalScore = document.querySelector('.window-end__score-number');
+const gameOver = document.querySelector('.game__game-over');
+
 const dropsArr = [];  // {element: this._dropElement, result: this._expressionResult, bonus: this._bonus, check: false,};
 // const mistakesNumber = 3;
+
+const NO_OF_HIGH_SCORES = 5;
+const HIGH_SCORES = 'highScores';
 
 const DEFAULT = {
     points: 10,
@@ -198,6 +204,7 @@ function playGame() {
 }
 
 function resetGameScore() {
+    level = 1;
     dropCounter = 0;  //make drops counter and mistakes reset or make function for the future
     gameScore = 0;
     points = DEFAULT.points;
@@ -205,6 +212,7 @@ function resetGameScore() {
     dropsArr.length = 0;
     score.innerHTML = gameScore;
     wavesContainer.style.top = `${DEFAULT.wavesStartLevet}%`;
+    wavesLevel = DEFAULT.wavesStartLevet;
 }
 
 // playGame();
@@ -228,7 +236,8 @@ function stopWavesAnimation() {
 function createDrops() {
     const drop = new Drop(level, dropSpeed);
     const bonusDrop = new BonusDrop(level, dropSpeed);
-    const time = getRandomNumber(2000, 4000);
+    // const time = getRandomNumber(2000, 4000);
+    const time = 2000;
 
     if (dropCounter === randomBonusNumber) {
         dropsArr.push(bonusDrop.init());
@@ -245,6 +254,8 @@ function createDrops() {
 
     if (mistakesCounter === DEFAULT.mistakes) {
         clearTimeout(timerId);  
+        // setTimeout(() => finishGame(), 1000);
+        finishGame();
     }
 }
 
@@ -262,14 +273,31 @@ function deleteDrops() {
     }
 }
 
-// createDrops();
-
 function finishGame() {
-    game.classList.remove('game--play');
-    game.classList.add('game--finish');
     stopWavesAnimation();
     stopWavesSound();
     stopDropsFall();
+    // setTimeout(() => {
+    //     gameOver.style.display = 'none'
+    //     game.classList.remove('game--play');
+    //     game.classList.add('game--finish'); 
+    //     finalScore.innerHTML = gameScore;
+    // }, 1000);
+    
+}
+
+function showGameOver() {
+    gameOver.style.display = 'block';
+    setTimeout(() => {
+        const topScores = new TopScore(gameScore);
+
+        gameOver.style.display = 'none';
+        game.classList.remove('game--play');
+        game.classList.add('game--finish'); 
+        finalScore.innerHTML = gameScore;
+        topScores.checkHighScore(gameScore);
+}, 2000);
+    
 }
 
 function checkUsersAnswer(value) {
@@ -289,7 +317,8 @@ function checkUsersAnswer(value) {
         minusLive(mistakesCounter);
         upWaves();
         if (mistakesCounter === DEFAULT.mistakes) {
-            setTimeout(() => finishGame(), 1000); ;
+            showGameOver();
+            // setTimeout(() => showGameOver(), 1000);
         }
    }
    
@@ -393,8 +422,68 @@ function stopWavesSound() {
 function playAnswerSound(dataName) {
     const targetSound = Array.from(answerSounds).find(sound => sound.dataset.sound === dataName);
 
+    
     targetSound.currenttime = 0;
     targetSound.play(); 
+}
+
+class TopScore {
+    constructor(score) {
+        this._score = score;
+        this._numOfHighScores = 5;
+        this._nameHighScores = 'highScores';
+        this._highScores = [];
+        this._lowestScore = null;
+        this._highScoresList = document.querySelector('.score-best__list');
+    }
+    checkHighScore(score) {
+        this._highScores = JSON.parse(localStorage.getItem(this._nameHighScores)) ?? [];
+        this._lowestScore = this._highScores[this._numOfHighScores - 1]?.score ?? 0;
+        
+        if (score > this._lowestScore) {
+          this._saveHighScore(this._score, this._highScores);  
+        };
+        this._showHighScores(); 
+    }
+    _saveHighScore(score, highScores) {
+        const d = new Date();
+        const date = this._formateDate(d);
+        const newScore = { score, date };
+    
+        highScores.push(newScore);
+        highScores.sort((a, b) => b.score - a.score).splice(this._numOfHighScores);
+        localStorage.setItem(this._nameHighScores, JSON.stringify(highScores));
+    }
+    _showHighScores() {
+        const fragment = document.createDocumentFragment();
+        
+        this._clearScoresList(this._highScoresList);
+        this._highScores.map((item) => {
+            const liElement = document.createElement('li');
+    
+            liElement.classList.add('score-best__item');
+            liElement.innerHTML = `<span class="score-best__score">${item.score}</span>
+            <span class="score-best__date">${item.date}</span>`;
+            fragment.appendChild(liElement);
+        });
+    
+        this._highScoresList.appendChild(fragment);
+    }
+    _clearScoresList(list) {
+        while (list.firstChild) {
+            list.firstChild.remove();
+        }
+    }
+    _formateDate(date) {
+        const dd = date.getDate();
+        const mm = date.getMonth() + 1;
+        const yy = date.getFullYear();
+    
+        return `${this._addZero(dd)}/${this._addZero(mm)}/${this._addZero(yy)}`;
+    }
+    _addZero(num) {
+        return num < 10 ? `0${num}` : num;
+    }
 }
 
 buttons.addEventListener('click', (event) => {
@@ -415,6 +504,34 @@ buttons.addEventListener('click', (event) => {
             }
         }
     }
+})
+
+
+function checkKey(key, input, event) {
+    if (key >= '0' && key <= '9') {
+        input.value += event.key;
+    }
+    if (key == 'Backspace') {
+        input.value = input.value.substring(0, input.value.length - 1);
+    }
+    if (key == 'Delete') {
+        input.value = '';
+        console.log(key)
+    }
+    if (key == 'Enter') {
+        if (input.value.length > 0) {
+            usersExpressionResult = +input.value;
+            checkUsersAnswer(usersExpressionResult);
+            input.value = '';
+        } else {
+            return;
+        }
+    }
+    // return (key >= '0' && key <= '9') || key == 'Backspace' || key == 'Delete' || key == 'Enter';
+}
+
+document.addEventListener('keydown', (event) => {
+    checkKey(event.key, keyboardInput, event);
 })
 
 function toggleFullscreen() {
