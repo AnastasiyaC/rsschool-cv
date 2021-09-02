@@ -86,12 +86,12 @@ body {
     border: 4px solid #a0307e;
 }
 
-.drop--burst {
+.drop--burst_green {
     transform-origin: center;  
-    animation: burst 1s linear forwards;
+    animation: burst-green 1s linear forwards;
 }
 
-@keyframes burst {
+@keyframes burst-green {
     40% {
         transform: rotate(-45deg) scale(0.5);
         border-top-right-radius: 50%;
@@ -114,6 +114,38 @@ body {
         transform: rotate(-45deg) scale(0);
         border-top-right-radius: 50%;
         background: green;
+        border: 4px solid rgb(3, 80, 3);
+    }
+}
+
+.drop--burst_red {
+    transform-origin: center;  
+    animation: burst-red 1s linear forwards;
+}
+
+@keyframes burst-red {
+    40% {
+        transform: rotate(-45deg) scale(0.5);
+        border-top-right-radius: 50%;
+        background: red;
+        border: 4px solid rgb(3, 80, 3);
+    }
+    80% {
+        transform: rotate(-45deg) scale(0.5);
+        border-top-right-radius: 50%;
+        background: red;
+        border: 4px solid rgb(3, 80, 3);
+    }
+    90% {
+        transform: rotate(-45deg) scale(0.7);
+        border-top-right-radius: 50%;
+        background: red;
+        border: 4px solid rgb(3, 80, 3);
+    }
+    100% {
+        transform: rotate(-45deg) scale(0);
+        border-top-right-radius: 50%;
+        background: red;
         border: 4px solid rgb(3, 80, 3);
     }
 }
@@ -149,7 +181,8 @@ body {
     transform: rotate(45deg);
 }
 
-.drop--burst > .drop__expression,
+.drop--burst_green > .drop__expression,
+.drop--burst_red > .drop__expression,
 .drop--burst_all > .drop__expression {
     display: none;
 }
@@ -179,7 +212,8 @@ body {
     font-weight: 700;
 }
 
-.drop--burst > .drop__icon {
+.drop--burst_green > .drop__icon,
+.drop--burst_red > .drop__icon {
     display: block;
     opacity: 0;
     height: 80%;
@@ -421,15 +455,18 @@ body {
     font-size: 16px;
 }
 
-.keyboard__button-number:hover {
-    background-color: rgb(193, 217, 224);
+.keyboard__button-number:hover,
+.keyboard__button--active_number {
+    background-color: rgb(169, 200, 209);
 }
 
-.button-operation--hover_red:hover {
+.button-operation--hover_red:hover,
+.keyboard__button--active_clear {
     background-color: rgb(218, 187, 172);
 }
 
-.button-operation--hover_green:hover {
+.button-operation--hover_green:hover,
+.keyboard__button--active_enter {
     background-color: rgb(176, 197, 154);
 }
 

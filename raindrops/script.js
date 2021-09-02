@@ -1,11 +1,15 @@
 const game = document.querySelector('.game');
-const buttons = document.querySelector('.keyboard__buttons');
+const drops = document.querySelector('.playing-field__drops');
+const keyboardButtonsContainer = document.querySelector('.keyboard__buttons');
 const keyboardInput = document.querySelector('.keyboard__input');
 const score = document.querySelector('.score__number');
 const lives = document.querySelectorAll('.lives__heart');
-const answerSounds = document.querySelectorAll('.sounds__sound-short');
+const waves = document.querySelectorAll('.wave');
+const wavesContainer = document.querySelector('.playing-field__waves');
 const wawesSound =document.querySelector('.sounds__sound-waves');
-
+const answerSounds = document.querySelectorAll('.sounds__sound-short');
+const finalScore = document.querySelector('.window-end__score-number');
+const gameOver = document.querySelector('.game__game-over');
 
 //buttons
 const buttonFullscreen = document.querySelector('.button-fullscreen__icon');
@@ -13,39 +17,28 @@ const settingButtons = document.querySelector('.game__setting');
 const buttonStart = document.querySelector('.window-start__button-start');
 const buttonPlayAgain = document.querySelector('.window-end__button-start');
 const buttonExit = document.querySelector('.window-end__button-exit');
-
-const drops = document.querySelector('.playing-field__drops');
-const waves = document.querySelectorAll('.wave');
-const wavesContainer = document.querySelector('.playing-field__waves');
-
-const finalScore = document.querySelector('.window-end__score-number');
-const gameOver = document.querySelector('.game__game-over');
-
-const dropsArr = [];  // {element: this._dropElement, result: this._expressionResult, bonus: this._bonus, check: false,};
-// const mistakesNumber = 3;
-
-const NO_OF_HIGH_SCORES = 5;
-const HIGH_SCORES = 'highScores';
+const keyboardButtons = document.querySelectorAll('.keyboard__button');
 
 const DEFAULT = {
-    points: 10,
+    level: 1,
+    points: 10,  // accrued points
     mistakes: 3,
     speed: 15,
-    level: 1,
     pointsToChangeLevel: 100,
-    wavesStartLevet: 84,
+    wavesLevel: 84,
+    maxInputLength: 10,
 }
 
+const dropsArr = [];  // {element: this._dropElement, result: this._expressionResult, bonus: this._bonus, check: false,};
+let [level, points, dropSpeed, wavesLevel] = [DEFAULT.level, DEFAULT.points, DEFAULT.speed, DEFAULT.wavesLevel];
+let soundVolume = 1;
 let dropCounter = 0;
-let randomBonusNumber = getRandomNumber(3, 10);;
 let mistakesCounter = 0;
 let usersExpressionResult = null;  // entered user's answer
-let points = 10;  // accrued number of points
 let gameScore = 0;
 let correctAnswer = false;
-let level = 1;
-let dropSpeed = DEFAULT.speed;
-let wavesLevel = DEFAULT.wavesStartLevet;
+let randomBonusNumber = getRandomNumber(3, 10);
+let gameStarted = false;
 
 
 function getRandomNumber(min, max) {
@@ -194,69 +187,87 @@ function playGame() {
     if (game.classList.contains('game--start')) {
         game.classList.remove('game--start');
     }
+    gameStarted = true;
     game.classList.add('game--play');
-    resetGameScore();
-    deleteDrops();
-    resetLives();
-    createDrops();
-    startWavesAnimation();
+    setGameStartParameters();
+    startOrStopWavesAnimation('start');
     playWavesSound();
+    createDrops();
 }
 
-function resetGameScore() {
-    level = 1;
-    dropCounter = 0;  //make drops counter and mistakes reset or make function for the future
-    gameScore = 0;
-    points = DEFAULT.points;
-    mistakesCounter = 0;
+function setGameStartParameters() {
     dropsArr.length = 0;
+    [level, points, dropSpeed, wavesLevel] = [DEFAULT.level, DEFAULT.points, DEFAULT.speed, DEFAULT.wavesLevel];
+    dropCounter = 0;
+    gameScore = 0;
+    mistakesCounter = 0;
     score.innerHTML = gameScore;
-    wavesContainer.style.top = `${DEFAULT.wavesStartLevet}%`;
-    wavesLevel = DEFAULT.wavesStartLevet;
-}
-
-// playGame();
-
-function getRandomBonus() {
-    randomBonusNumber = getRandomNumber(3, 10);
-}
-
-function startWavesAnimation() {
-    Array.from(waves).map((wave) => {
-        wave.style.animationPlayState = 'running';
-    })
-}
-
-function stopWavesAnimation() {
-    Array.from(waves).map((wave) => {
-        wave.style.animationPlayState = 'paused';
-    })
+    wavesContainer.style.top = `${wavesLevel}%`;
+    resetLives();
+    deleteDrops();
 }
 
 function createDrops() {
     const drop = new Drop(level, dropSpeed);
     const bonusDrop = new BonusDrop(level, dropSpeed);
-    // const time = getRandomNumber(2000, 4000);
     const time = 2000;
+    const isBonus = dropCounter === randomBonusNumber;
+    const isGameOver = mistakesCounter === DEFAULT.mistakes;
+    let targObj = null;
 
-    if (dropCounter === randomBonusNumber) {
+    if (isBonus && !isGameOver) {
         dropsArr.push(bonusDrop.init());
         dropCounter = 0;
         getRandomBonus();
-    } else {
+    } if (!isBonus && !isGameOver) {
         dropsArr.push(drop.init());
         dropCounter++;
     }
+    targObj = dropsArr[dropsArr.length - 1] || dropsArr.first();
+    checkDropPosition(targObj);
 
     let timerId = setTimeout(() => {
        createDrops();
     }, time);
 
-    if (mistakesCounter === DEFAULT.mistakes) {
+    if (isGameOver) {
         clearTimeout(timerId);  
-        // setTimeout(() => finishGame(), 1000);
         finishGame();
     }
+}
+
+function getRandomBonus() {
+    randomBonusNumber = getRandomNumber(3, 10);
+}
+
+function checkDropPosition(drop) {
+    const targDrop = drop.element;
+    const d = wavesContainer.getBoundingClientRect();  //come up with variables!!!!!!!!!!!
+    const dTop = d.top;
+    const dr = targDrop.getBoundingClientRect();
+    const drTop = dr.bottom;
+
+    let timer = setTimeout(() => {
+        checkDropPosition(drop);
+    }, 500);
+
+    if (gameStarted) {
+        if (drop.check) {
+            clearTimeout(timer);
+        } if (!drop.check && drTop > dTop) {
+            removeDropWithWaves(targDrop);
+            drop.check = true;
+            setMistake();
+            updateScore(correctAnswer);
+            
+            if (mistakesCounter === DEFAULT.mistakes) {
+                clearTimeout(timer);
+                showGameOver();
+            }
+        }
+    } if (!gameStarted) {
+        clearTimeout(timer);
+    } 
 }
 
 function stopDropsFall() {
@@ -274,9 +285,10 @@ function deleteDrops() {
 }
 
 function finishGame() {
-    stopWavesAnimation();
+    startOrStopWavesAnimation('stop');
+    // stopWavesAnimation();
     stopWavesSound();
-    stopDropsFall();
+    // stopDropsFall();
     // setTimeout(() => {
     //     gameOver.style.display = 'none'
     //     game.classList.remove('game--play');
@@ -287,6 +299,8 @@ function finishGame() {
 }
 
 function showGameOver() {
+    gameStarted = false;
+    stopDropsFall();
     gameOver.style.display = 'block';
     setTimeout(() => {
         const topScores = new TopScore(gameScore);
@@ -304,50 +318,30 @@ function checkUsersAnswer(value) {
     const targetDrop = dropsArr.find(i => i.result === value && !i.check);
 
     if (targetDrop && !targetDrop.bonus) {
-        removeDrop(targetDrop);
+        setCorrectAnswer(targetDrop);
     }
     if (targetDrop && targetDrop.bonus) {
-        removeDrop(targetDrop);
-        removeDropsWithBonus(); 
+        setCorrectAnswer(targetDrop, true);
     }
     if (!targetDrop) {
-        correctAnswer = false;
-        mistakesCounter++;
-        playAnswerSound('incorrect');
-        minusLive(mistakesCounter);
-        upWaves();
+        setMistake();
         if (mistakesCounter === DEFAULT.mistakes) {
             showGameOver();
-            // setTimeout(() => showGameOver(), 1000);
         }
-   }
-   
-   updateScore(correctAnswer);
-}
-
-function updateGameLevel() {
-    if (gameScore / DEFAULT.pointsToChangeLevel >= level) {
-        level++;
-        dropSpeed -= 0.5;
     }
-}
-
-function removeDrop(dropEl) {
-    correctAnswer = true;
-    dropEl.check = true;
-    removeDropWithCorrectAnswer(dropEl.element);
+   updateScore(correctAnswer);
 }
 
 function removeDropWithCorrectAnswer(dropEl) {
     const dropPos = dropEl.getBoundingClientRect();
 
     dropEl.innerHTML = '<img src="./assets/icons/icon_check.png" class="drop__icon" alt="icon-check">';
-    dropEl.classList.add('drop--burst');
+    dropEl.classList.add('drop--burst_green');
     dropEl.style.animationDuration = '1s';
     dropEl.style.top = `${dropPos.top}px`;
 }
 
-function removeDropsWithBonus() { 
+function removeAllDropsWithBonus() { 
     dropsArr.map((drop) => {
         if (!drop.check) {
             const dropPos = drop.element.getBoundingClientRect();
@@ -361,6 +355,33 @@ function removeDropsWithBonus() {
             return;
         }
     })    
+}
+
+function removeDropWithWaves(dropEl) {
+    const dropPos = dropEl.getBoundingClientRect();
+
+    dropEl.innerHTML = '<img src="./assets/icons/icon_mistake.png" class="drop__icon" alt="icon_mistake">';
+    dropEl.classList.add('drop--burst_red');
+    dropEl.style.animationDuration = '1s';
+    dropEl.style.top = `${dropPos.top}px`;
+}
+
+function setCorrectAnswer(dropEl, isBonus = false) {
+    const drop = dropEl;
+
+    correctAnswer = true;
+    drop.check = true;
+    removeDropWithCorrectAnswer(drop.element);
+    if (isBonus) {
+        removeAllDropsWithBonus(); 
+    }
+}
+
+function setMistake() {
+    correctAnswer = false;
+    mistakesCounter++;
+    minusLive(mistakesCounter);
+    upWaves();
 }
 
 function updateScore(booleanResult) {
@@ -378,6 +399,13 @@ function updateScore(booleanResult) {
     updateGameLevel();
 }
 
+function updateGameLevel() {
+    if (gameScore / DEFAULT.pointsToChangeLevel >= level) {
+        level++;
+        dropSpeed -= 0.5;
+    }
+}
+
 function minusLive(num) {
     Array.from(lives).map(item => {
         const checkNum = +item.dataset.count === num;
@@ -390,11 +418,6 @@ function minusLive(num) {
     })
 }
 
-function upWaves() {
-    wavesLevel -= 10;
-    wavesContainer.style.top = `${wavesLevel}%`;
-}
-
 function resetLives() {
     Array.from(lives).map((item) => {
         if (item.classList.contains('heart--minus')) {
@@ -405,14 +428,29 @@ function resetLives() {
     })
 }
 
-function playWavesSound() {
-    wawesSound.currenttime = 0;
-    wawesSound.play();
+function startOrStopWavesAnimation(string) {
+    const start = 'running';
+    const stop = 'paused';
+    const action = string == 'start' ? start : stop;
 
-    wawesSound.addEventListener('ended', () => {
-        wawesSound.currenttime = 0;
-        wawesSound.play(); 
+    Array.from(waves).map((wave) => {
+        wave.style.animationPlayState = action;
     })
+}
+
+function upWaves() {
+    wavesLevel -= 10;
+    wavesContainer.style.top = `${wavesLevel}%`;
+}
+
+function playWavesSound() {
+    const playSound = () => {
+        wawesSound.currenttime = 0;
+        wawesSound.play();
+    }
+
+    playSound();
+    wawesSound.addEventListener('ended', playSound);
 }
 
 function stopWavesSound() {
@@ -422,10 +460,14 @@ function stopWavesSound() {
 function playAnswerSound(dataName) {
     const targetSound = Array.from(answerSounds).find(sound => sound.dataset.sound === dataName);
 
-    
-    targetSound.currenttime = 0;
+    if ( !targetSound.paused ) { // fix promise!!!!!!!!
+        targetSound.pause();   
+    }
+    targetSound.currentTime = 0;
     targetSound.play(); 
 }
+
+
 
 class TopScore {
     constructor(score) {
@@ -486,53 +528,99 @@ class TopScore {
     }
 }
 
-buttons.addEventListener('click', (event) => {
-    if (event.target.classList.contains('keyboard__button-number')) {
-        keyboardInput.value += event.target.textContent;
-    } if (event.target.classList.contains('keyboard__button-operation')) {
-        if (event.target.textContent == 'delete') {
+function clickKeyboardButtons(event) {
+    const clickedKey = event.target;
+    const clickedOperationKey = clickedKey.dataset.name;
+
+    if (clickedKey.classList.contains('keyboard__button-number')) {
+        keyboardInput.value = gameStarted ? keyboardInput.value + clickedKey.textContent : '';
+        checkInputLength();
+    } if (clickedKey.classList.contains('keyboard__button-operation')) {
+        if (clickedOperationKey == 'Backspace') {
             keyboardInput.value = keyboardInput.value.substring(0, keyboardInput.value.length - 1);
-        } if (event.target.textContent == 'clear') {
+        } if (clickedOperationKey == 'Delete') {
             keyboardInput.value = '';
-        } if (event.target.textContent == 'enter') {
-            if (keyboardInput.value.length > 0) {
-                usersExpressionResult = +keyboardInput.value;
-                checkUsersAnswer(usersExpressionResult);
-                keyboardInput.value = '';
-            } else {
-                return;
-            }
+        } if (clickedOperationKey == 'Enter') {
+            enterUsersAnswer();
         }
     }
-})
-
-
-function checkKey(key, input, event) {
-    if (key >= '0' && key <= '9') {
-        input.value += event.key;
-    }
-    if (key == 'Backspace') {
-        input.value = input.value.substring(0, input.value.length - 1);
-    }
-    if (key == 'Delete') {
-        input.value = '';
-        console.log(key)
-    }
-    if (key == 'Enter') {
-        if (input.value.length > 0) {
-            usersExpressionResult = +input.value;
-            checkUsersAnswer(usersExpressionResult);
-            input.value = '';
-        } else {
-            return;
-        }
-    }
-    // return (key >= '0' && key <= '9') || key == 'Backspace' || key == 'Delete' || key == 'Enter';
 }
 
-document.addEventListener('keydown', (event) => {
-    checkKey(event.key, keyboardInput, event);
-})
+function enterUsersAnswer() {
+    if (keyboardInput.value.length > 0) {
+        usersExpressionResult = +keyboardInput.value;
+        checkUsersAnswer(usersExpressionResult);
+        keyboardInput.value = '';
+    } else {
+        return;
+    }
+}
+
+function checkKey(key, event) {
+    if (key >= '0' && key <= '9' && gameStarted) {
+        keyboardInput.value = gameStarted ? keyboardInput.value + event.key : '';
+        checkInputLength();
+        toggleKeyClass('number', event);
+    }
+    if (key == 'Backspace') {
+        keyboardInput.value = keyboardInput.value.substring(0, keyboardInput.value.length - 1);
+        toggleKeyClass('clear', event);
+    }
+    if (key == 'Delete') {
+        keyboardInput.value = '';
+        toggleKeyClass('clear', event);
+    }
+    if (key == 'Enter') {
+        enterUsersAnswer();
+        toggleKeyClass('enter', event);
+    }
+}
+
+function toggleKeyClass(name, event) {
+    Array.from(keyboardButtons).map((button) => {
+        if (button.dataset.name === event.key) {
+            button.classList.toggle(`keyboard__button--active_${name}`);
+        }
+    })
+}
+
+function removeButtonClass(name, event) {
+    Array.from(keyboardButtons).map((button) => {
+        if (button.dataset.name === event.key) {
+            button.classList.remove(`keyboard__button--active_${name}`);
+        }
+    })
+}
+
+function keyUp(key, event) {
+    if (key >= '0' && key <= '9') {
+        removeButtonClass('number', event);
+    }
+    if (key == 'Backspace') {
+        removeButtonClass('clear', event);
+    }
+    if (key == 'Delete') {
+        removeButtonClass('clear', event);
+    }
+    if (key == 'Enter') {
+        removeButtonClass('enter', event);  
+    }
+}
+
+function checkInputLength() {
+    const maxLength = DEFAULT.maxInputLength;
+
+    if (keyboardInput.value.length > maxLength) {
+        keyboardInput.value = keyboardInput.value.substring(0, maxLength);
+    }
+}
+
+keyboardButtonsContainer.addEventListener('click', clickKeyboardButtons);
+
+document.addEventListener('keydown', (event) => checkKey(event.key, event));
+document.addEventListener('keyup', (event) => keyUp(event.key, event));
+
+
 
 function toggleFullscreen() {
     if (!game.fullscreenElement) {
@@ -558,9 +646,13 @@ buttonStart.addEventListener('click', playGame);
 
 buttonPlayAgain.addEventListener('click', playGame);
 
-function exit() {
+function exitGame() {
     game.classList.remove('game--finish')
     game.classList.add('game--start');
 }
 
-buttonExit.addEventListener('click', exit);
+buttonExit.addEventListener('click', exitGame);
+
+
+
+
