@@ -15,6 +15,7 @@ const gameOver = document.querySelector('.game__game-over');
 const buttonFullscreen = document.querySelector('.button-fullscreen__icon');
 const settingButtons = document.querySelector('.game__setting');
 const buttonStart = document.querySelector('.window-start__button-start');
+const buttonInstruction = document.querySelector('.window-start__button-instruction');
 const buttonPlayAgain = document.querySelector('.window-end__button-start');
 const buttonExit = document.querySelector('.window-end__button-exit');
 const keyboardButtons = document.querySelectorAll('.keyboard__button');
@@ -28,6 +29,24 @@ const DEFAULT = {
     wavesLevel: 84,
     maxInputLength: 10,
 }
+
+
+
+////////
+const DEFAULT_HTP = {
+    level: 1,
+    points: 10,  // accrued points
+    mistakes: 3,
+    speed: 15,
+    wavesLevel: 84,
+    bonus: 3,
+    numberOfDrops: 18,
+}
+
+let isHTP = false;
+//////////
+
+
 
 const dropsArr = [];  // {element: this._dropElement, result: this._expressionResult, bonus: this._bonus, check: false,};
 let [level, points, dropSpeed, wavesLevel] = [DEFAULT.level, DEFAULT.points, DEFAULT.speed, DEFAULT.wavesLevel];
@@ -61,7 +80,7 @@ class Drop {
         this._bonus = false;
     }
     init() {
-        drops.appendChild(this._createDrop(this._dropDownSpeed));
+        drops.appendChild(this._createDrop());
         return {
             element: this._dropElement,
             result: this._expressionResult,
@@ -69,7 +88,7 @@ class Drop {
             check: false,
         };
     }
-    _createDrop(speed) {
+    _createDrop() {
         const drop = document.createElement('div');
         const expression = document.createElement('div');
         const operandOne = document.createElement('span');
@@ -80,7 +99,7 @@ class Drop {
 
         drop.classList.add('playing-field__drop', 'drop', 'drop--color_blue');
         drop.style.left = `${this._positionLeft}%`;
-        drop.style.animationDuration = `${speed}s`;
+        drop.style.animationDuration = `${this._dropDownSpeed}s`;
         expression.classList.add('drop__expression');
         operandOne.classList.add('drop__operand', 'drop__operand--position_first');
         operandOne.innerHTML = this._operandOne;
@@ -254,7 +273,8 @@ function checkDropPosition(drop) {
     if (gameStarted) {
         if (drop.check) {
             clearTimeout(timer);
-        } if (!drop.check && drTop > dTop) {
+        }
+        if (!drop.check && drTop > dTop) {
             removeDropWithWaves(targDrop);
             drop.check = true;
             setMistake();
@@ -339,6 +359,7 @@ function removeDropWithCorrectAnswer(dropEl) {
     dropEl.classList.add('drop--burst_green');
     dropEl.style.animationDuration = '1s';
     dropEl.style.top = `${dropPos.top}px`;
+    playAnswerSound('correct');
 }
 
 function removeAllDropsWithBonus() { 
@@ -381,6 +402,7 @@ function setMistake() {
     correctAnswer = false;
     mistakesCounter++;
     minusLive(mistakesCounter);
+    playAnswerSound('incorrect');
     upWaves();
 }
 
@@ -388,11 +410,9 @@ function updateScore(booleanResult) {
     if (booleanResult) {
         gameScore += points;
         points++;
-        playAnswerSound('correct');
     } if (!booleanResult) {
         gameScore--;
-        gameScore = gameScore < 0 ? 0 : gameScore;
-        playAnswerSound('incorrect');
+        gameScore = gameScore < 0 ? 0 : gameScore; 
     }
 
     score.innerHTML = gameScore;
@@ -535,7 +555,8 @@ function clickKeyboardButtons(event) {
     if (clickedKey.classList.contains('keyboard__button-number')) {
         keyboardInput.value = gameStarted ? keyboardInput.value + clickedKey.textContent : '';
         checkInputLength();
-    } if (clickedKey.classList.contains('keyboard__button-operation')) {
+    } 
+    if (clickedKey.classList.contains('keyboard__button-operation')) {
         if (clickedOperationKey == 'Backspace') {
             keyboardInput.value = keyboardInput.value.substring(0, keyboardInput.value.length - 1);
         } if (clickedOperationKey == 'Delete') {
@@ -616,10 +637,8 @@ function checkInputLength() {
 }
 
 keyboardButtonsContainer.addEventListener('click', clickKeyboardButtons);
-
 document.addEventListener('keydown', (event) => checkKey(event.key, event));
 document.addEventListener('keyup', (event) => keyUp(event.key, event));
-
 
 
 function toggleFullscreen() {
@@ -642,6 +661,222 @@ settingButtons.addEventListener('click', (event) => {
     } 
 })
 
+
+
+//////////////////////////////////////////////
+
+
+
+function showHowToPlayGame() {
+    if (game.classList.contains('game--finish')) {
+        game.classList.remove('game--finish');
+    }
+    if (game.classList.contains('game--start')) {
+        game.classList.remove('game--start');
+    }
+    game.classList.add('game--play');
+    isHTP = true;
+    startOrStopWavesAnimation('start');
+    playWavesSound();
+    createDropsFor();
+}
+
+function createDropsFor() {
+    const drop = new Drop(DEFAULT_HTP.level, DEFAULT_HTP.speed);
+    const bonusDrop = new BonusDrop(DEFAULT_HTP.level, DEFAULT_HTP.speed);
+    const time = 2000;
+    const isBonus = dropCounter === DEFAULT_HTP.bonus;
+    const isFinish = dropCounter === DEFAULT_HTP.numberOfDrops;
+
+    if (isBonus) {
+        dropsArr.push(bonusDrop.init());
+    } if (!isBonus) {
+        dropsArr.push(drop.init());   
+    }
+    dropCounter++;
+    instruction(dropsArr, dropCounter);
+    
+    let timerId = setTimeout(() => {
+        createDropsFor(); 
+     }, time);
+ 
+    if (isFinish) {
+        clearTimeout(timerId);  
+        isHTP = false;
+        stopDropsFall();
+        gameOver.style.display = 'block';
+        startOrStopWavesAnimation('stop');
+        stopWavesSound();
+    }
+}
+
+function instruction(drops, counter) {
+    const i = counter;
+    const index = i - 1;
+    const expressionResult = dropsArr[index].result;
+    
+        switch (i) {
+            case 1:
+                console.log(i);
+
+                setTimeout(() => {
+                    let promise = imitateKeyPress(expressionResult);
+
+                    promise.then(() => {
+                        imitateEnterPress();
+                        removeDropWithCorrectAnswer(dropsArr[index].element);
+                        dropsArr[index].check = true;
+                    })
+                }, 3000)
+
+                
+
+                
+                
+                // setTimeout(() => {
+                //     enterAnswer(567);
+                //     removeDropWithCorrectAnswer(dropsArr[index].element);
+                //     dropsArr[index].check = true;
+                // }, 3000);
+                
+                break;
+
+            case 2:
+                console.log(i);
+                
+                break;
+
+            case 3:
+                console.log(i);
+                setTimeout(() => {
+                    removeDropWithCorrectAnswer(dropsArr[index].element);
+                    dropsArr[index].check = true;
+                }, 3500);
+                break;
+
+            case 4:
+                console.log(i);
+                setTimeout(() => {
+                    removeDropWithCorrectAnswer(dropsArr[index].element);
+                    dropsArr[index].check = true;
+                    removeAllDropsWithBonus();
+                }, 4500);
+                
+                break;
+
+            case 5:
+                console.log(i);
+                setTimeout(() => setMistake(), 5000);
+                break;
+
+            case 6:
+                console.log(i);
+                
+                break;
+
+            case 7:
+                console.log(i);
+                checkDrPos(dropsArr[index]);
+                break;
+
+            case 8:
+                console.log(i);
+                setTimeout(() => {
+                    removeDropWithCorrectAnswer(dropsArr[index].element);
+                    dropsArr[index].check = true;
+                }, 3500);
+                break;
+
+            case 9:
+                console.log(i);
+                break;
+
+            case 10:
+                console.log(i);
+               
+                break;
+
+            case 11:
+                console.log(i);
+                setTimeout(() => {
+                    removeDropWithCorrectAnswer(dropsArr[index].element);
+                    dropsArr[index].check = true;
+                }, 3500);
+                break;
+                    
+            case 12:
+                console.log(i);
+                
+                break;
+
+            case 13:
+                console.log(i);
+                break;
+
+            case 14:
+                console.log(i);
+                break;
+        }
+}
+
+
+function checkDrPos(dropObj) {
+    const drop = dropObj.element;
+    const d = wavesContainer.getBoundingClientRect();  //come up with variables!!!!!!!!!!!
+    const dTop = d.top;
+    const dr = drop.getBoundingClientRect();
+    const drTop = dr.bottom;
+
+    let timer = setTimeout(() => {
+        checkDrPos(dropObj);
+    }, 500);
+
+    if (dropObj.check) {
+        clearTimeout(timer);
+    }
+    if (drTop > dTop) {
+        dropObj.check = true;
+        removeDropWithWaves(drop);  
+        setMistake(); 
+    }
+}
+
+
+function imitateKeyPress(num, index = 0) {
+    const strFromNum = String(num);
+
+    return new Promise((resolve, reject) => {
+        if(index === strFromNum.length) {
+            resolve();
+            return;
+        } else {
+            Array.from(keyboardButtons).find((button) => {
+                if (button.dataset.name == strFromNum[index]) {
+                    button.classList.toggle('keyboard__button--active_number');
+                    keyboardInput.value += strFromNum[index];
+                    setTimeout(() => button.classList.remove('keyboard__button--active_number'), 300)
+                    setTimeout(() => resolve(imitateKeyPress(num, index + 1)), 800)
+                }
+            })
+        } 
+    })    
+}
+
+function imitateEnterPress() {
+    Array.from(keyboardButtons).find((button) => {
+        if (button.dataset.name == "Enter") {
+            button.classList.toggle('keyboard__button--active_enter');
+            keyboardInput.value = '';
+            setTimeout(() => button.classList.remove('keyboard__button--active_enter'), 300);
+        }
+    })
+}
+
+buttonInstruction.addEventListener('click', showHowToPlayGame);
+
+//////////////////////////////////
+
+
 buttonStart.addEventListener('click', playGame);
 
 buttonPlayAgain.addEventListener('click', playGame);
@@ -652,7 +887,3 @@ function exitGame() {
 }
 
 buttonExit.addEventListener('click', exitGame);
-
-
-
-

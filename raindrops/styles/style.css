@@ -22,22 +22,7 @@ body {
     display: flex;
     overflow: hidden;
 }
-
-/* .game--play {
-    animation: apperance 1s linear forwards;
-}
-
-@keyframes apperance {
-    100% {
-        opacity: 1;
-    }
-}
-
-.game__container {
-    height: 100vh;
-    width: 100vw;
-} */
-                
+          
 .game__playing-field {
     height: 100%;
     width: calc(100% - 350px);
