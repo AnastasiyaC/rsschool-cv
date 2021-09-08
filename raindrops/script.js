@@ -46,8 +46,6 @@ const DEFAULT_HTP = {
 let isHTP = false;
 //////////
 
-
-
 const dropsArr = [];  // {element: this._dropElement, result: this._expressionResult, bonus: this._bonus, check: false,};
 let [level, points, dropSpeed, wavesLevel] = [DEFAULT.level, DEFAULT.points, DEFAULT.speed, DEFAULT.wavesLevel];
 let soundVolume = 1;
@@ -686,7 +684,7 @@ function createDropsFor() {
     const bonusDrop = new BonusDrop(DEFAULT_HTP.level, DEFAULT_HTP.speed);
     const time = 2000;
     const isBonus = dropCounter === DEFAULT_HTP.bonus;
-    const isFinish = dropCounter === DEFAULT_HTP.numberOfDrops;
+    const isFinish = mistakesCounter === DEFAULT.mistakes;
 
     if (isBonus) {
         dropsArr.push(bonusDrop.init());
@@ -704,9 +702,13 @@ function createDropsFor() {
         clearTimeout(timerId);  
         isHTP = false;
         stopDropsFall();
-        gameOver.style.display = 'block';
-        startOrStopWavesAnimation('stop');
-        stopWavesSound();
+        finishGame();
+        setTimeout(() => {
+            if (game.classList.contains('game--play')) {
+                game.classList.remove('game--play');
+            }
+            game.classList.add('game--start')
+        }, 500)
     }
 }
 
@@ -726,19 +728,9 @@ function instruction(drops, counter) {
                         imitateEnterPress();
                         removeDropWithCorrectAnswer(dropsArr[index].element);
                         dropsArr[index].check = true;
+                        updateScore(true);
                     })
                 }, 3000)
-
-                
-
-                
-                
-                // setTimeout(() => {
-                //     enterAnswer(567);
-                //     removeDropWithCorrectAnswer(dropsArr[index].element);
-                //     dropsArr[index].check = true;
-                // }, 3000);
-                
                 break;
 
             case 2:
@@ -749,59 +741,95 @@ function instruction(drops, counter) {
             case 3:
                 console.log(i);
                 setTimeout(() => {
-                    removeDropWithCorrectAnswer(dropsArr[index].element);
-                    dropsArr[index].check = true;
-                }, 3500);
+                    let promise = imitateKeyPress(expressionResult);
+
+                    promise.then(() => {
+                        imitateEnterPress();
+                        removeDropWithCorrectAnswer(dropsArr[index].element);
+                        dropsArr[index].check = true;
+                        updateScore(true);
+                    })
+                }, 2500);
                 break;
 
             case 4:
                 console.log(i);
                 setTimeout(() => {
-                    removeDropWithCorrectAnswer(dropsArr[index].element);
-                    dropsArr[index].check = true;
-                    removeAllDropsWithBonus();
-                }, 4500);
+                    let promise = imitateKeyPress(expressionResult);
+
+                    promise.then(() => {
+                        imitateEnterPress();
+                        removeDropWithCorrectAnswer(dropsArr[index].element);
+                        dropsArr[index].check = true;
+                        removeAllDropsWithBonus();
+                        updateScore(true);
+                    })
+                }, 4000);
                 
                 break;
 
             case 5:
                 console.log(i);
-                setTimeout(() => setMistake(), 5000);
+                
                 break;
 
             case 6:
                 console.log(i);
-                
+                // checkDrPos(dropsArr[index]);
                 break;
 
             case 7:
                 console.log(i);
-                checkDrPos(dropsArr[index]);
+                setTimeout(() => {
+                    let promise = imitateKeyPress(expressionResult + 1);
+
+                    promise.then(() => {
+                        imitateEnterPress();
+                        setMistake();
+                        updateScore(false);
+                        checkDrPos(dropsArr[index]);
+                    })
+                }, 3500);
                 break;
 
             case 8:
                 console.log(i);
                 setTimeout(() => {
-                    removeDropWithCorrectAnswer(dropsArr[index].element);
-                    dropsArr[index].check = true;
-                }, 3500);
+                    let promise = imitateKeyPress(expressionResult);
+
+                    promise.then(() => {
+                        imitateEnterPress();
+                        removeDropWithCorrectAnswer(dropsArr[index].element);
+                        dropsArr[index].check = true;
+                        updateScore(true);
+                    })
+                }, 4000);
                 break;
 
             case 9:
                 console.log(i);
+
+             checkDrPos(dropsArr[index]);
                 break;
 
             case 10:
                 console.log(i);
-               
+                
+                
                 break;
 
             case 11:
                 console.log(i);
                 setTimeout(() => {
-                    removeDropWithCorrectAnswer(dropsArr[index].element);
-                    dropsArr[index].check = true;
-                }, 3500);
+                    let promise = imitateKeyPress(expressionResult);
+
+                    promise.then(() => {
+                        imitateEnterPress();
+                        removeDropWithCorrectAnswer(dropsArr[index].element);
+                        dropsArr[index].check = true;
+                        updateScore(true);
+                    })
+                }, 2000);
                 break;
                     
             case 12:
@@ -834,10 +862,16 @@ function checkDrPos(dropObj) {
     if (dropObj.check) {
         clearTimeout(timer);
     }
-    if (drTop > dTop) {
+    if (!dropObj.check && drTop > dTop) {
         dropObj.check = true;
         removeDropWithWaves(drop);  
         setMistake(); 
+        updateScore(false);
+        if (mistakesCounter === DEFAULT.mistakes) {
+            clearTimeout(timer);
+            stopDropsFall();
+            gameOver.style.display = 'block'; 
+        }
     }
 }
 
@@ -854,8 +888,8 @@ function imitateKeyPress(num, index = 0) {
                 if (button.dataset.name == strFromNum[index]) {
                     button.classList.toggle('keyboard__button--active_number');
                     keyboardInput.value += strFromNum[index];
-                    setTimeout(() => button.classList.remove('keyboard__button--active_number'), 300)
-                    setTimeout(() => resolve(imitateKeyPress(num, index + 1)), 800)
+                    setTimeout(() => button.classList.remove('keyboard__button--active_number'), 400)
+                    setTimeout(() => resolve(imitateKeyPress(num, index + 1)), 700)
                 }
             })
         } 
@@ -867,7 +901,7 @@ function imitateEnterPress() {
         if (button.dataset.name == "Enter") {
             button.classList.toggle('keyboard__button--active_enter');
             keyboardInput.value = '';
-            setTimeout(() => button.classList.remove('keyboard__button--active_enter'), 300);
+            setTimeout(() => button.classList.remove('keyboard__button--active_enter'), 400);
         }
     })
 }
