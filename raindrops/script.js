@@ -47,7 +47,7 @@ let isHTP = false;
 //////////
 
 const dropsArr = [];  // {element: this._dropElement, result: this._expressionResult, bonus: this._bonus, check: false,};
-let [level, points, dropSpeed, wavesLevel] = [DEFAULT.level, DEFAULT.points, DEFAULT.speed, DEFAULT.wavesLevel];
+let [gameLevel, points, dropSpeed, wavesLevel] = [DEFAULT.level, DEFAULT.points, DEFAULT.speed, DEFAULT.wavesLevel];
 let soundVolume = 1;
 let dropCounter = 0;
 let mistakesCounter = 0;
@@ -56,6 +56,7 @@ let gameScore = 0;
 let correctAnswer = false;
 let randomBonusNumber = getRandomNumber(3, 10);
 let gameStarted = false;
+let tutorialStarted = false;
 
 
 function getRandomNumber(min, max) {
@@ -63,8 +64,8 @@ function getRandomNumber(min, max) {
 };
 
 class Drop {
-    constructor(gameLevel, speed) {
-        this._gameLevel = gameLevel;
+    constructor(level, speed) {
+        this._gameLevel = level;
         this._dropDownSpeed = speed;
         this._operators = ['+', '-', '×', '÷'];
         this._dropElement = null;
@@ -206,15 +207,16 @@ function playGame() {
     }
     gameStarted = true;
     game.classList.add('game--play');
-    setGameStartParameters();
+    setGameParameters();
     startOrStopWavesAnimation('start');
     playWavesSound();
-    createDrops();
+    // createDrops();
+    createD('game')
 }
 
-function setGameStartParameters() {
+function setGameParameters() {
     dropsArr.length = 0;
-    [level, points, dropSpeed, wavesLevel] = [DEFAULT.level, DEFAULT.points, DEFAULT.speed, DEFAULT.wavesLevel];
+    [gameLevel, points, dropSpeed, wavesLevel] = [DEFAULT.level, DEFAULT.points, DEFAULT.speed, DEFAULT.wavesLevel];
     dropCounter = 0;
     gameScore = 0;
     mistakesCounter = 0;
@@ -224,28 +226,46 @@ function setGameStartParameters() {
     deleteDrops();
 }
 
-function createDrops() {
-    const drop = new Drop(level, dropSpeed);
-    const bonusDrop = new BonusDrop(level, dropSpeed);
+function createD(mode) {
+    const drop = new Drop(gameLevel, dropSpeed);
+    const bonusDrop = new BonusDrop(gameLevel, dropSpeed);
     const time = 2000;
-    const isBonus = dropCounter === randomBonusNumber;
+    // const isBonus = dropCounter === randomBonusNumber;
     const isGameOver = mistakesCounter === DEFAULT.mistakes;
-    let targObj = null;
+    let dropObject = null;
 
-    if (isBonus && !isGameOver) {
-        dropsArr.push(bonusDrop.init());
-        dropCounter = 0;
-        getRandomBonus();
-    } if (!isBonus && !isGameOver) {
-        dropsArr.push(drop.init());
-        dropCounter++;
+    if (mode === 'game') {
+        const isBonus = dropCounter === randomBonusNumber;
+
+        if (isBonus && !isGameOver) {
+            dropsArr.push(bonusDrop.init());
+            dropCounter = 0;
+            getRandomBonus();
+        } if (!isBonus && !isGameOver) {
+            dropsArr.push(drop.init());
+            dropCounter++;
+        }
+        // dropObject = dropsArr[dropsArr.length - 1] || dropsArr.first();
+        // checkDropPosition(dropObject);
     }
-    targObj = dropsArr[dropsArr.length - 1] || dropsArr.first();
-    checkDropPosition(targObj);
+    if (mode === 'tutorial') {
+        const isBonus = dropCounter === DEFAULT_HTP.bonus;
+
+        if (isBonus) {
+            dropsArr.push(bonusDrop.init());
+        } if (!isBonus) {
+            dropsArr.push(drop.init());   
+        }
+        dropCounter++;
+        instruction(dropsArr, dropCounter);
+    }
+
+    dropObject = dropsArr[dropsArr.length - 1] || dropsArr.first();
+    checkDropPosition(dropObject);
 
     let timerId = setTimeout(() => {
-       createDrops();
-    }, time);
+        createD(mode);
+     }, time);
 
     if (isGameOver) {
         clearTimeout(timerId);  
@@ -253,40 +273,69 @@ function createDrops() {
     }
 }
 
+// function createDrops() {
+//     const drop = new Drop(level, dropSpeed);
+//     const bonusDrop = new BonusDrop(level, dropSpeed);
+//     const time = 2000;
+//     const isBonus = dropCounter === randomBonusNumber;
+//     const isGameOver = mistakesCounter === DEFAULT.mistakes;
+//     let targObj = null;
+
+//     if (isBonus && !isGameOver) {
+//         dropsArr.push(bonusDrop.init());
+//         dropCounter = 0;
+//         getRandomBonus();
+//     } if (!isBonus && !isGameOver) {
+//         dropsArr.push(drop.init());
+//         dropCounter++;
+//     }
+//     targObj = dropsArr[dropsArr.length - 1] || dropsArr.first();
+//     checkDropPosition(targObj);
+
+//     let timerId = setTimeout(() => {
+//        createDrops();
+//     }, time);
+
+//     if (isGameOver) {
+//         clearTimeout(timerId);  
+//         finishGame();
+//     }
+// }
+
 function getRandomBonus() {
     randomBonusNumber = getRandomNumber(3, 10);
 }
 
-function checkDropPosition(drop) {
-    const targDrop = drop.element;
-    const d = wavesContainer.getBoundingClientRect();  //come up with variables!!!!!!!!!!!
-    const dTop = d.top;
-    const dr = targDrop.getBoundingClientRect();
-    const drTop = dr.bottom;
+// function checkDropPosition(drop) {
+//     const targDrop = drop.element;
+//     const d = wavesContainer.getBoundingClientRect();  //come up with variables!!!!!!!!!!!
+//     const dTop = d.top;
+//     const dr = targDrop.getBoundingClientRect();
+//     const drTop = dr.bottom;
 
-    let timer = setTimeout(() => {
-        checkDropPosition(drop);
-    }, 500);
+//     let timer = setTimeout(() => {
+//         checkDropPosition(drop);
+//     }, 500);
 
-    if (gameStarted) {
-        if (drop.check) {
-            clearTimeout(timer);
-        }
-        if (!drop.check && drTop > dTop) {
-            removeDropWithWaves(targDrop);
-            drop.check = true;
-            setMistake();
-            updateScore(correctAnswer);
+//     if (gameStarted) {
+//         if (drop.check) {
+//             clearTimeout(timer);
+//         }
+//         if (!drop.check && drTop > dTop) {
+//             removeDropWithWaves(targDrop);
+//             drop.check = true;
+//             setMistake();
+//             updateScore(correctAnswer);
             
-            if (mistakesCounter === DEFAULT.mistakes) {
-                clearTimeout(timer);
-                showGameOver();
-            }
-        }
-    } if (!gameStarted) {
-        clearTimeout(timer);
-    } 
-}
+//             if (mistakesCounter === DEFAULT.mistakes) {
+//                 clearTimeout(timer);
+//                 showGameOver();
+//             }
+//         }
+//     } if (!gameStarted) {
+//         clearTimeout(timer);
+//     } 
+// }
 
 function stopDropsFall() {
     dropsArr.forEach(drop => {
@@ -318,6 +367,7 @@ function finishGame() {
 
 function showGameOver() {
     gameStarted = false;
+    tutorialStarted = false;
     stopDropsFall();
     gameOver.style.display = 'block';
     setTimeout(() => {
@@ -418,8 +468,8 @@ function updateScore(booleanResult) {
 }
 
 function updateGameLevel() {
-    if (gameScore / DEFAULT.pointsToChangeLevel >= level) {
-        level++;
+    if (gameScore / DEFAULT.pointsToChangeLevel >= gameLevel) {
+        gameLevel++;
         dropSpeed -= 0.5;
     }
 }
@@ -673,49 +723,64 @@ function showHowToPlayGame() {
         game.classList.remove('game--start');
     }
     game.classList.add('game--play');
-    isHTP = true;
+    tutorialStarted = true;
+    setTutorialParameters();
     startOrStopWavesAnimation('start');
     playWavesSound();
-    createDropsFor();
+    // createDropsFor();
+    createD('tutorial');
 }
 
-function createDropsFor() {
-    const drop = new Drop(DEFAULT_HTP.level, DEFAULT_HTP.speed);
-    const bonusDrop = new BonusDrop(DEFAULT_HTP.level, DEFAULT_HTP.speed);
-    const time = 2000;
-    const isBonus = dropCounter === DEFAULT_HTP.bonus;
-    const isFinish = mistakesCounter === DEFAULT.mistakes;
+// function createDropsFor() {
+//     const drop = new Drop(DEFAULT_HTP.level, DEFAULT_HTP.speed);
+//     const bonusDrop = new BonusDrop(DEFAULT_HTP.level, DEFAULT_HTP.speed);
+//     const time = 2000;
+//     const isBonus = dropCounter === DEFAULT_HTP.bonus;
+//     const isFinish = mistakesCounter === DEFAULT.mistakes;
 
-    if (isBonus) {
-        dropsArr.push(bonusDrop.init());
-    } if (!isBonus) {
-        dropsArr.push(drop.init());   
-    }
-    dropCounter++;
-    instruction(dropsArr, dropCounter);
+//     if (isBonus) {
+//         dropsArr.push(bonusDrop.init());
+//     } if (!isBonus) {
+//         dropsArr.push(drop.init());   
+//     }
+//     dropCounter++;
+//     instruction(dropsArr, dropCounter);
     
-    let timerId = setTimeout(() => {
-        createDropsFor(); 
-     }, time);
+//     let timerId = setTimeout(() => {
+//         createDropsFor(); 
+//      }, time);
  
-    if (isFinish) {
-        clearTimeout(timerId);  
-        isHTP = false;
-        stopDropsFall();
-        finishGame();
-        setTimeout(() => {
-            if (game.classList.contains('game--play')) {
-                game.classList.remove('game--play');
-            }
-            game.classList.add('game--start')
-        }, 500)
-    }
+//     if (isFinish) {
+//         clearTimeout(timerId);  
+//         isHTP = false;
+//         stopDropsFall();
+//         finishGame();
+//         setTimeout(() => {
+//             if (game.classList.contains('game--play')) {
+//                 game.classList.remove('game--play');
+//             }
+//             game.classList.add('game--start')
+//         }, 500)
+//     }
+// }
+
+function setTutorialParameters() {
+    dropsArr.length = 0;
+    [gameLevel, points, dropSpeed, wavesLevel] = [DEFAULT.level, DEFAULT.points, DEFAULT_HTP.speed, DEFAULT.wavesLevel];
+    dropCounter = 0;
+    gameScore = 0;
+    mistakesCounter = 0;
+    score.innerHTML = gameScore;
+    wavesContainer.style.top = `${wavesLevel}%`;
+    resetLives();
+    deleteDrops();
 }
 
 function instruction(drops, counter) {
     const i = counter;
     const index = i - 1;
-    const expressionResult = dropsArr[index].result;
+    const expressionResult = drops[index].result;
+    const dropEL = drops[index].element;
     
         switch (i) {
             case 1:
@@ -726,8 +791,8 @@ function instruction(drops, counter) {
 
                     promise.then(() => {
                         imitateEnterPress();
-                        removeDropWithCorrectAnswer(dropsArr[index].element);
-                        dropsArr[index].check = true;
+                        removeDropWithCorrectAnswer(dropEL);
+                        drops.check = true;
                         updateScore(true);
                     })
                 }, 3000)
@@ -745,8 +810,8 @@ function instruction(drops, counter) {
 
                     promise.then(() => {
                         imitateEnterPress();
-                        removeDropWithCorrectAnswer(dropsArr[index].element);
-                        dropsArr[index].check = true;
+                        removeDropWithCorrectAnswer(dropEL);
+                        drops.check = true;
                         updateScore(true);
                     })
                 }, 2500);
@@ -759,8 +824,8 @@ function instruction(drops, counter) {
 
                     promise.then(() => {
                         imitateEnterPress();
-                        removeDropWithCorrectAnswer(dropsArr[index].element);
-                        dropsArr[index].check = true;
+                        removeDropWithCorrectAnswer(dropEL);
+                        drops.check = true;
                         removeAllDropsWithBonus();
                         updateScore(true);
                     })
@@ -787,7 +852,7 @@ function instruction(drops, counter) {
                         imitateEnterPress();
                         setMistake();
                         updateScore(false);
-                        checkDrPos(dropsArr[index]);
+                        // checkDrPos(dropsArr[index]);
                     })
                 }, 3500);
                 break;
@@ -799,8 +864,8 @@ function instruction(drops, counter) {
 
                     promise.then(() => {
                         imitateEnterPress();
-                        removeDropWithCorrectAnswer(dropsArr[index].element);
-                        dropsArr[index].check = true;
+                        removeDropWithCorrectAnswer(dropEL);
+                        drops.check = true;
                         updateScore(true);
                     })
                 }, 4000);
@@ -809,7 +874,7 @@ function instruction(drops, counter) {
             case 9:
                 console.log(i);
 
-             checkDrPos(dropsArr[index]);
+            //  checkDrPos(dropsArr[index]);
                 break;
 
             case 10:
@@ -921,3 +986,83 @@ function exitGame() {
 }
 
 buttonExit.addEventListener('click', exitGame);
+
+
+// function checkDropPosition(mode, dropObj) {
+//     const dropEl = dropObj.element;
+//     const wawesPos = wavesContainer.getBoundingClientRect();  //come up with variables!!!!!!!!!!!
+//     const wawesPosTop = wawesPos.top;
+//     const dropPos = dropEl.getBoundingClientRect();
+//     const dropPosBottom = dropPos.bottom;
+
+//     let timer = setTimeout(() => {
+//         checkDropPosition(dropObj);
+//     }, 500);
+
+//     if (mode === 'game') {
+
+//     }
+// }
+
+
+
+
+function checkDropPosition(dropObj) {
+    const dropEl = dropObj.element;
+    const wawesPos = wavesContainer.getBoundingClientRect();
+    const wawesPosTop = wawesPos.top;
+    const dropPos = dropEl.getBoundingClientRect();
+    const dropPosBottom = dropPos.bottom;
+
+    let timer = setTimeout(() => {
+        checkDropPosition(dropObj);
+    }, 500);
+
+    if (gameStarted || tutorialStarted) { //----tutorial??
+        if (dropObj.check) {
+            clearTimeout(timer);
+        }
+        if (!dropObj.check && dropPosBottom >= wawesPosTop) {
+            removeDropWithWaves(dropEl);
+            dropObj.check = true;
+            setMistake();
+            updateScore(correctAnswer);
+            
+            if (mistakesCounter === DEFAULT.mistakes) {
+                clearTimeout(timer);
+                showGameOver();
+            }
+        }
+    } if (!gameStarted && !tutorialStarted) { //----tutorial??
+        clearTimeout(timer);
+    } 
+}
+
+
+function checkDrPos(dropObj) {
+    const dropEl = dropObj.element;
+    const wawesPos = wavesContainer.getBoundingClientRect();  //come up with variables!!!!!!!!!!!
+    const wawesPosTop = wawesPos.top;
+    const dropPos = dropEl.getBoundingClientRect();
+    const dropPosBottom = dropPos.bottom;
+
+    let timer = setTimeout(() => {
+        checkDrPos(dropObj);
+    }, 500);
+
+    if (dropObj.check) {
+        clearTimeout(timer);
+    }
+    if (!dropObj.check && wawesPosTop >= dropPosBottom) {
+        dropObj.check = true;
+        removeDropWithWaves(dropEl);  
+        setMistake(); 
+        updateScore(false);
+        if (mistakesCounter === DEFAULT.mistakes) {
+            clearTimeout(timer);
+            stopDropsFall();
+            gameOver.style.display = 'block'; 
+        }
+    }
+}
+
