@@ -309,7 +309,7 @@ body {
     color: black;
     font-size: 58px;
     text-transform: uppercase;
-    animation: gameover 1.6s linear 0.4s forwards;
+    animation: gameover 2.6s linear 0.4s forwards;
     opacity: 0;
 }
 
@@ -318,7 +318,7 @@ body {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1.8);
     }
-    80%{
+    70%{
         opacity: 1;
         transform: translate(-50%, -50%) scale(1.8);
     }
@@ -668,7 +668,7 @@ body {
     transition: all 0.4s linear;
 }
 /* WINDOW BUTTONS END */
-.window-start__button-instruction,
+.window-start__button-tutorial,
 .window-start__button-start,
 .window-end__button-start,
 .window-end__button-exit {
@@ -676,11 +676,11 @@ body {
     box-shadow: 1px 2px 4px 0px rgba(34, 60, 80, 0.4);
 }
 
-.window-start__button-instruction {
+.window-start__button-tutorial {
     background-color: rgb(144, 151, 39); 
 }
 
-.window-start__button-instruction:hover {
+.window-start__button-tutorial:hover {
     background-color: transparent;
     border: 3px solid rgb(144, 151, 39);
     box-shadow: 0 0 4px 4px rgba(144, 151, 39, 0.3);
