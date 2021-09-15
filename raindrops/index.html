@@ -7,6 +7,9 @@
     <title>Raindrops</title>
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="shortcut icon" href="./assets/favicon/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -16,20 +19,6 @@
         <div class="game game--start">           
             <div class="game__playing-field playing-field">
                 <div class="playing-field__drops">
-                    <!-- <div class="playing-field__drop drop drop--color_blue">
-                        <div class="drop__expression">
-                            <span class="drop__operand drop__operand--position_first">26</span>
-                            <span class="drop__operator">+</span>
-                            <span class="drop__operand drop__operand--position_second">76</span>
-                           
-                        </div>
-                        <img src="./assets/icons/icon_check.png" class="drop__icon" alt="icon-check">
-                    </div> -->
-                    <!-- <div class="playing-field__drop drop drop--color_bonus">
-                        <span class="drop__operand drop__operand--position_first">2</span>
-                        <span class="drop__operator">+</span>
-                        <span class="drop__operand drop__operand--position_second">7</span>
-                    </div> -->
                 </div>
                 <div class="playing-field__rock rock">
                     <img class="rock__image image" src="./assets/images/stones.png">
@@ -67,9 +56,6 @@
             </div>
             <div class="game__score score">
                 <span class="score__text">score:</span>
-                <!-- <div class="score__icon">
-                    <img class="score__image image" src="./assets/icons/icon_star.png" alr="icon-star">
-                </div> -->
                 <span class="score__number">0</span>
             </div>
             <div class="game__lives lives">
@@ -103,16 +89,13 @@
                 </button>
             </div>
             <div class="game__window window window-start">
-                <div class="window-start__title">raindrops</div>
-                <div class="window-start__container container">
-                    <!-- <form class="window-start__form">
-                        <input type="checkbox" id="scales" name="scales" checked>
-                        <label for="scales">Scales</label>
-                    </form> -->
-                    <div class="window-start__buttons">
-                        <button class="window-start__button window-start__button-tutorial" data-mode="tutorial">how to play</button>
-                        <button class="window-start__button window-start__button-start" data-mode="game">play</button>
-                    </div>
+                <div class="window-start__container">
+                    <h2 class="window-start__title">raindrops</h2>
+                    <img class="window-start__image" src="./assets/images/drops.png">
+                </div>
+                <div class="window-start__buttons">
+                    <button class="window-start__button window-start__button-tutorial" data-mode="tutorial">how to play</button>
+                    <button class="window-start__button window-start__button-start" data-mode="game">play</button>
                 </div>
             </div>
             <div class="game__window window window-end">
@@ -124,18 +107,6 @@
                     <div class="window-end__score-best score-best">
                         <div class="score-best__title">your top scores:</div>
                         <ol class="score-best__list">
-                            <!-- <li class="score-best__item">
-                                <span class="score-best__score">33433</span>
-                                <span class="score-best__date">29.05.1992</span>
-                            </li>
-                            <li class="score-best__item">
-                                <span class="score-best__score">3333</span>
-                                <span class="score-best__date">29.05.1992</span>
-                            </li>
-                            <li class="score-best__item">
-                                <span class="score-best__score">333</span>
-                                <span class="score-best__date">29.05.1992</span>
-                            </li> -->
                         </ol>
                     </div>
                     <div class="window-end__buttons">
@@ -144,7 +115,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
     </main>
     <footer></footer>

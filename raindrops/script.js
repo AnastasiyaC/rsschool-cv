@@ -14,19 +14,17 @@ const gameOver = document.querySelector('.game__game-over');
 //buttons
 const buttonFullscreen = document.querySelector('.button-fullscreen__icon');
 const settingButtons = document.querySelector('.game__setting');
-const buttonStart = document.querySelector('.window-start__button-start');
-const buttonInstruction = document.querySelector('.window-start__button-tutorial');
-const buttonPlayAgain = document.querySelector('.window-end__button-start');
-const buttonExit = document.querySelector('.window-end__button-exit');
+// const buttonStart = document.querySelector('.window-start__button-start');
+// const buttonTutorial = document.querySelector('.window-start__button-tutorial');
+// const buttonPlayAgain = document.querySelector('.window-end__button-start');
+// const buttonExit = document.querySelector('.window-end__button-exit');
 const keyboardButtons = document.querySelectorAll('.keyboard__button');
-
 const windowStartButtons = document.querySelector('.window-start__buttons');
 const windowEndButtons = document.querySelector('.window-end__buttons');
 
-
 const DEFAULT = {
     level: 1,
-    points: 10,  // accrued points
+    points: 10,
     mistakes: 3,
     speed: 15,
     tutorialBonus: 3,
@@ -36,29 +34,18 @@ const DEFAULT = {
     maxInputLength: 10,
 }
 
-////////
-const DEFAULT_HTP = {
-    level: 1,
-    points: 10,  // accrued points
-    mistakes: 3,
-    speed: 15,
-    wavesLevel: 84,
-    bonus: 3,
-    // numberOfDrops: 18,
-}
-//////////
-
 const dropsArr = [];  // {element: this._dropElement, result: this._expressionResult, bonus: this._bonus, check: false,};
 let [gameLevel, points, dropSpeed, wavesLevel] = [DEFAULT.level, DEFAULT.points, DEFAULT.speed, DEFAULT.wavesLevel];
 let soundVolume = 1;
 let dropCounter = 0;
 let mistakesCounter = 0;
-let usersExpressionResult = null;  // entered user's answer
+let usersExpressionResult = null;
 let gameScore = 0;
 let correctAnswer = false;
 let randomBonusNumber = getRandomNumber(3, 10);
 let gameStarted = false;
 let tutorialStarted = false;
+let gameMode = null;
 
 
 function getRandomNumber(min, max) {
@@ -200,29 +187,12 @@ class BonusDrop extends Drop {
     }
 }
 
-// function playGame() {
-//     addGamePlayClass();
-//     setGameParameters();
-//     gameStarted = true;
-//     startOrStopWavesAnimation('start');
-//     playWavesSound();
-//     createDrops('game')
-// }
-
 function playGame(mode) {
-    const gameMode = mode;
-
+    gameMode = mode;
     setGameParameters();
     addGamePlayClass();
     startOrStopWavesAnimation('start');
     playWavesSound();
-
-    // if (gameMode === 'game') {
-    //     gameStarted = true;
-    // } 
-    // if (gameMode === 'tutorial') {
-    //     tutorialStarted = true;
-    // }
     [gameStarted, tutorialStarted] = gameMode === 'game' ? [true, false] : [false, true];
     createDrops(gameMode);
 }
@@ -348,18 +318,19 @@ function deleteDrops() {
 function showGameOver() {
     stopDropsFall();
     gameOver.style.display = 'block';
+    [gameStarted, tutorialStarted] = [false, false];
     setTimeout(() => {
         gameOver.style.display = 'none';
         game.classList.remove('game--play');
         startOrStopWavesAnimation('stop');
         stopWavesSound();
-        if (gameStarted) {
+        if (gameMode === 'game') {
             showFinalScore();
         }
-        if (tutorialStarted) {
+        if (gameMode === 'tutorial') {
             game.classList.add('game--start'); 
         }
-        [gameStarted, tutorialStarted] = [false, false];
+        
     }, 3000);   
 }
 
@@ -500,17 +471,17 @@ function startOrStopWavesAnimation(string) {
     })
 }
 
-function startWavesAnimation() {
-    Array.from(waves).map((wave) => {
-        wave.style.animationPlayState = 'running';
-    })
-}
+// function startWavesAnimation() {
+//     Array.from(waves).map((wave) => {
+//         wave.style.animationPlayState = 'running';
+//     })
+// }
 
-function stopWavesAnimation() {
-    Array.from(waves).map((wave) => {
-        wave.style.animationPlayState = 'paused';
-    })
-}
+// function stopWavesAnimation() {
+//     Array.from(waves).map((wave) => {
+//         wave.style.animationPlayState = 'paused';
+//     })
+// }
 
 function upWaves() {
     wavesLevel -= DEFAULT.wavesLevelUp;
@@ -540,8 +511,6 @@ function playAnswerSound(dataName) {
     targetSound.currentTime = 0;
     targetSound.play(); 
 }
-
-
 
 class TopScore {
     constructor(score) {
@@ -715,136 +684,70 @@ settingButtons.addEventListener('click', (event) => {
     } 
 })
 
-
 function instruction(drops, counter) {
     const i = counter;
     const drop = drops[i - 1];
     
         switch (i) {
             case 1:
-                console.log(i);
-
-                setTimeout(() => {
-                    let promise = imitateKeyPress(drop.result);
-
-                    promise.then(() => {
-                        imitateEnterPress();
-                        removeDropWithCorrectAnswer(drop.element);
-                        drop.check = true;
-                        updateScore(true);
-                    })
-                }, 3000)
-                break;
-
-            case 2:
-                console.log(i);
-                
+                imitateCorrectAnswer(drop, 3000);
                 break;
 
             case 3:
-                console.log(i);
-                setTimeout(() => {
-                    let promise = imitateKeyPress(drop.result);
-
-                    promise.then(() => {
-                        imitateEnterPress();
-                        removeDropWithCorrectAnswer(drop.element);
-                        drop.check = true;
-                        updateScore(true);
-                    })
-                }, 2500);
+                imitateCorrectAnswer(drop, 2500);
                 break;
 
             case 4:
-                console.log(i);
-                setTimeout(() => {
-                    let promise = imitateKeyPress(drop.result);
-
-                    promise.then(() => {
-                        imitateEnterPress();
-                        removeDropWithCorrectAnswer(drop.element);
-                        drop.check = true;
-                        removeAllDropsWithBonus();
-                        updateScore(true);
-                    })
-                }, 4500);
-                
-                break;
-
-            case 5:
-                console.log(i);
-                
-                break;
-
-            case 6:
-                console.log(i);
+                imitateCorrectAnswer(drop, 4500, true);
                 break;
 
             case 7:
-                console.log(i);
-                setTimeout(() => {
-                    let promise = imitateKeyPress(drop.result + 1);
-
-                    promise.then(() => {
-                        imitateEnterPress();
-                        setMistake();
-                        updateScore(false);
-                    })
-                }, 3500);
+                imitateMistake(drop, 3500);
                 break;
 
             case 8:
-                console.log(i);
-                setTimeout(() => {
-                    let promise = imitateKeyPress(drop.result);
-
-                    promise.then(() => {
-                        imitateEnterPress();
-                        removeDropWithCorrectAnswer(drop.element);
-                        drop.check = true;
-                        updateScore(true);
-                    })
-                }, 4000);
-                break;
-
-            case 9:
-                console.log(i);
-
-                break;
-
-            case 10:
-                console.log(i);
-                
-                
+                imitateCorrectAnswer(drop, 4000);
                 break;
 
             case 11:
-                console.log(i);
-                setTimeout(() => {
-                    let promise = imitateKeyPress(drop.result);
-
-                    promise.then(() => {
-                        imitateEnterPress();
-                        removeDropWithCorrectAnswer(drop.element);
-                        drop.check = true;
-                        updateScore(true);
-                    })
-                }, 2000);
-                break;
-                    
-            case 12:
-                console.log(i);
-                
+                imitateCorrectAnswer(drop, 2000);
                 break;
 
-            case 13:
-                console.log(i);
-                break;
-
-            case 14:
-                console.log(i);
-                break;
+            default:
+                return;
         }
+}
+
+function imitateCorrectAnswer(dropEl, time, isBonus = false) {
+    const targetDrop = dropEl;
+    
+    setTimeout(() => {
+        let promise = imitateKeyPress(targetDrop.result);
+
+        promise.then(() => {
+            imitateEnterPress();
+            removeDropWithCorrectAnswer(targetDrop.element);
+            targetDrop.check = true;
+            updateScore(true);
+            if (isBonus) {
+                removeAllDropsWithBonus();
+            }
+        })
+    }, time)
+}
+
+function imitateMistake(dropEl, time) {
+    const targetDrop = dropEl; 
+
+    setTimeout(() => {
+        let promise = imitateKeyPress(targetDrop.result + 1);
+
+        promise.then(() => {
+            imitateEnterPress();
+            setMistake();
+            updateScore(false);
+        })
+    }, time);
 }
 
 function imitateKeyPress(num, index = 0) {
@@ -853,7 +756,6 @@ function imitateKeyPress(num, index = 0) {
     return new Promise((resolve, reject) => {
         if(index === strFromNum.length) {
             resolve();
-            return;
         } else {
             Array.from(keyboardButtons).find((button) => {
                 if (button.dataset.name == strFromNum[index]) {
@@ -877,11 +779,13 @@ function imitateEnterPress() {
     })
 }
 
-windowStartButtons.addEventListener('click', (event) => {
-    const clickedButtonMode = event.target.dataset.mode;
+// windowStartButtons.addEventListener('click', (event) => {
+//     const clickedButtonMode = event.target.dataset.mode;
 
-    playGame(clickedButtonMode);
-});
+//     playGame(clickedButtonMode);
+// });
+
+windowStartButtons.addEventListener('click', (event) => playGame(event.target.dataset.mode));
 
 windowEndButtons.addEventListener('click', (event) => {
     const clickedButtonMode = event.target.dataset.mode;
