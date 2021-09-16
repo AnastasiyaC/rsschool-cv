@@ -29,7 +29,7 @@ const DEFAULT = {
     speed: 15,
     tutorialBonus: 3,
     pointsToChangeLevel: 100,
-    wavesLevel: 84,
+    wavesLevel: 85,
     wavesLevelUp: 7,
     maxInputLength: 10,
 }
@@ -115,7 +115,6 @@ class Drop {
         return randomOperator;
     }
     _getRandomNumber(min = 1, max = 10 * this._gameLevel) {
-        // max = 10 * this._gameLevel;
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
     _createExpression() {
