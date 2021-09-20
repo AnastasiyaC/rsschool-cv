@@ -43,8 +43,6 @@ let randomBonusNumber = getRandomNumber(3, 10);
 let gameStarted = false;
 let tutorialStarted = false;
 let gameMode = null;
-let isMuted = false;
-
 
 function getRandomNumber(min, max) {
     return Math.round(Math.random() * (max - min) + min);
@@ -486,19 +484,17 @@ function playAnswerSound(dataName) {
         targetSound.pause();   
     }
     targetSound.currentTime = 0;
-    targetSound.muted = isMuted ? true : false;
+    targetSound.muted = wawesSound.muted ? true : false;
     targetSound.play(); 
 }
 
 function muteAudio() {
     if (!wawesSound.muted) {
-        isMuted = true;
         wawesSound.muted = true;
         buttonMuteAudioIcon.setAttribute('src', './assets/icons/icon_sound_on.png');
         buttonMuteAudio.classList.remove('button-sound--unmuted');
         buttonMuteAudio.classList.add('button-sound--muted');
     } else {
-        isMuted = false;
         wawesSound.muted = false;
         buttonMuteAudioIcon.setAttribute('src', './assets/icons/icon_sound_off.png');
         buttonMuteAudio.classList.remove('button-sound--muted');
