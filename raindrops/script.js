@@ -4,20 +4,17 @@ const keyboardButtonsContainer = document.querySelector('.keyboard__buttons');
 const keyboardInput = document.querySelector('.keyboard__input');
 const score = document.querySelector('.score__number');
 const lives = document.querySelectorAll('.lives__heart');
-const waves = document.querySelectorAll('.wave');
 const wavesContainer = document.querySelector('.playing-field__waves');
+const waves = document.querySelectorAll('.wave');
 const wawesSound =document.querySelector('.sounds__sound-waves');
 const answerSounds = document.querySelectorAll('.sounds__sound-short');
 const finalScore = document.querySelector('.window-end__score-number');
 const gameOver = document.querySelector('.game__game-over');
 
 //buttons
-const buttonFullscreen = document.querySelector('.button-fullscreen__icon');
+const buttonMuteAudio = document.querySelector('.button-sound');
+const buttonMuteAudioIcon = document.querySelector('.button-sound__icon');
 const settingButtons = document.querySelector('.game__setting');
-// const buttonStart = document.querySelector('.window-start__button-start');
-// const buttonTutorial = document.querySelector('.window-start__button-tutorial');
-// const buttonPlayAgain = document.querySelector('.window-end__button-start');
-// const buttonExit = document.querySelector('.window-end__button-exit');
 const keyboardButtons = document.querySelectorAll('.keyboard__button');
 const windowStartButtons = document.querySelector('.window-start__buttons');
 const windowEndButtons = document.querySelector('.window-end__buttons');
@@ -31,7 +28,7 @@ const DEFAULT = {
     pointsToChangeLevel: 100,
     wavesLevel: 85,
     wavesLevelUp: 7,
-    maxInputLength: 10,
+    maxInputLength: 8,
 }
 
 const dropsArr = [];  // {element: this._dropElement, result: this._expressionResult, bonus: this._bonus, check: false,};
@@ -46,6 +43,7 @@ let randomBonusNumber = getRandomNumber(3, 10);
 let gameStarted = false;
 let tutorialStarted = false;
 let gameMode = null;
+let isMuted = false;
 
 
 function getRandomNumber(min, max) {
@@ -63,7 +61,6 @@ class Drop {
         this._operator = null;
         this._operandOne = null;
         this._operandTwo = null;
-        this._expressionString = null;
         this._expressionResult = null;
         this._bonus = false;
     }
@@ -107,7 +104,7 @@ class Drop {
         return drop;
     }
     _getPositionLeft() {
-        return this._getRandomNumber(5, 90);
+        return this._getRandomNumber(10, 90);
     }
     _getRandomOperator() {
         const randomIndex = Math.floor(Math.random() * this._operators.length);
@@ -127,7 +124,6 @@ class Drop {
                 this._operator = operator;
                 this._operandOne = operandOne;
                 this._operandTwo = operandTwo;
-                this._expressionString = `${operandOne} + ${operandTwo}`;
                 this._expressionResult = operandOne + operandTwo;
                 break;
       
@@ -136,12 +132,10 @@ class Drop {
                 if (operandOne >= operandTwo) {
                     this._operandOne = operandOne;
                     this._operandTwo = operandTwo;
-                    this._expressionString = `${operandOne} - ${operandTwo}`;
                     this._expressionResult = operandOne - operandTwo;
                 } else {
                     this._operandOne = operandTwo;
                     this._operandTwo = operandOne;
-                    this._expressionString = `${operandTwo} - ${operandOne}`;
                     this._expressionResult = operandTwo - operandOne;
                 }
                 break;
@@ -150,7 +144,6 @@ class Drop {
                 this._operator = operator;
                 this._operandOne = operandOne;
                 this._operandTwo = operandTwo;
-                this._expressionString = `${operandOne} × ${operandTwo}`;
                 this._expressionResult = operandOne * operandTwo;
                 break;
       
@@ -161,13 +154,9 @@ class Drop {
                 this._operator = operator;
                 this._operandOne = operandOne;
                 this._operandTwo = operandTwo;
-                this._expressionString = `${operandOne} ÷ ${operandTwo}`;
                 this._expressionResult = operandOne / operandTwo;
                 break;
           }
-    }
-    getExpressionResult() {
-        return this._expressionResult;
     }
 }
 
@@ -215,6 +204,7 @@ function setGameParameters() {
     mistakesCounter = 0;
     score.innerHTML = gameScore;
     wavesContainer.style.top = `${wavesLevel}%`;
+    keyboardInput.value = '';
     resetLives();
     deleteDrops();
 }
@@ -470,18 +460,6 @@ function startOrStopWavesAnimation(string) {
     })
 }
 
-// function startWavesAnimation() {
-//     Array.from(waves).map((wave) => {
-//         wave.style.animationPlayState = 'running';
-//     })
-// }
-
-// function stopWavesAnimation() {
-//     Array.from(waves).map((wave) => {
-//         wave.style.animationPlayState = 'paused';
-//     })
-// }
-
 function upWaves() {
     wavesLevel -= DEFAULT.wavesLevelUp;
     wavesContainer.style.top = `${wavesLevel}%`;
@@ -504,11 +482,36 @@ function stopWavesSound() {
 function playAnswerSound(dataName) {
     const targetSound = Array.from(answerSounds).find(sound => sound.dataset.sound === dataName);
 
-    if ( !targetSound.paused ) { // fix promise!!!!!!!!
+    if ( !targetSound.paused ) {
         targetSound.pause();   
     }
     targetSound.currentTime = 0;
+    targetSound.muted = isMuted ? true : false;
     targetSound.play(); 
+}
+
+function muteAudio() {
+    if (!wawesSound.muted) {
+        isMuted = true;
+        wawesSound.muted = true;
+        buttonMuteAudioIcon.setAttribute('src', './assets/icons/icon_sound_on.png');
+        buttonMuteAudio.classList.remove('button-sound--unmuted');
+        buttonMuteAudio.classList.add('button-sound--muted');
+    } else {
+        isMuted = false;
+        wawesSound.muted = false;
+        buttonMuteAudioIcon.setAttribute('src', './assets/icons/icon_sound_off.png');
+        buttonMuteAudio.classList.remove('button-sound--muted');
+        buttonMuteAudio.classList.add('button-sound--unmuted');
+    }
+}
+
+function toggleFullscreen() {
+    if (!game.fullscreenElement) {
+        game.requestFullscreen();
+    } if (document.exitFullscreen) {
+        document.exitFullscreen();
+    };
 }
 
 class TopScore {
@@ -658,31 +661,6 @@ function checkInputLength() {
     }
 }
 
-keyboardButtonsContainer.addEventListener('click', clickKeyboardButtons);
-document.addEventListener('keydown', (event) => checkKey(event.key, event));
-document.addEventListener('keyup', (event) => keyUp(event.key, event));
-
-
-function toggleFullscreen() {
-    if (!game.fullscreenElement) {
-        game.requestFullscreen();
-    } if (document.exitFullscreen) {
-        document.exitFullscreen();
-    };
-}
-
-function changeVolume() {
-
-}
-
-settingButtons.addEventListener('click', (event) => {
-    if (event.target.closest('.button-fullscreen')) {
-        toggleFullscreen();
-    } if (event.target.closest('.button-sound')) {
-        console.log('sound');
-    } 
-})
-
 function instruction(drops, counter) {
     const i = counter;
     const drop = drops[i - 1];
@@ -778,11 +756,17 @@ function imitateEnterPress() {
     })
 }
 
-// windowStartButtons.addEventListener('click', (event) => {
-//     const clickedButtonMode = event.target.dataset.mode;
+keyboardButtonsContainer.addEventListener('click', clickKeyboardButtons);
+document.addEventListener('keydown', (event) => checkKey(event.key, event));
+document.addEventListener('keyup', (event) => keyUp(event.key, event));
 
-//     playGame(clickedButtonMode);
-// });
+settingButtons.addEventListener('click', (event) => {
+    if (event.target.closest('.button-fullscreen')) {
+        toggleFullscreen();
+    } if (event.target.closest('.button-sound')) {
+        muteAudio();
+    } 
+})
 
 windowStartButtons.addEventListener('click', (event) => playGame(event.target.dataset.mode));
 
@@ -795,4 +779,3 @@ windowEndButtons.addEventListener('click', (event) => {
         exitGame();
     }
 })
-

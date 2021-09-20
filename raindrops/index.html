@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="./assets/favicon/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&family=Lato:wght@700&family=Roboto&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -17,81 +17,83 @@
     </header>
     <main>
         <div class="game game--start">           
-            <div class="game__playing-field playing-field">
-                <div class="playing-field__drops">
+            <div class="game__window window window-game">
+                <div class="game__playing-field playing-field">
+                    <div class="playing-field__drops">
+                    </div>
+                    <div class="playing-field__rock rock">
+                        <img class="rock__image image" src="./assets/images/stones.png" alt="rocks">
+                    </div>
+                    <div class="playing-field__waves">
+                        <div class="playing-field__wave-one wave"></div>
+                        <div class="playing-field__wave-two wave"></div>
+                        <div class="playing-field__wave-three wave"></div>
+                    </div>
+                    <span class="game__game-over">game over!!!</span>
                 </div>
-                <div class="playing-field__rock rock">
-                    <img class="rock__image image" src="./assets/images/stones.png">
-                </div>
-                <div class="playing-field__waves">
-                    <div class="playing-field__wave-one wave"></div>
-                    <div class="playing-field__wave-two wave"></div>
-                    <div class="playing-field__wave-three wave"></div>
-                </div>
-                <div class="game__game-over">game over!!!</div>
-            </div>
-            <div class="game__keyboard-field keyboard-field">      
-                <div class="keyboard-field__keyboard keyboard">
-                    <div class="keyboard__display">
-                        <form class="keyboard__form">
-                            <input type="text" class="keyboard__input" readonly="readonly">
-                        </form>
-                    </div>
-                    <div class="keyboard__buttons">
-                        <button class="keyboard__button keyboard__button-number" data-name="7">7</button>
-                        <button class="keyboard__button keyboard__button-number" data-name="8">8</button>
-                        <button class="keyboard__button keyboard__button-number" data-name="9">9</button>
-                        <button class="keyboard__button keyboard__button-operation button-operation--grid_clear button-operation--hover_red" data-name="Delete">clear</button>
-                        <button class="keyboard__button keyboard__button-number" data-name="4">4</button>
-                        <button class="keyboard__button keyboard__button-number" data-name="5">5</button>
-                        <button class="keyboard__button keyboard__button-number" data-name="6">6</button>
-                        <button class="keyboard__button keyboard__button-number" data-name="1">1</button>
-                        <button class="keyboard__button keyboard__button-number" data-name="2">2</button>
-                        <button class="keyboard__button keyboard__button-number" data-name="3">3</button>
-                        <button class="keyboard__button keyboard__button-operation button-operation--grid_enter button-operation--hover_green" data-name="Enter">enter</button>
-                        <button class="keyboard__button keyboard__button-number button-number--grid_zero" data-name="0">0</button>
-                        <button class="keyboard__button keyboard__button-operation button-operation--hover_red" data-name="Backspace">delete</button>
+                <div class="game__keyboard-field keyboard-field">      
+                    <div class="keyboard-field__keyboard keyboard">
+                        <div class="keyboard__display">
+                            <form class="keyboard__form">
+                                <input type="text" class="keyboard__input" readonly="readonly">
+                            </form>
+                        </div>
+                        <div class="keyboard__buttons">
+                            <button class="keyboard__button keyboard__button-number" data-name="7">7</button>
+                            <button class="keyboard__button keyboard__button-number" data-name="8">8</button>
+                            <button class="keyboard__button keyboard__button-number" data-name="9">9</button>
+                            <button class="keyboard__button keyboard__button-operation button-operation--grid_clear button-operation--hover_red" data-name="Delete">clear</button>
+                            <button class="keyboard__button keyboard__button-number" data-name="4">4</button>
+                            <button class="keyboard__button keyboard__button-number" data-name="5">5</button>
+                            <button class="keyboard__button keyboard__button-number" data-name="6">6</button>
+                            <button class="keyboard__button keyboard__button-number" data-name="1">1</button>
+                            <button class="keyboard__button keyboard__button-number" data-name="2">2</button>
+                            <button class="keyboard__button keyboard__button-number" data-name="3">3</button>
+                            <button class="keyboard__button keyboard__button-operation button-operation--grid_enter button-operation--hover_green" data-name="Enter">enter</button>
+                            <button class="keyboard__button keyboard__button-number button-number--grid_zero" data-name="0">0</button>
+                            <button class="keyboard__button keyboard__button-operation button-operation--hover_red" data-name="Backspace">delete</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="game__score score">
-                <span class="score__text">score:</span>
-                <span class="score__number">0</span>
-            </div>
-            <div class="game__lives lives">
-                <span class="lives__text">lives:</span>
-                <div class="lives__hearts">
-                    <div class="lives__heart heart" data-count="3">
-                        <div class="heart__part heart__part--left"></div>
-                        <div class="heart__part heart__part--rigth"></div>
-                    </div>
-                    <div class="lives__heart" data-count="2">
-                        <div class="heart__part heart__part--left"></div>
-                        <div class="heart__part heart__part--rigth"></div>
-                    </div>
-                    <div class="lives__heart" data-count="1">
-                        <div class="heart__part heart__part--left"></div>
-                        <div class="heart__part heart__part--rigth"></div>
-                    </div>
-                </div>  
-            </div>
-            <div class="game__sounds sounds">
-                <audio src="./assets/sounds/sound_correct.mp3" class="sounds__sound-short" data-sound="correct"></audio>
-                <audio src="./assets/sounds/sound_incorrect.mp3" class="sounds__sound-short" data-sound="incorrect"></audio>
-                <audio src="./assets/sounds/sound_wawes.mp3" class="sounds__sound-waves" data-sound="waves"></audio>
-            </div>
-            <div class="game__setting setting">
-                <button class="setting__button button button-fullscreen">
-                    <img src="./assets/icons/icon_fullscreen.png" class="button__icon button-fullscreen__icon" alt="icon-fullscreen">
-                </button>
-                <button class="setting__button button button-sound">
-                    <img src="./assets/icons/icon_sound_off.png" class="button__icon button-sound__icon" alt="icon-sound">
-                </button>
+                <div class="game__score score">
+                    <span class="score__text">score:</span>
+                    <span class="score__number">0</span>
+                </div>
+                <div class="game__lives lives">
+                    <span class="lives__text">lives:</span>
+                    <div class="lives__hearts">
+                        <div class="lives__heart heart" data-count="3">
+                            <div class="heart__part heart__part--left"></div>
+                            <div class="heart__part heart__part--rigth"></div>
+                        </div>
+                        <div class="lives__heart" data-count="2">
+                            <div class="heart__part heart__part--left"></div>
+                            <div class="heart__part heart__part--rigth"></div>
+                        </div>
+                        <div class="lives__heart" data-count="1">
+                            <div class="heart__part heart__part--left"></div>
+                            <div class="heart__part heart__part--rigth"></div>
+                        </div>
+                    </div>  
+                </div>
+                <div class="game__sounds sounds">
+                    <audio src="./assets/sounds/sound_correct.mp3" class="sounds__sound sounds__sound-short" data-sound="correct"></audio>
+                    <audio src="./assets/sounds/sound_incorrect.mp3" class="sounds__sound sounds__sound-short" data-sound="incorrect"></audio>
+                    <audio src="./assets/sounds/sound_wawes.mp3" class="sounds__sound sounds__sound-waves" data-sound="waves"></audio>
+                </div>
+                <div class="game__setting setting">
+                    <button class="setting__button button button-fullscreen">
+                        <img src="./assets/icons/icon_fullscreen.png" class="button__icon button-fullscreen__icon" alt="icon-fullscreen">
+                    </button>
+                    <button class="setting__button button button-sound button-sound--unmuted">
+                        <img src="./assets/icons/icon_sound_off.png" class="button__icon button-sound__icon" alt="icon-sound">
+                    </button>
+                </div>
             </div>
             <div class="game__window window window-start">
                 <div class="window-start__container">
                     <h2 class="window-start__title">raindrops</h2>
-                    <img class="window-start__image" src="./assets/images/drops.png">
+                    <img class="window-start__image" src="./assets/images/drops.png" alt="drops">
                 </div>
                 <div class="window-start__buttons">
                     <button class="window-start__button window-start__button-tutorial" data-mode="tutorial">how to play</button>
