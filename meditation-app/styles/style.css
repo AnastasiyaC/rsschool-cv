@@ -174,19 +174,19 @@ body {
 }
 
 .button-element--background_fire {
-  background-image: url(../assets/images/fire_moment.png);
+  background-image: url(../assets/images/fire_moment.jpg);
 }
 
 .button-element--background_air {
-  background-image: url(../assets/images/air_moment.png);
+  background-image: url(../assets/images/air_moment.jpg);
 }
 
 .button-element--background_water {
-  background-image: url(../assets/images/water_moment.png);
+  background-image: url(../assets/images/water_moment.jpg);
 }
 
 .button-element--background_earth {
-  background-image: url(../assets/images/earth_moment.png);
+  background-image: url(../assets/images/earth_moment.jpg);
 }
 
 .button-element__name {
